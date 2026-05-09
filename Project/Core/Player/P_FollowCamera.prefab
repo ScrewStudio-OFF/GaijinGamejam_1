@@ -1,0 +1,28 @@
+node{
+name:t="P_FollowCamera"
+uid:i=2059526607
+SCameraFollow{
+target:i=0
+offset:p3=0, 0, 0
+follow_halflife:r=0.15
+}
+}
+node{
+name:t="camera"
+uid:i=-2071617657
+parent:i=2059526607
+rot:p4=0.5, 0, 0, 0.866025
+Camera{
+znear:r=0.001
+zfar:r=10000
+fov:r=0.523599
+fovAxis:i=1
+orthographic:b=no
+orthographicSize:r=10
+viewport:p4=0, 0, 1, 1
+backgroundColor:p3=0.25, 0.25, 0.25
+__renderTargetId:i64=0
+layerIdx:i=0
+renderSettings:i=0
+}
+}

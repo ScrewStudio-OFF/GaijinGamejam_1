@@ -1,0 +1,82 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "project"
+    }
+  ],
+  "settings": {
+    "dascript.compiler": "C:/Users/stasd/AppData/Local/EdenSpark/win64/../win64/eden-aot-windows-x86_64.exe",
+    "dascript.project.file": "./plugin.das_project",
+    "dascript.server.args": [
+      "${file}",
+      "--",
+      "--verbose",
+      "--ver2",
+      "--indenting",
+      "4",
+      "--base-path",
+      "${workspaceFolder}/",
+      "--base-path",
+      "C:/Users/stasd/AppData/Local/EdenSpark/win64/../",
+      "--vfs",
+      "eden.vromfs.bin"
+    ],
+    "mcp": {
+			"servers": {
+				"EdenSpark": {
+					"url": "http://localhost:54300/mcp",
+					"type": "http"
+				},
+				"context7": {
+					"url": "https://mcp.context7.com/mcp",
+					"type": "http"
+				}
+			},
+			"inputs": []
+		}
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "cppvsdbg",
+            "request": "launch",
+            "name": "Run editor",
+            "program": "win64/eden.exe",
+            "args": [
+                "${workspaceFolder}/main.das",
+                "-config:debug/openAsEditor:b=yes",
+                "--cache-blk-path",
+                "C:/Users/stasd/OneDrive/\xd0\x94\xd0\xbe\xd0\xba\xd1\x83\xd0\xbc\xd0\xb5\xd0\xbd\xd1\x82\xd1\x8b/My Games/eden/launcher/cache.blk",
+            ],
+            "cwd": "C:/Users/stasd/AppData/Local/EdenSpark/win64/.."
+        },
+        {
+            "type": "cppvsdbg",
+            "request": "launch",
+            "name": "Run game",
+            "program": "win64/eden.exe",
+            "args": [
+                "${workspaceFolder}/main.das",
+                "-config:debug/openAsEditor:b=no",
+                "--cache-blk-path",
+                "C:/Users/stasd/OneDrive/\xd0\x94\xd0\xbe\xd0\xba\xd1\x83\xd0\xbc\xd0\xb5\xd0\xbd\xd1\x82\xd1\x8b/My Games/eden/launcher/cache.blk",
+            ],
+            "cwd": "C:/Users/stasd/AppData/Local/EdenSpark/win64/.."
+        },
+        {
+            "type": "dascript",
+            "request": "attach",
+            "name": "Attach das debugger",
+            "port": 10000,
+            "paths": [
+                "${workspaceFolder}"
+            ],
+            "pathAliases": {
+                "%file": "${workspaceFolder}",
+            }
+        },
+    ]
+  }
+}

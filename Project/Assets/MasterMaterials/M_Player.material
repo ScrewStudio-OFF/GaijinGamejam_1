@@ -1,0 +1,16 @@
+shader:t="standard_diffuse_shader"
+userShader{}
+textures{
+it{}
+it{}
+it{}
+it{}
+it{}
+it{}
+}
+properties{
+color{
+__variant_index:i=1
+f4:p4=0.911392, 0, 0.161513, 1
+}
+}

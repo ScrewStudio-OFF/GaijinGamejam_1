@@ -1,0 +1,94 @@
+node{
+name:t="P_Player"
+uid:i=2145662318
+SPlayer{
+move_direction:p3=0, 0, 0
+vertical_velocity:r=0
+MOVE_SPEED:r=5
+FRICTION:r=0.85
+GRAVITY:r=-15
+character_controller:i=0
+camera:i=0
+abilityComponents{
+vs{}
+}
+}
+SAbilityDash{
+isAbilityEnabled:b=yes
+dashSpeed:r=20
+dashDuration:r=0.12
+dashCooldown:r=0.6
+dashPriority:i=10
+ghostPrefabPath:t=""
+ghostInterval:r=0
+ghostLifeTime:r=0
+ghostTintStart:p4=0, 1.008, 1.3, 1
+ghostTintEnd:p4=0, 0.512, 1, 0.4
+ghostScaleBoost:r=10
+freezeGhostAnimation:b=yes
+dashSoundPath:t="Project/Assets/SFX/Abilities/SFX_DashAbility.mp3"
+dashSoundVolume:r=1
+cooldownLeft:r=0
+dashTimeLeft:r=0
+dashDir:p3=0, 0, 0
+ghostTimer:r=0
+}
+CharacterController{
+maxSlopeAngle:r=0.785398
+stepHeight:r=0.3
+upDirection:p3=0, 1, 0
+gravityScale:r=1
+}
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=3
+translation:p3=0, 0.852665, 0
+rotation:p4=0, 0, 0, 1
+params:p3=1.70533, 1, 1
+__mesh:i64=0
+}
+}
+}
+}
+node{
+name:t="Mesh"
+uid:i=-1467474727
+parent:i=2145662318
+scl:p3=0.01, 0.01, 0.01
+Mesh{
+__meshId:i64=-7133727610193693360
+__materialId:i64=1512357604505240131
+visibility:i=2047
+isStatic:b=no
+}
+Animator{enabled:b=yes;}
+SingleAnimationPlayer{
+enabled:b=yes
+loop:b=yes
+__animation:i64=-7597741853021104354
+speed:r=1
+progress:r=0
+}
+}
+res{
+guid:t="019e051a-eb3c-707c-b6e0-ccec75a915c3"
+id:t="char1"
+type:i=1
+refId:i64=-7133727610193693360
+}
+res{
+guid:t="019e051d-b815-7374-8b2e-c27a5324e24d"
+type:i=3
+refId:i64=1512357604505240131
+}
+res{
+guid:t="019e051a-eb3c-707c-b6e0-ccec75a915c3"
+id:t="Running"
+type:i=7
+refId:i64=-7597741853021104354
+}
