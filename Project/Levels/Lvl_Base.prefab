@@ -88,7 +88,7 @@ pos:p3=-0.0384, 2.2735, -1.9151
 rot:p4=0.373094, 0, 0, 0.927793
 DirectionLight{
 color:p3=1, 0.96, 0.92
-intensity:r=1
+intensity:r=0
 castShadows:b=yes
 }
 }
@@ -104,6 +104,18 @@ res{
 guid:t="019dff80-b620-79a6-be46-203478f7e6b1"
 type:i=12
 refId:i64=5025407379149348420
+}
+node{
+name:t="Corps"
+uid:i=1890475661
+prefab:i64=-6122538003777464466
+parent:i=857286189
+pos:p3=-5.7468, 0, 13.4582
+}
+res{
+guid:t="019e0f03-a76e-7db4-bf5f-0a1a303b3d35"
+type:i=12
+refId:i64=-6122538003777464466
 }
 res{
 guid:t="0192f7ae-f381-7981-aca1-68dcd2f42029"
