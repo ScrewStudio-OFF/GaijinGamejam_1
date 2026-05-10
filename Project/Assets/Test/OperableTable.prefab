@@ -1,0 +1,36 @@
+node{
+name:t="OperableTable"
+uid:i=1
+Mesh{
+__meshId:i64=-6922797313224926907
+__materialId:i64=-1665643330029679243
+visibility:i=2047
+isStatic:b=no
+}
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=0
+translation:p3=-0.0585413, 0.740822, 0.0109331
+rotation:p4=0, 0, 0, 1
+params:p3=0.882408, 1.53569, 2.05733
+__mesh:i64=0
+}
+}
+}
+}
+res{
+guid:t="019e128d-b5ca-7665-ab95-92a610390818"
+id:t="OperableTable"
+type:i=1
+refId:i64=-6922797313224926907
+}
+res{
+guid:t="019e127c-c6eb-7c51-8674-d2990bd3c7b3"
+type:i=3
+refId:i64=-1665643330029679243
+}

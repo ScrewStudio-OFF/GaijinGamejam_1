@@ -1,0 +1,35 @@
+shader:t="standard_diffuse_shader"
+textures{
+it{}
+it{}
+it{}
+it{}
+it{}
+it{
+id:t="*3"
+type:i=2
+guid:t="019e139c-009c-7a7c-919e-cc5beaa95d53"
+}
+}
+properties{
+color{
+__variant_index:i=1
+f4:p4=0, 0, 0, 1
+}
+emissionEnabled{
+__variant_index:i=2
+i:i=1
+}
+emission{
+__variant_index:i=1
+f4:p4=1, 1, 1, 1
+}
+emissionStrength{
+__variant_index:i=0
+f:r=5
+}
+glossiness{
+__variant_index:i=0
+f:r=0
+}
+}

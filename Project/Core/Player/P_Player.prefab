@@ -49,7 +49,7 @@ shape{
 shapeType:i=3
 translation:p3=0, 0.852665, 0
 rotation:p4=0, 0, 0, 1
-params:p3=1.70533, 1, 1
+params:p3=1.70533, 0.45, 1
 __mesh:i64=0
 }
 }

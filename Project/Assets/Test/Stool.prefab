@@ -1,0 +1,36 @@
+node{
+name:t="Stool"
+uid:i=1
+Mesh{
+__meshId:i64=8450185245501456666
+__materialId:i64=-1665643330029679243
+visibility:i=2047
+isStatic:b=no
+}
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=2
+translation:p3=-0.00468562, 0.301079, -0.000984646
+rotation:p4=0, 0, 0, 1
+params:p3=1, 0.545514, 1
+__mesh:i64=0
+}
+}
+}
+}
+res{
+guid:t="019e128d-b5cc-7aa4-83bd-dfa8dd5564b5"
+id:t="Stool"
+type:i=1
+refId:i64=8450185245501456666
+}
+res{
+guid:t="019e127c-c6eb-7c51-8674-d2990bd3c7b3"
+type:i=3
+refId:i64=-1665643330029679243
+}

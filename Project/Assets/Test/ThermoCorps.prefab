@@ -1,0 +1,283 @@
+node{
+name:t="ThermoCorps"
+uid:i=1
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=0
+translation:p3=-0.0117229, 1.57661, -0.05571
+rotation:p4=0, 0, 0, 1
+params:p3=7.06722, 3.17134, 1.98535
+__mesh:i64=0
+}
+shape{
+shapeType:i=0
+translation:p3=0, 0.707115, 1.1048
+rotation:p4=0, 0, 0, 1
+params:p3=1, 1.44665, 0.334518
+__mesh:i64=0
+}
+}
+}
+}
+node{
+name:t="ThermoCorps"
+uid:i=2
+parent:i=1
+Mesh{
+__meshId:i64=-1973126845712820589
+__materialId:i64=-1665643330029679243
+visibility:i=2047
+isStatic:b=no
+}
+}
+node{
+name:t="ThermoCorps"
+uid:i=4
+parent:i=1
+Mesh{
+__meshId:i64=-1232947091591204085
+__materialId:i64=7715926125407656981
+visibility:i=2047
+isStatic:b=no
+}
+}
+node{
+name:t="ThermoCorps"
+uid:i=6
+parent:i=1
+Mesh{
+__meshId:i64=490245424981288895
+__materialId:i64=-819502668989717895
+visibility:i=2047
+isStatic:b=no
+}
+}
+node{
+name:t="ThermoCorps"
+uid:i=8
+parent:i=1
+Mesh{
+__meshId:i64=-1314668427497721204
+__materialId:i64=1883596551450857496
+visibility:i=2047
+isStatic:b=no
+}
+}
+node{
+name:t="point_light"
+uid:i=-1506651483
+parent:i=1
+pos:p3=0.0048, 2.3019, -0.0686
+PointLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=3
+color:p3=1, 0, 0.364706
+radius:r=3
+}
+}
+node{
+name:t="point_light"
+uid:i=-875413098
+parent:i=1
+pos:p3=-2.9547, 2.7522, 0.0069
+PointLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=1
+color:p3=0.0705882, 0.784314, 1
+radius:r=3
+}
+}
+node{
+name:t="point_light"
+uid:i=328598709
+parent:i=1
+pos:p3=-2.6777, 2.7522, 0.0069
+PointLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=1
+color:p3=0.0705882, 0.784314, 1
+radius:r=3
+}
+}
+node{
+name:t="point_light"
+uid:i=157976797
+parent:i=1
+pos:p3=-2.3966, 2.7522, 0.0069
+PointLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=1
+color:p3=0.0705882, 0.784314, 1
+radius:r=3
+}
+}
+node{
+name:t="point_light"
+uid:i=-1771793710
+parent:i=1
+pos:p3=-1.8511, 2.7522, 0.0069
+PointLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=1
+color:p3=0.0705882, 0.784314, 1
+radius:r=3
+}
+}
+node{
+name:t="point_light"
+uid:i=2144207386
+parent:i=1
+pos:p3=1.5714, 2.7522, 0.0069
+PointLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=1
+color:p3=0.0705882, 0.784314, 1
+radius:r=3
+}
+}
+node{
+name:t="point_light"
+uid:i=-1307010825
+parent:i=1
+pos:p3=1.8525, 2.7522, 0.0069
+PointLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=1
+color:p3=0.0705882, 0.784314, 1
+radius:r=3
+}
+}
+node{
+name:t="point_light"
+uid:i=-1155177872
+parent:i=1
+pos:p3=2.398, 2.7522, 0.0069
+PointLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=1
+color:p3=0.0705882, 0.784314, 1
+radius:r=3
+}
+}
+node{
+name:t="point_light"
+uid:i=947754625
+parent:i=1
+pos:p3=2.675, 2.7522, 0.0069
+PointLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=1
+color:p3=0.0705882, 0.784314, 1
+radius:r=3
+}
+}
+node{
+name:t="point_light"
+uid:i=-140922036
+parent:i=1
+pos:p3=2.1295, 2.7522, 0.0069
+PointLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=1
+color:p3=0.0705882, 0.784314, 1
+radius:r=3
+}
+}
+node{
+name:t="point_light"
+uid:i=873035630
+parent:i=1
+pos:p3=2.9561, 2.7522, 0.0069
+PointLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=1
+color:p3=0.0705882, 0.784314, 1
+radius:r=3
+}
+}
+node{
+name:t="point_light"
+uid:i=-96264506
+parent:i=1
+pos:p3=-1.5741, 2.7522, 0.0069
+PointLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=1
+color:p3=0.0705882, 0.784314, 1
+radius:r=3
+}
+}
+node{
+name:t="point_light"
+uid:i=-1216381448
+parent:i=1
+pos:p3=-2.1196, 2.7522, 0.0069
+PointLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=1
+color:p3=0.0705882, 0.784314, 1
+radius:r=3
+}
+}
+res{
+guid:t="019e139c-009c-7a7c-919e-cc5beaa95d53"
+id:t="ThermoCorps"
+type:i=1
+refId:i64=-1973126845712820589
+}
+res{
+guid:t="019e127c-c6eb-7c51-8674-d2990bd3c7b3"
+type:i=3
+refId:i64=-1665643330029679243
+}
+res{
+guid:t="019e139c-009c-7a7c-919e-cc5beaa95d53"
+id:t="ThermoCorps#1"
+type:i=1
+refId:i64=-1232947091591204085
+}
+res{
+guid:t="019e139c-9334-79a3-9c48-8137abbd9a89"
+type:i=3
+refId:i64=7715926125407656981
+}
+res{
+guid:t="019e139c-009c-7a7c-919e-cc5beaa95d53"
+id:t="ThermoCorps#2"
+type:i=1
+refId:i64=490245424981288895
+}
+res{
+guid:t="019e128e-374f-7a4d-a7e2-87e3552618aa"
+type:i=3
+refId:i64=-819502668989717895
+}
+res{
+guid:t="019e139c-009c-7a7c-919e-cc5beaa95d53"
+id:t="ThermoCorps#3"
+type:i=1
+refId:i64=-1314668427497721204
+}
+res{
+guid:t="019e128e-2dd3-75bb-abc8-511cf734d722"
+type:i=3
+refId:i64=1883596551450857496
+}
