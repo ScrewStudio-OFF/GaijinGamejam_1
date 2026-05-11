@@ -17,10 +17,23 @@ shape{
 shapeType:i=2
 translation:p3=-0.00468562, 0.301079, -0.000984646
 rotation:p4=0, 0, 0, 1
-params:p3=1, 0.545514, 1
+params:p3=1, 0.2725, 1
 __mesh:i64=0
 }
 }
+}
+RigidBody{
+enabled:b=yes
+mass:r=5
+linearDamping:r=0.05
+angularDamping:r=0.05
+useGravity:b=yes
+motionType:i=0
+collisionDetection:i=0
+allowedDofs:i=63
+maxVelocity:r=500
+maxAngularVelocity:r=47.124
+interpolation:i=0
 }
 }
 res{

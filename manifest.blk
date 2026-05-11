@@ -1,5 +1,9 @@
 title:t="Gaijin_Gamejam_2"
-description:t="Write your game description here"
+description:t="""
+Возьми телефон, детка
+Я знаю ты хочешь позвонить
+
+"""
 project_guid:t="019dff1a-ae8f-7fae-830d-b2789d7f3e40"
 defaultPrefab:t="019dff1e-cbf3-7e8b-9be8-86fb80a634e2"
 type:i=3
@@ -12,7 +16,7 @@ uri:t=""
 build_size:i=-1
 last_played:i=0
 last_downloaded:i=0
-last_opened:i=1778456771
+last_opened:i=1778457384
 deleted_at:i=0
 likes:i=0
 downloads:i=0

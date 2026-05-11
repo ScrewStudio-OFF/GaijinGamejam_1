@@ -251,6 +251,27 @@ refId:i64=-6913067740776376043
 }
 }
 instance{
+root:i=36195003
+newNodes{
+node{
+name:t="spot_light"
+uid:i=-1833916874
+parent:i=1
+pos:p3=-0.9246, 0.8935, 0.0515
+rot:p4=0.404954, -0.589278, -0.0827333, 0.694204
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=2
+color:p3=0.0677965, 1, 0
+radius:r=5.05
+angle:r=1.04883
+attenuation:r=0.54
+}
+}
+}
+}
+instance{
 root:i=-64313499
 newNodes{
 node{
