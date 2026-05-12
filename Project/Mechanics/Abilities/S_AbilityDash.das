@@ -11,7 +11,6 @@ class SAbilityDash : SAbilityBase {
     @export dashCooldown : float = 0.6
     @export dashPriority : int = 10
 
-    @export ghostPrefabPath : string = "Project/Mechanics/VFX/Prefabs/P_DashGhost.prefab"
     @export ghostInterval : float = 0.04
     @export ghostLifeTime : float = 0.16
     @export ghostTintStart : float4 = float4(0.1, 0.9, 1.0, 0.6)
@@ -26,48 +25,13 @@ class SAbilityDash : SAbilityBase {
     dashTimeLeft : float = 0.0
     dashDir : float3 = float3(0)
     ghostTimer : float = 0.0
+    visualRoot : NodeId = NodeId()
 
     def override on_initialize() : void {
         cooldownLeft = 0.0
         dashTimeLeft = 0.0
         dashDir = float3(0)
         ghostTimer = 0.0
-    }
-
-    def spawn_ghost() : void {
-        let ghost_prefab = request_prefab("Project/Mechanics/VFX/Prefabs/P_DashGhost.prefab")
-        let ghost = instantiate_prefab(ghost_prefab, NodeData(
-            name = "DashGhost",
-            position = nodeId.localPosition,
-            rotation = nodeId.localRotation,
-            scale = nodeId.localScale
-        ))
-
-        get_component(ghost) $(var comp : SDashAfterImage?) {
-            if (comp != null) {
-                comp.lifeTime = ghostLifeTime
-                comp.startTint = ghostTintStart
-                comp.endTint = ghostTintEnd
-                comp.scaleBoost = ghostScaleBoost
-                comp.freezeAnimation = freezeGhostAnimation
-                comp.source = nodeId
-            } else {
-                add_component(ghost, new SDashAfterImage(
-                    lifeTime = ghostLifeTime,
-                    startTint = ghostTintStart,
-                    endTint = ghostTintEnd,
-                    scaleBoost = ghostScaleBoost,
-                    freezeAnimation = freezeGhostAnimation,
-                    source = nodeId
-                ))
-            }
-        }
-    }
-
-    def play_dash_sound() : void {
-        let sound = request_sound(dashSoundPath)
-        let sid = play_sound(sound)
-        set_volume(sid, dashSoundVolume)
     }
 
     def override collect_motion(ctx : AbilityContext) : AbilityMotionRequest {
@@ -93,8 +57,7 @@ class SAbilityDash : SAbilityBase {
                 dashTimeLeft = dashDuration
                 cooldownLeft = dashCooldown
                 ghostTimer = 0.0
-                
-                // Спавним первого призрака и проигрываем звук
+
                 spawn_ghost()
                 play_dash_sound()
             }
@@ -114,6 +77,60 @@ class SAbilityDash : SAbilityBase {
         }
 
         return req
+    }
+
+    def private spawn_ghost() : void {
+        visualRoot = NodeId()
+        find_visual_root(nodeId)
+
+        if (!visualRoot.isAlive) {
+            return
+        }
+
+        let ghost = duplicate_node(visualRoot, NodeData(
+            name = "DashGhost",
+            position = visualRoot.localPosition,
+            rotation = visualRoot.localRotation,
+            scale = visualRoot.localScale
+        ))
+
+        ghost.set_parent(nodeId.parent, AddChildStrategy.KeepWorldTransform)
+
+        add_component(ghost, new SDashAfterImage(
+            lifeTime = ghostLifeTime,
+            startTint = ghostTintStart,
+            endTint = ghostTintEnd,
+            scaleBoost = ghostScaleBoost,
+            freezeAnimation = freezeGhostAnimation,
+            source = nodeId
+        ))
+    }
+
+    def private find_visual_root(root : NodeId) : void {
+        if (visualRoot.isAlive) {
+            return
+        }
+
+        let sap = get_component(root, type<SingleAnimationPlayer>)
+        if (sap != null) {
+            visualRoot = root
+            return
+        }
+
+        var inscope children = root.get_children()
+        for (child in children) {
+            find_visual_root(child)
+        }
+    }
+
+    def private play_dash_sound() : void {
+        let sound = request_sound(dashSoundPath)
+        let sid = play_sound(sound)
+        set_volume(sid, dashSoundVolume)
+    }
+
+    def is_dashing() : bool {
+        return dashTimeLeft > 0.0
     }
 
     def override on_destroy() : void {

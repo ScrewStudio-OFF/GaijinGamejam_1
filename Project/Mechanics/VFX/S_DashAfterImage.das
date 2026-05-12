@@ -11,6 +11,10 @@ class SDashAfterImage : Component {
 
     timeLeft : float = 0.0
     baseScale : float3 = float3(1.0)
+    freezeNextFrame : bool = false
+
+    sourceAnim : SingleAnimationPlayer?
+    ghostAnim : SingleAnimationPlayer?
 
     def override on_initialize() : void {
         timeLeft = lifeTime
@@ -18,31 +22,26 @@ class SDashAfterImage : Component {
 
         if (source.isAlive) {
             copy_hierarchy(source, nodeId)
+            copy_animation_state(source, nodeId)
         }
 
         tint_recursive(nodeId, startTint)
 
         if (freezeAnimation) {
-            get_component(nodeId) $(var animator : Animator?) {
-                if (animator != null) {
-                    animator.enabled = false
-                }
-            }
-
-            get_component(nodeId) $(var singleAnimation : SingleAnimationPlayer?) {
-                if (singleAnimation != null) {
-                    singleAnimation.enabled = false
-                }
-            }
+            // Даем один кадр применить скопированный progress, потом стопаем анимацию.
+            freezeNextFrame = true
         }
     }
 
     def override on_update() : void {
+        if (freezeNextFrame) {
+            set_animation_enabled_recursive(nodeId, false)
+            freezeNextFrame = false
+        }
+
         timeLeft -= get_delta_time()
 
         let t = clamp(timeLeft / lifeTime, 0.0, 1.0)
-        
-        // Интерполяция цвета: начальный → конечный
         let colorLerp = float4(
             startTint.x + (endTint.x - startTint.x) * (1.0 - t),
             startTint.y + (endTint.y - startTint.y) * (1.0 - t),
@@ -57,6 +56,75 @@ class SDashAfterImage : Component {
 
         if (timeLeft <= 0.0) {
             remove_node(nodeId)
+        }
+    }
+
+    def private copy_animation_state(srcRoot : NodeId, dstRoot : NodeId) : void {
+        sourceAnim = null
+        ghostAnim = null
+
+        resolve_source_anim(srcRoot)
+        resolve_ghost_anim(dstRoot)
+
+        if (sourceAnim != null && ghostAnim != null) {
+            ghostAnim.animation = sourceAnim.animation
+            ghostAnim.progress = sourceAnim.progress
+            ghostAnim.speed = sourceAnim.speed
+            ghostAnim.loop = sourceAnim.loop
+            ghostAnim.enabled = true
+        }
+    }
+
+    def private resolve_source_anim(root : NodeId) : void {
+        if (sourceAnim != null) {
+            return
+        }
+
+        get_component(root) $(var sap : SingleAnimationPlayer?) {
+            if (sap != null) {
+                sourceAnim = sap
+            }
+        }
+
+        var inscope children = root.get_children()
+        for (child in children) {
+            resolve_source_anim(child)
+        }
+    }
+
+    def private resolve_ghost_anim(root : NodeId) : void {
+        if (ghostAnim != null) {
+            return
+        }
+
+        get_component(root) $(var sap : SingleAnimationPlayer?) {
+            if (sap != null) {
+                ghostAnim = sap
+            }
+        }
+
+        var inscope children = root.get_children()
+        for (child in children) {
+            resolve_ghost_anim(child)
+        }
+    }
+
+    def private set_animation_enabled_recursive(root : NodeId, enabled : bool) : void {
+        get_component(root) $(var animator : Animator?) {
+            if (animator != null) {
+                animator.enabled = enabled
+            }
+        }
+
+        get_component(root) $(var sap : SingleAnimationPlayer?) {
+            if (sap != null) {
+                sap.enabled = enabled
+            }
+        }
+
+        var inscope children = root.get_children()
+        for (child in children) {
+            set_animation_enabled_recursive(child, enabled)
         }
     }
 

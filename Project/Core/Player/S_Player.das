@@ -47,11 +47,18 @@ class SPlayer : Component {
                 joystickActions = JoystickAction(
                     keyboardDPads = [
                         KeyboardDPadInput(
-                            leftIdx = KeyCode.A,     // A = влево по экрану
-                            rightIdx = KeyCode.D,    // D = вправо по экрану
-                            upIdx = KeyCode.W,       // W = вверх по экрану
-                            downIdx = KeyCode.S      // S = вниз по экрану
+                            leftIdx = KeyCode.A,
+                            rightIdx = KeyCode.D,
+                            upIdx = KeyCode.W,
+                            downIdx = KeyCode.S
                         )
+                    ]
+                )
+            ),
+            "attack" => Action(
+                buttonActions = ButtonAction(
+                    mouseButtons = [
+                        MouseButtonInput(idx = MouseButton.Left)
                     ]
                 )
             )
