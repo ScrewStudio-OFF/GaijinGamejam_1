@@ -15,9 +15,9 @@ collisionLayer:i=0
 shapes{
 shape{
 shapeType:i=2
-translation:p3=-0.00468562, 0.301079, -0.000984646
+translation:p3=-0.00468562, 0.300844, -0.000984646
 rotation:p4=0, 0, 0, 1
-params:p3=1, 0.2725, 1
+params:p3=0.603129, 0.2725, 1
 __mesh:i64=0
 }
 }

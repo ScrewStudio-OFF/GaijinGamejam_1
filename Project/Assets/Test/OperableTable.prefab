@@ -25,8 +25,8 @@ __mesh:i64=0
 RigidBody{
 enabled:b=yes
 mass:r=40
-linearDamping:r=0.7
-angularDamping:r=0.7
+linearDamping:r=0.6
+angularDamping:r=0.6
 useGravity:b=yes
 motionType:i=0
 collisionDetection:i=0
