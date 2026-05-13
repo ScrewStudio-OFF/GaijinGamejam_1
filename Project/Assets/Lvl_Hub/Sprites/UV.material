@@ -1,0 +1,31 @@
+shader:t="standard_diffuse_shader"
+textures{
+it{}
+it{}
+it{}
+it{}
+it{}
+it{}
+}
+properties{
+color{
+__variant_index:i=1
+f4:p4=0, 0, 0, 1
+}
+emissionEnabled{
+__variant_index:i=2
+i:i=1
+}
+emission{
+__variant_index:i=1
+f4:p4=1, 0, 0.365655, 1
+}
+emissionStrength{
+__variant_index:i=0
+f:r=10
+}
+glossiness{
+__variant_index:i=0
+f:r=0
+}
+}

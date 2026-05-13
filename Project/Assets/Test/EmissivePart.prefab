@@ -25,7 +25,7 @@ Mesh{
 __meshId:i64=4758790397897405383
 __materialId:i64=519315226933633378
 visibility:i=2047
-isStatic:b=no
+isStatic:b=yes
 }
 }
 node{
@@ -36,7 +36,7 @@ Mesh{
 __meshId:i64=9149596904451113723
 __materialId:i64=-1665643330029679243
 visibility:i=2047
-isStatic:b=no
+isStatic:b=yes
 }
 }
 res{

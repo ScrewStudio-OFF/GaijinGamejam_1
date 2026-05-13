@@ -1,0 +1,30 @@
+node{
+name:t="Lvl_Laboratory"
+uid:i=-409248843
+}
+node{
+name:t="microscopefinal"
+uid:i=-1410415289
+prefab:i64=-3144694606138965004
+parent:i=-409248843
+pos:p3=-0.0143446, 0, 0.0101395
+scl:p3=0.005, 0.005, 0.005
+}
+res{
+guid:t="019e1dcb-55ee-7019-9ad0-66068bedc41d"
+type:i=12
+refId:i64=-3144694606138965004
+}
+node{
+name:t="kolba3f"
+uid:i=-152923376
+prefab:i64=-1991565478045224542
+parent:i=-409248843
+pos:p3=0.049834, -2.98023e-08, 0.21623
+scl:p3=0.00402077, 0.00402077, 0.00402077
+}
+res{
+guid:t="019e1e10-13c8-728f-8def-9ee409235978"
+type:i=12
+refId:i64=-1991565478045224542
+}
