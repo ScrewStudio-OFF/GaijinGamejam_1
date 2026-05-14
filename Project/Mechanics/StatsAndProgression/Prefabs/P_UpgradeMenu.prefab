@@ -1,0 +1,23 @@
+node{
+name:t="P_UpgradeMenu"
+uid:i=-37113882
+}
+node{
+name:t="canvas"
+uid:i=1376052325
+parent:i=-37113882
+UIFrame{
+localPosition2D:p2=0, 0
+size:p2=1111, 433
+pivot:p2=0.5, 0.5
+}
+UICanvas{
+renderMode:i=0
+screenMode:i=2
+}
+SUpgradeShop{
+canvasSize:p2=1920, 1080
+isOpen:b=no
+playerNode:i=0
+}
+}

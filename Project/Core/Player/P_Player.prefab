@@ -87,6 +87,8 @@ dashDuration:r=0.12
 dashCooldown:r=0.6
 dashPriority:i=10
 ghostInterval:r=0.04
+ghostCopiesPerSpawn:i=2
+ghostCopySpacing:r=0.02
 ghostLifeTime:r=0.16
 ghostTintStart:p4=0.1, 0.9, 1, 0.6
 ghostTintEnd:p4=0.5, 0.15, 1, 0.05
@@ -99,6 +101,9 @@ dashTimeLeft:r=0
 dashDir:p3=0, 0, 0
 ghostTimer:r=0
 visualRoot:i=2145662318
+firstGhostSpawned:b=no
+__lastAnimId:i64=0
+lastAnimProgress:r=0
 }
 SPlayerAnimController{
 __idleAnim:i64=-1575754562899439477
@@ -119,6 +124,21 @@ speedResponse:r=0.08
 attackBlendTime:r=0.1
 comboBlendTime:r=0.1
 postAttackHold:r=0.08
+}
+SPlayerStats{
+baseHP:i=20
+baseDamage:i=5
+baseMoveSpeed:r=8
+currentHP:i=20
+currentDamage:i=5
+currentMoveSpeed:r=8
+hpUpgradeLevel:i=0
+damageUpgradeLevel:i=0
+speedUpgradeLevel:i=0
+coins:i=0
+HP_BONUS:i=2
+DAMAGE_BONUS:i=2
+SPEED_BONUS_PERCENT:r=0.2
 }
 }
 node{

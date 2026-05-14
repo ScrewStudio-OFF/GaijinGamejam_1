@@ -3,6 +3,7 @@ require engine.math.math_utils
 require Project.Core.Player.S_Player
 require Project.Core.Player.S_CameraFollow
 require Project.Mechanics.Combat.S_Damageable
+require Project.Mechanics.StatsAndProgression.S_GameState
 require Project.Mechanics.UIUX.S_GameUI
 
 
@@ -45,6 +46,7 @@ class LevelTrigger : Component {
     playerSpawnRotation : quat4 = quat4()
 
     preservePlayerHealth : bool = true
+    requireArenaCleared : bool = false
 
     triggerRadius : float = 3.0
 
@@ -77,6 +79,10 @@ class LevelTrigger : Component {
 
     def override on_update() : void {
         if ( self.triggered ) {
+            return
+        }
+
+        if ( self.requireArenaCleared && !progress_is_arena_cleared() ) {
             return
         }
 
