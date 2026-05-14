@@ -246,22 +246,22 @@ type:i=12
 refId:i64=-1283282881628316874
 }
 node{
-name:t="UpgradeTable"
-uid:i=1293747995
-prefab:i64=4649306695770351518
-parent:i=-825133966
-pos:p3=-5.1085, 4.9125, -6.6105
-}
-res{
-guid:t="019e2523-0a07-7406-b77a-9eb407448c79"
-type:i=12
-refId:i64=4649306695770351518
-}
-node{
 name:t="PlayerSpawn"
 uid:i=-455682299
 parent:i=-825133966
 pos:p3=-5.5899, 5.3063, 6.0373
+}
+node{
+name:t="P_UpgradePad"
+uid:i=-1085239541
+prefab:i64=1534396013376246799
+parent:i=-825133966
+pos:p3=-4.85021, 4.67416, -6.49895
+}
+res{
+guid:t="019e27a1-34af-7ae7-a78e-801e86ba675b"
+type:i=12
+refId:i64=1534396013376246799
 }
 internalRef{
 ref:i=-1146581833

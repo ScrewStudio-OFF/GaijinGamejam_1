@@ -2,6 +2,7 @@ require engine.core
 require engine.input_core
 require Project.Core.Player.S_Player
 require Project.Mechanics.Combat.S_Damageable
+require Project.Mechanics.StatsAndProgression.S_GameState
 
 
 def game_ui_find_player_recursive(nodeId : NodeId, playerName : string) : NodeId {
@@ -40,6 +41,7 @@ class SGameUI : Component {
     tipsHintNode : NodeId
     tipsPanelNode : NodeId
     tipsTextNode : NodeId
+    coinsTextNode : NodeId
 
     tipsShown : bool = false
 
@@ -61,6 +63,7 @@ class SGameUI : Component {
         }
 
         self->update_health()
+        self->update_coins()
     }
 
     def override on_destroy() : void {
@@ -101,6 +104,19 @@ class SGameUI : Component {
         ))
         healthTextNode?.UIFrame.localPosition2D = float2(32.0, 26.0)
         healthTextNode?.UIFrame.size = float2(360.0, 52.0)
+
+        coinsTextNode = create_node(NodeData(name = "CoinsText", parent = canvasNode))
+        add_component(coinsTextNode, new UIText(
+            text = "Coins: 0",
+            color = float4(0.95, 0.92, 0.3, 1.0),
+            fontSize = 28.0,
+            wordWrapping = false,
+            pivot = float2(1.0, 0.0),
+            horAlignment = TextHorAlignment.Right,
+            vertAlignment = TextVertAlignment.Top
+        ))
+        coinsTextNode?.UIFrame.localPosition2D = float2(1840.0, 26.0)
+        coinsTextNode?.UIFrame.size = float2(240.0, 48.0)
 
         tipsHintNode = create_node(NodeData(name = "TipsHint", parent = canvasNode))
         add_component(tipsHintNode, new UIText(
@@ -164,6 +180,19 @@ class SGameUI : Component {
         get_component(healthTextNode) $(var text : UIText?) {
             if (text != null) {
                 text.text = healthText
+            }
+        }
+    }
+
+    def private update_coins() : void {
+        var coinsText = "Coins: 0"
+
+        let saved = progress_get_saved_coins()
+        coinsText = "Coins: {saved}"
+
+        get_component(coinsTextNode) $(var text : UIText?) {
+            if (text != null) {
+                text.text = coinsText
             }
         }
     }

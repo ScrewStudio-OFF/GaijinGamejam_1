@@ -1,5 +1,6 @@
 require engine.core
 require Project.Mechanics.Enemy.S_EnemyLoot
+require Project.Mechanics.Enemy.S_EnemySpawner
 require Project.Mechanics.StatsAndProgression.S_GameState
 
 struct EnemyWaveConfig {
@@ -28,13 +29,25 @@ class SLevelManager : Component {
         progress_set_arena_level(arenaLevel)
         progress_set_arena_cleared(false)
         
+        // Auto-discover enemy spawners in the scene if none assigned in the editor
+        if (length(spawnerNodes) == 0) {
+            var comps := find_components(type<SEnemySpawner>)
+            for (c in comps) {
+                if (c != null) {
+                    push(spawnerNodes, c.nodeId)
+                }
+            }
+            print("Auto-discovered {length(spawnerNodes)} spawner nodes")
+        }
+
         spawn_next_wave()
     }
 
     def setup_default_waves() : void {
-        push(waveConfigs, EnemyWaveConfig(enemyCount = 3, enemyPrefabPath = "Prefab resource not found: Project/Assets/Test/Enemy.prefab", timeBetweenSpawns = 0.5))
-        push(waveConfigs, EnemyWaveConfig(enemyCount = 5, enemyPrefabPath = "Prefab resource not found: Project/Assets/Test/Enemy.prefab", timeBetweenSpawns = 0.4))
-        push(waveConfigs, EnemyWaveConfig(enemyCount = 7, enemyPrefabPath = "Prefab resource not found: Project/Assets/Test/Enemy.prefab", timeBetweenSpawns = 0.3))
+        let enemyPath = "Project/Mechanics/Enemy/Prefabs/P_Enemy.prefab"
+        push(waveConfigs, EnemyWaveConfig(enemyCount = 1, enemyPrefabPath = enemyPath, timeBetweenSpawns = 4.))
+        push(waveConfigs, EnemyWaveConfig(enemyCount = 2, enemyPrefabPath = enemyPath, timeBetweenSpawns = 3.))
+        push(waveConfigs, EnemyWaveConfig(enemyCount = 3, enemyPrefabPath = enemyPath, timeBetweenSpawns = 2.))
     }
 
     def override on_update() : void {
@@ -75,16 +88,40 @@ class SLevelManager : Component {
     }
 
     def private spawn_enemy(prefabPath : string) : NodeId {
+        print("Requesting enemy prefab: {prefabPath}")
         let prefab = request_prefab(prefabPath)
         if (prefab == PrefabId()) {
             print("Failed to load enemy prefab: {prefabPath}")
             return NodeId()
         }
-        
+        // Ensure we have spawner nodes available
+        if (length(spawnerNodes) == 0) {
+            var comps := find_components(type<SEnemySpawner>)
+            for (c in comps) {
+                if (c != null) {
+                     push(spawnerNodes, c.nodeId) 
+                     }
+            }
+        }
+
+        // fallback to children of this manager node
+        if (length(spawnerNodes) == 0) {
+            var fallback := nodeId.get_children()
+            if (length(fallback) > 0) {
+                spawnerNodes <- fallback
+            }
+        }
+
+        if (length(spawnerNodes) == 0) {
+            print("No spawner nodes available, cannot spawn enemy")
+            return NodeId()
+        }
+
         let spawnerIdx = enemiesSpawnedThisWave % length(spawnerNodes)
         let spawnerNode = spawnerNodes[spawnerIdx]
-        
+
         if (!spawnerNode.isAlive) {
+            print("Selected spawner node is not alive, aborting spawn")
             return NodeId()
         }
         
@@ -107,9 +144,17 @@ class SLevelManager : Component {
         }
         
         var hasEnemies = false
-        var spawners = nodeId.get_children()
-        
+        var spawners := spawnerNodes
+
+        // fallback: if spawnerNodes is empty, try to use children of this node
+        if (length(spawners) == 0) {
+            spawners <- nodeId.get_children()
+        }
+
         for (spawner in spawners) {
+            if (spawner == NodeId()) {
+                 continue 
+            }
             var children = spawner.get_children()
             if (length(children) > 0) {
                 hasEnemies = true
@@ -128,6 +173,9 @@ class SLevelManager : Component {
         
         print("Wave completed! Next wave in {timeBetweenWaves}s")
         
+        // update saved progression wave index
+        progress_advance_wave()
+
         if (currentWave >= length(waveConfigs)) {
             on_all_waves_completed()
         } else {

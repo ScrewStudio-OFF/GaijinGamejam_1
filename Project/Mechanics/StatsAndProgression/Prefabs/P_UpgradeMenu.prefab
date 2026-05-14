@@ -8,7 +8,7 @@ uid:i=1376052325
 parent:i=-37113882
 UIFrame{
 localPosition2D:p2=0, 0
-size:p2=1111, 433
+size:p2=1920, 1080
 pivot:p2=0.5, 0.5
 }
 UICanvas{
@@ -19,5 +19,288 @@ SUpgradeShop{
 canvasSize:p2=1920, 1080
 isOpen:b=no
 playerNode:i=0
+menuRootNode:i=0
+coinsTextNode:i=0
+statusTextNode:i=0
+hpButtonNode:i=0
+damageButtonNode:i=0
+speedButtonNode:i=0
+closeButtonNode:i=0
+}
+}
+node{
+name:t="UpgradeMenuRoot"
+uid:i=1376052330
+parent:i=1376052325
+pos:p3=-960, 540, 0
+UIFrame{
+localPosition2D:p2=0, 0
+size:p2=500, 600
+pivot:p2=0.5, 0.5
+}
+UIImage{
+__textureId:i64=0
+color:p4=1, 1, 1, 0.196078
+uvRegion:p4=1, 1, 1, 1
+nineGrid:p4=0, 0, 0, 0
+pixelMultiplier:r=1
+fillMode:i=0
+fillOrigin:i=0
+fillAmount:r=1
+fillClockwise:b=yes
+grayScale:b=no
+grayScaleFactor:r=1
+}
+}
+node{
+name:t="UpgradeTitleText"
+uid:i=1376052331
+parent:i=1376052330
+pos:p3=346.049, 206.674, 0
+UIFrame{
+localPosition2D:p2=596.049, 93.3255
+size:p2=520, 60
+pivot:p2=0.5, 0.5
+}
+UIText{
+text:t="UPGRADE SHOP"
+color:p4=1, 1, 1, 1
+fontSize:r=34
+fontScaling:b=yes
+autoResizeFrame:b=no
+__fontId:i64=0
+effect:i=0
+effectColor:p4=1, 1, 1, 1
+effectOffset:p2=0, 0
+effectThickness:r=1
+fontAutoSize:p2=0, 0
+wordWrapping:b=no
+margin:p4=0, 0, 0, 0
+horAlignment:i=1
+vertAlignment:i=1
+}
+}
+node{
+name:t="UpgradeCoinsText"
+uid:i=1376052332
+parent:i=1376052330
+pos:p3=346.049, 156.674, 0
+UIFrame{
+localPosition2D:p2=596.049, 143.326
+size:p2=520, 44
+pivot:p2=0.5, 0.5
+}
+UIText{
+text:t="Coins: 0"
+color:p4=1, 1, 1, 1
+fontSize:r=24
+fontScaling:b=yes
+autoResizeFrame:b=no
+__fontId:i64=0
+effect:i=0
+effectColor:p4=1, 1, 1, 1
+effectOffset:p2=0, 0
+effectThickness:r=1
+fontAutoSize:p2=0, 0
+wordWrapping:b=no
+margin:p4=0, 0, 0, 0
+horAlignment:i=1
+vertAlignment:i=1
+}
+}
+node{
+name:t="UpgradeStatusText"
+uid:i=1376052333
+parent:i=1376052330
+pos:p3=346.049, 116.675, 0
+UIFrame{
+localPosition2D:p2=596.049, 183.325
+size:p2=620, 44
+pivot:p2=0.5, 0.5
+}
+UIText{
+text:t="HP 0/3  DMG 0/3  SPD 0/3"
+color:p4=1, 1, 1, 1
+fontSize:r=22
+fontScaling:b=yes
+autoResizeFrame:b=no
+__fontId:i64=0
+effect:i=0
+effectColor:p4=1, 1, 1, 1
+effectOffset:p2=0, 0
+effectThickness:r=1
+fontAutoSize:p2=0, 0
+wordWrapping:b=no
+margin:p4=0, 0, 0, 0
+horAlignment:i=1
+vertAlignment:i=1
+}
+}
+node{
+name:t="UpgradeHpButton"
+uid:i=1376052334
+parent:i=1376052330
+pos:p3=346.049, 16.674, 0
+UIFrame{
+localPosition2D:p2=596.049, 283.326
+size:p2=560, 72
+pivot:p2=0.5, 0.5
+}
+UIImage{
+__textureId:i64=0
+color:p4=0.245189, 0.776371, 0.0884474, 1
+uvRegion:p4=0, 0, 1, 1
+nineGrid:p4=0, 0, 0, 0
+pixelMultiplier:r=1
+fillMode:i=0
+fillOrigin:i=0
+fillAmount:r=1
+fillClockwise:b=yes
+grayScale:b=no
+grayScaleFactor:r=1
+}
+UIButton{interactable:b=yes;}
+UIText{
+text:t="Upgrade HP"
+color:p4=0, 0, 0, 1
+fontSize:r=26
+fontScaling:b=yes
+autoResizeFrame:b=no
+__fontId:i64=0
+effect:i=0
+effectColor:p4=1, 1, 1, 1
+effectOffset:p2=0, 0
+effectThickness:r=1
+fontAutoSize:p2=0, 0
+wordWrapping:b=no
+margin:p4=0, 0, 0, 0
+horAlignment:i=1
+vertAlignment:i=1
+}
+}
+node{
+name:t="UpgradeDamageButton"
+uid:i=1376052335
+parent:i=1376052330
+pos:p3=346.049, -73.326, 0
+UIFrame{
+localPosition2D:p2=596.049, 373.326
+size:p2=560, 72
+pivot:p2=0.5, 0.5
+}
+UIImage{
+__textureId:i64=0
+color:p4=0.30172, 0.104061, 0.704641, 1
+uvRegion:p4=0, 0, 1, 1
+nineGrid:p4=0, 0, 0, 0
+pixelMultiplier:r=1
+fillMode:i=0
+fillOrigin:i=0
+fillAmount:r=1
+fillClockwise:b=yes
+grayScale:b=no
+grayScaleFactor:r=1
+}
+UIButton{interactable:b=yes;}
+UIText{
+text:t="Upgrade Damage"
+color:p4=0, 0, 0, 1
+fontSize:r=26
+fontScaling:b=yes
+autoResizeFrame:b=no
+__fontId:i64=0
+effect:i=0
+effectColor:p4=1, 1, 1, 1
+effectOffset:p2=0, 0
+effectThickness:r=1
+fontAutoSize:p2=0, 0
+wordWrapping:b=no
+margin:p4=0, 0, 0, 0
+horAlignment:i=1
+vertAlignment:i=1
+}
+}
+node{
+name:t="UpgradeSpeedButton"
+uid:i=1376052336
+parent:i=1376052330
+pos:p3=346.049, -163.326, 0
+UIFrame{
+localPosition2D:p2=596.049, 463.326
+size:p2=560, 72
+pivot:p2=0.5, 0.5
+}
+UIImage{
+__textureId:i64=0
+color:p4=0.319162, 0.831224, 0.682142, 1
+uvRegion:p4=0, 0, 1, 1
+nineGrid:p4=0, 0, 0, 0
+pixelMultiplier:r=1
+fillMode:i=0
+fillOrigin:i=0
+fillAmount:r=1
+fillClockwise:b=yes
+grayScale:b=no
+grayScaleFactor:r=1
+}
+UIButton{interactable:b=yes;}
+UIText{
+text:t="Upgrade Speed"
+color:p4=0, 0, 0, 1
+fontSize:r=26
+fontScaling:b=yes
+autoResizeFrame:b=no
+__fontId:i64=0
+effect:i=0
+effectColor:p4=1, 1, 1, 1
+effectOffset:p2=0, 0
+effectThickness:r=1
+fontAutoSize:p2=0, 0
+wordWrapping:b=no
+margin:p4=0, 0, 0, 0
+horAlignment:i=1
+vertAlignment:i=1
+}
+}
+node{
+name:t="UpgradeCloseButton"
+uid:i=1376052337
+parent:i=1376052330
+pos:p3=297.84, -297.283, 0
+UIFrame{
+localPosition2D:p2=547.84, 597.283
+size:p2=170, 54
+pivot:p2=0.5, 0.5
+}
+UIImage{
+__textureId:i64=0
+color:p4=0.50211, 0.177963, 0.177963, 1
+uvRegion:p4=0, 0, 1, 1
+nineGrid:p4=0, 0, 0, 0
+pixelMultiplier:r=1
+fillMode:i=0
+fillOrigin:i=0
+fillAmount:r=1
+fillClockwise:b=yes
+grayScale:b=no
+grayScaleFactor:r=1
+}
+UIButton{interactable:b=yes;}
+UIText{
+text:t="Close"
+color:p4=0, 0, 0, 1
+fontSize:r=22
+fontScaling:b=yes
+autoResizeFrame:b=no
+__fontId:i64=0
+effect:i=0
+effectColor:p4=1, 1, 1, 1
+effectOffset:p2=0, 0
+effectThickness:r=1
+fontAutoSize:p2=0, 0
+wordWrapping:b=no
+margin:p4=0, 0, 0, 0
+horAlignment:i=1
+vertAlignment:i=1
 }
 }

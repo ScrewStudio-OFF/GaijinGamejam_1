@@ -1,7 +1,7 @@
 require engine.core
 
 class SEnemySpawner : Component {
-    @export enemyPrefabPath : string = "sdsada"
+    @export enemyPrefabPath : string = "Project/Mechanics/Enemy/Prefabs/P_Enemy.prefab"
     @export maxEnemies : int = 5
     
     currentEnemyCount : int = 0

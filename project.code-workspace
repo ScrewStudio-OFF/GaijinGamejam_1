@@ -6,7 +6,7 @@
     }
   ],
   "settings": {
-    "dascript.compiler": "C:/Users/brawl/AppData/Local/EdenSpark/win64/../win64/eden-aot-windows-x86_64.exe",
+    "dascript.compiler": "C:/Users/stasd/AppData/Local/EdenSpark/win64/../win64/eden-aot-windows-x86_64.exe",
     "dascript.project.file": "./plugin.das_project",
     "dascript.server.args": [
       "${file}",
@@ -18,7 +18,7 @@
       "--base-path",
       "${workspaceFolder}/",
       "--base-path",
-      "C:/Users/brawl/AppData/Local/EdenSpark/win64/../",
+      "C:/Users/stasd/AppData/Local/EdenSpark/win64/../",
       "--vfs",
       "eden.vromfs.bin"
     ],
@@ -48,9 +48,9 @@
                 "${workspaceFolder}/main.das",
                 "-config:debug/openAsEditor:b=yes",
                 "--cache-blk-path",
-                "C:/Users/brawl/OneDrive/Documents/My Games/eden/launcher/cache.blk",
+                "C:/Users/stasd/OneDrive/\xd0\x94\xd0\xbe\xd0\xba\xd1\x83\xd0\xbc\xd0\xb5\xd0\xbd\xd1\x82\xd1\x8b/My Games/eden/launcher/cache.blk",
             ],
-            "cwd": "C:/Users/brawl/AppData/Local/EdenSpark/win64/.."
+            "cwd": "C:/Users/stasd/AppData/Local/EdenSpark/win64/.."
         },
         {
             "type": "cppvsdbg",
@@ -61,9 +61,9 @@
                 "${workspaceFolder}/main.das",
                 "-config:debug/openAsEditor:b=no",
                 "--cache-blk-path",
-                "C:/Users/brawl/OneDrive/Documents/My Games/eden/launcher/cache.blk",
+                "C:/Users/stasd/OneDrive/\xd0\x94\xd0\xbe\xd0\xba\xd1\x83\xd0\xbc\xd0\xb5\xd0\xbd\xd1\x82\xd1\x8b/My Games/eden/launcher/cache.blk",
             ],
-            "cwd": "C:/Users/brawl/AppData/Local/EdenSpark/win64/.."
+            "cwd": "C:/Users/stasd/AppData/Local/EdenSpark/win64/.."
         },
         {
             "type": "dascript",

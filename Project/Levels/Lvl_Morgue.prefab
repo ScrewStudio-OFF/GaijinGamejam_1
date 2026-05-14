@@ -155,14 +155,6 @@ type:i=12
 refId:i64=7853566160102372390
 }
 node{
-name:t="Door"
-uid:i=-64313499
-prefab:i64=7853566160102372390
-parent:i=857286189
-pos:p3=-18.2384, 1, 15.3387
-rot:p4=0, -0.995396, 0, 0.0958457
-}
-node{
 name:t="PlayerSpawn"
 uid:i=574986319
 parent:i=857286189
@@ -185,6 +177,20 @@ res{
 guid:t="019e2720-ed8f-7cca-83aa-0b2d11e7cd9f"
 type:i=12
 refId:i64=7668696029787419492
+}
+node{
+name:t="Door"
+uid:i=-1718855438
+prefab:i64=2324462395507322239
+parent:i=857286189
+pos:p3=-8.7114, 0.1187, 13.9064
+rot:p4=0, 0.986135, 0, -0.165948
+scl:p3=0.54, 0.54, 0.54
+}
+res{
+guid:t="019e2523-0a05-7f75-8a5b-ecf3faffd686"
+type:i=12
+refId:i64=2324462395507322239
 }
 res{
 guid:t="0192f7ae-f381-7981-aca1-68dcd2f42029"
@@ -338,7 +344,14 @@ attenuation:r=0.54
 }
 }
 instance{
-root:i=-64313499
+root:i=310536303
+node{
+uid:i=-1588463328
+SEnemySpawner{enemyPrefabPath:t="Sasdasda";}
+}
+}
+instance{
+root:i=-1718855438
 node{
 uid:i=2
 Mesh{isStatic:b=yes;}
@@ -350,44 +363,7 @@ Mesh{isStatic:b=yes;}
 node{
 uid:i=6
 Mesh{isStatic:b=yes;}
-}
-newNodes{
-node{
-name:t="spot_light"
-uid:i=-611951252
-parent:i=1
-pos:p3=-1.0855, 1.7235, -0.0376
-rot:p4=0.30163, -0.639546, 0.30163, 0.639546
-SpotLight{
-castShadows:b=yes
-castShadowsOnlyForStatic:b=no
-intensity:r=100
-color:p3=0.105882, 0.439216, 0.513726
-radius:r=8.92
-angle:r=1.04883
-attenuation:r=0.42
-}
-}
-node{
-name:t="TheEnd"
-uid:i=-107116132
-parent:i=1
-pos:p3=-1.3379, -0.9854, -0.2091
-Collider{
-friction:r=-1
-restitution:r=-1
-isSensor:b=yes
-collisionLayer:i=0
-shapes{
-shape{
-shapeType:i=0
-translation:p3=-0.644575, 0.903373, 0.248396
-rotation:p4=0, 1.41754e-07, 0, 1
-params:p3=0.479291, 1.36061, 1.97157
-__mesh:i64=0
-}
-}
-}
+newComps{
 LevelTrigger{
 playerNode:i=0
 triggerNode:i=0
@@ -409,11 +385,18 @@ triggered:b=no
 }
 }
 }
-}
-instance{
-root:i=310536303
+newNodes{
 node{
-uid:i=-1588463328
-SEnemySpawner{enemyPrefabPath:t="Sasdasda";}
+name:t="empty_mesh"
+uid:i=-1352971678
+parent:i=1
+pos:p3=15.2498, 1.9244, 0.6732
+Mesh{
+__meshId:i64=0
+__materialId:i64=0
+visibility:i=2047
+isStatic:b=no
+}
+}
 }
 }

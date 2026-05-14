@@ -1,5 +1,7 @@
 require engine.core
 require engine.math.math_utils
+require Project.Mechanics.Enemy.S_EnemyLoot
+require Project.Mechanics.Enemy.S_EnemySpawner
 
 class SDamageable : Component {
     @export maxHealth : float = 100.0
@@ -28,7 +30,7 @@ class SDamageable : Component {
         apply_knockback(source, knockbackForce)
 
         if (health <= 0.0) {
-            die()
+            die(source)
         }
     }
 
@@ -56,7 +58,21 @@ class SDamageable : Component {
         }
     }
 
-    def private die() : void {
+    def private die(source : NodeId) : void {
+        get_component(nodeId) $(var loot : SEnemyLoot?) {
+            if (loot != null) {
+                loot.on_enemy_died(source)
+            }
+        }
+
+        if (nodeId.parent != NodeId()) {
+            get_component(nodeId.parent) $(var spawner : SEnemySpawner?) {
+                if (spawner != null) {
+                    spawner.enemy_died()
+                }
+            }
+        }
+
         if (destroyOnDeath) {
             remove_node(nodeId)
         }
