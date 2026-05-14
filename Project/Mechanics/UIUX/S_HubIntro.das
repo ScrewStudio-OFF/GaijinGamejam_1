@@ -46,7 +46,11 @@ class SHubIntro : Component {
     def private start_intro() : void {
         introControllerNode = create_node(NodeData(name = "HubIntroUI"))
 
-        introController = add_component(introControllerNode, new IntroController())
+        introController = add_component(introControllerNode, new IntroController(
+            canvasSize = self.canvasSize,
+            introMusicPath = self.introMusicPath,
+            introMusicVolume = self.introMusicVolume
+        ))
 
         if ( introController == null ) {
             hubIntroWasPlayed = false
