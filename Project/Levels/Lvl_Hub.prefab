@@ -1,15 +1,37 @@
 node{
 name:t="Lvl_Hub"
 uid:i=-825133966
-pos:p3=0, -4.0313, 0
+pos:p3=0, -8.2198, 5.8007
 rot:p4=0, -0.707107, 0, 0.707107
 LevelTrigger{
 playerNode:i=0
-triggerNode:i=2057281706
-playerName:t="Player"
+triggerNode:i=-1146581833
+playerName:t="P_Player"
+triggerNodeName:t="empty_mesh"
 targetLevelPath:t="Project/Levels/Lvl_Morgue.prefab"
-triggerRadius:r=1.5
+targetLevelName:t="Lvl_Morgue"
+playerPrefabPath:t="Project/Core/Player/P_Player.prefab"
+cameraPrefabPath:t="Project/Core/Player/P_FollowCamera.prefab"
+cameraName:t="P_FollowCamera"
+cameraOffset:p3=0, 10, -5
+playerSpawnNodeName:t="PlayerSpawn"
+playerSpawnPosition:p3=0, 1, 0
+playerSpawnRotation:p4=0, 0, 0, 1
+preservePlayerHealth:b=yes
+triggerRadius:r=3
 triggered:b=no
+}
+SHubIntro{
+canvasSize:p2=1920, 1080
+introMusicPath:t="Project/Assets/Music/1st scene.mp3"
+playlistFolder:t="Project/Assets/Music/PlayList"
+introTrack1File:t=""
+introTrack2File:t=""
+introTrack3File:t=""
+introMusicVolume:r=0.65
+introControllerNode:i=0
+introController:i=0
+introStarted:b=no
 }
 }
 node{
@@ -102,213 +124,6 @@ cutoffSmoothness:r=0.6
 }
 }
 node{
-name:t="MainHall"
-uid:i=-2104978509
-prefab:i64=84334148586291163
-parent:i=-825133966
-pos:p3=0, 3, 0
-}
-res{
-guid:t="019e1df3-7598-7f37-b3fc-7dcaef68ff51"
-type:i=12
-refId:i64=84334148586291163
-}
-node{
-name:t="UpgradeTable"
-uid:i=1845147324
-prefab:i64=-8430911708058727057
-parent:i=-825133966
-pos:p3=-1.1111, 4.1641, 2.2246
-}
-res{
-guid:t="019e1df3-759f-7197-909e-cdcfb2b48f44"
-type:i=12
-refId:i64=-8430911708058727057
-}
-node{
-name:t="MedBlock"
-uid:i=-2052737404
-prefab:i64=7850305317582742952
-parent:i=-825133966
-pos:p3=0.0799, 5.0255, 0.0152
-}
-res{
-guid:t="019e1df3-7599-7682-bc24-7f68c6dabbbe"
-type:i=12
-refId:i64=7850305317582742952
-}
-node{
-name:t="ConsoleTv_var1"
-uid:i=483808442
-prefab:i64=-4983665796406443462
-parent:i=-825133966
-pos:p3=15.128, 3.00522, -5.39063
-}
-res{
-guid:t="019e1df3-7595-7e77-9d72-710d1b36c538"
-type:i=12
-refId:i64=-4983665796406443462
-}
-node{
-name:t="ConsoleTv_var1"
-uid:i=309125683
-prefab:i64=-4983665796406443462
-parent:i=-825133966
-pos:p3=15.2127, 3.00493, 5.10525
-}
-node{
-name:t="ConsoleTv_var2"
-uid:i=105606372
-prefab:i64=4804304471656089426
-parent:i=-825133966
-pos:p3=12.8823, 3.0046, -7.5759
-}
-res{
-guid:t="019e1dfc-2324-79ac-8abd-d62dfea526fe"
-type:i=12
-refId:i64=4804304471656089426
-}
-node{
-name:t="ConsoleTv_var2"
-uid:i=867823372
-prefab:i64=4804304471656089426
-parent:i=-825133966
-pos:p3=8.5661, 3.0073, -7.5933
-}
-node{
-name:t="ConsoleTv_var2"
-uid:i=-1432285132
-prefab:i64=4804304471656089426
-parent:i=-825133966
-pos:p3=4.38019, 3.00515, -7.41917
-}
-node{
-name:t="ConsoleTv_var2"
-uid:i=-311023619
-prefab:i64=4804304471656089426
-parent:i=-825133966
-pos:p3=2.9265, 3.003, 7.4655
-rot:p4=0, 0.999998, 0, -0.00221159
-}
-node{
-name:t="ConsoleTv_var2"
-uid:i=1764196766
-prefab:i64=4804304471656089426
-parent:i=-825133966
-pos:p3=7.0021, 3.0051, 7.539
-rot:p4=0, 1, 0, 5.21539e-08
-}
-node{
-name:t="ConsoleTv_var2"
-uid:i=-28878160
-prefab:i64=4804304471656089426
-parent:i=-825133966
-pos:p3=11.8271, 3.0024, 7.6133
-rot:p4=0, 1, 0, 2.30968e-07
-}
-node{
-name:t="canvas"
-uid:i=-1522480108
-parent:i=-825133966
-pos:p3=0, 0, -13.4422
-UIFrame{
-localPosition2D:p2=0, 0
-size:p2=1920, 1080
-pivot:p2=0.5, 0.5
-}
-UICanvas{
-renderMode:i=0
-screenMode:i=3
-}
-IntroController{
-logoNode:i=0
-skipNode:i=34246904
-textNode:i=911099000
-time:r=15.4
-introFinished:b=no
-}
-}
-node{
-name:t="image"
-uid:i=-991933910
-parent:i=-1522480108
-pos:p3=0, 0, 3335.4
-UIFrame{
-localPosition2D:p2=960, 540
-size:p2=1920, 1080
-pivot:p2=0.5, 0.5
-}
-UIImage{
-__textureId:i64=-185800306262157224
-color:p4=1, 1, 1, 1
-uvRegion:p4=0, 0, 1, 1
-nineGrid:p4=0, 0, 0, 0
-pixelMultiplier:r=1
-fillMode:i=0
-fillOrigin:i=0
-fillAmount:r=1
-fillClockwise:b=yes
-grayScale:b=no
-grayScaleFactor:r=1
-}
-}
-node{
-name:t="text"
-uid:i=34246904
-parent:i=-1522480108
-pos:p3=719.45, 446.314, 3335.4
-UIFrame{
-localPosition2D:p2=1679.45, 93.6863
-size:p2=160, 60
-pivot:p2=0.5, 0.5
-}
-UIText{
-text:t=""
-color:p4=1, 1, 1, 1
-fontSize:r=16
-fontScaling:b=yes
-autoResizeFrame:b=yes
-__fontId:i64=8719121278847316989
-effect:i=2
-effectColor:p4=1, 1, 1, 1
-effectOffset:p2=0, 0
-effectThickness:r=1
-fontAutoSize:p2=0, 0
-wordWrapping:b=yes
-margin:p4=0, 0, 0, 0
-horAlignment:i=1
-vertAlignment:i=1
-}
-}
-node{
-name:t="text"
-uid:i=911099000
-parent:i=-1522480108
-pos:p3=-871.933, 414.852, 3592.37
-UIFrame{
-localPosition2D:p2=88.0674, 125.148
-size:p2=160, 60
-pivot:p2=0.5, 0.5
-}
-UIText{
-text:t=""
-color:p4=1, 1, 1, 1
-fontSize:r=16
-fontScaling:b=yes
-autoResizeFrame:b=no
-__fontId:i64=0
-effect:i=0
-effectColor:p4=1, 1, 1, 1
-effectOffset:p2=0, 0
-effectThickness:r=1
-fontAutoSize:p2=0, 0
-wordWrapping:b=yes
-margin:p4=0, 0, 0, 0
-horAlignment:i=1
-vertAlignment:i=1
-}
-}
-node{
 name:t="spot_light"
 uid:i=-779667648
 parent:i=-825133966
@@ -324,28 +139,141 @@ angle:r=1.04883
 attenuation:r=0.58
 }
 }
+node{
+name:t="MainHall"
+uid:i=-976993674
+prefab:i64=4269374485935133492
+parent:i=-825133966
+pos:p3=0, 2.6462, 0
+}
+res{
+guid:t="019e2521-99b9-7350-8645-694f1bb53b1a"
+type:i=12
+refId:i64=4269374485935133492
+}
+node{
+name:t="Door"
+uid:i=-2071552245
+prefab:i64=2324462395507322239
+parent:i=-825133966
+pos:p3=0.0753, 2.6514, 0.0029
+}
+res{
+guid:t="019e2523-0a05-7f75-8a5b-ecf3faffd686"
+type:i=12
+refId:i64=2324462395507322239
+}
+node{
+name:t="ConsoleTv_var2"
+uid:i=500127551
+prefab:i64=8468313206991510458
+parent:i=-825133966
+pos:p3=8.526, 2.6497, -7.5318
+}
+res{
+guid:t="019e2523-0a04-7dd0-892c-3d2df86264f0"
+type:i=12
+refId:i64=8468313206991510458
+}
+node{
+name:t="ConsoleTv_var2"
+uid:i=1849314322
+prefab:i64=8468313206991510458
+parent:i=-825133966
+pos:p3=3.9628, 2.6497, -7.5318
+}
+node{
+name:t="ConsoleTv_var2"
+uid:i=-1217233282
+prefab:i64=8468313206991510458
+parent:i=-825133966
+pos:p3=13.0172, 2.6497, -7.5318
+}
+node{
+name:t="ConsoleTv_var2"
+uid:i=-1580415161
+prefab:i64=8468313206991510458
+parent:i=-825133966
+pos:p3=13.0172, 2.6497, 7.6362
+rot:p4=0, 1, 0, 1.86264e-06
+}
+node{
+name:t="ConsoleTv_var2"
+uid:i=854269165
+prefab:i64=8468313206991510458
+parent:i=-825133966
+pos:p3=8.0927, 2.6497, 7.6362
+rot:p4=0, 1, 0, 1.86264e-06
+}
+node{
+name:t="ConsoleTv_var2"
+uid:i=427650807
+prefab:i64=8468313206991510458
+parent:i=-825133966
+pos:p3=2.744, 2.6497, 7.6362
+rot:p4=0, 1, 0, 1.86264e-06
+}
+node{
+name:t="ConsoleTv_var1"
+uid:i=1797509812
+prefab:i64=-1142374425208082973
+parent:i=-825133966
+pos:p3=15.4692, 2.6502, -5.0434
+}
+res{
+guid:t="019e2523-0a03-7f1b-a241-40611da93320"
+type:i=12
+refId:i64=-1142374425208082973
+}
+node{
+name:t="ConsoleTv_var1"
+uid:i=1869397606
+prefab:i64=-1142374425208082973
+parent:i=-825133966
+pos:p3=15.4692, 2.6502, 4.9763
+}
+node{
+name:t="MedBlock"
+uid:i=-876958997
+prefab:i64=-1283282881628316874
+parent:i=-825133966
+pos:p3=-7.6532, 4.8286, 6.4025
+}
+res{
+guid:t="019e2523-0a06-7ddc-bc36-e2e06f58b23b"
+type:i=12
+refId:i64=-1283282881628316874
+}
+node{
+name:t="UpgradeTable"
+uid:i=1293747995
+prefab:i64=4649306695770351518
+parent:i=-825133966
+pos:p3=-5.1085, 4.9125, -6.6105
+}
+res{
+guid:t="019e2523-0a07-7406-b77a-9eb407448c79"
+type:i=12
+refId:i64=4649306695770351518
+}
+node{
+name:t="PlayerSpawn"
+uid:i=-455682299
+parent:i=-825133966
+pos:p3=-5.5899, 5.3063, 6.0373
+}
 internalRef{
-ref:i=2057281706
-uid:i=-1407861251
-path{uid:i=-2104978509;}
+ref:i=-1146581833
+uid:i=-1352971678
+path{uid:i=-2071552245;}
 }
 res{
 guid:t="0192f7ae-f381-7981-aca1-68dcd2f42029"
 type:i=3
 refId:i64=5990970791006779606
 }
-res{
-guid:t="019e1ea3-3d5d-7974-be78-7911aff445f5"
-type:i=2
-refId:i64=-185800306262157224
-}
-res{
-guid:t="019e1ea7-bf60-7bdd-b914-d2d1d23adad7"
-type:i=11
-refId:i64=8719121278847316989
-}
 instance{
-root:i=-2104978509
+root:i=-976993674
 node{
 uid:i=1
 newComps{
@@ -357,17 +285,10 @@ collisionLayer:i=0
 shapes{
 shape{
 shapeType:i=4
-translation:p3=11.97, 2.52, 0
-rotation:p4=-0.707107, 0, 0, 0.707107
-params:p3=100, 100, 100
-__mesh:i64=1587519655729759306
-}
-shape{
-shapeType:i=0
-translation:p3=15.9752, 3.13431, 0.0236058
-rotation:p4=0, 1.23758e-14, 0, 1
-params:p3=1, 7.26862, 4.59311
-__mesh:i64=0
+translation:p3=11.5388, 2.27781, 2.27374e-13
+rotation:p4=0, 9.22207e-13, 0, 1
+params:p3=1, 0.999999, 1
+__mesh:i64=-1680102285347501144
 }
 }
 }
@@ -376,252 +297,91 @@ __mesh:i64=0
 node{
 uid:i=2
 Mesh{
-__materialId:i64=4606652197975435940
+__materialId:i64=-6913067740776376043
 isStatic:b=yes
 }
 }
 node{
-uid:i=5
-Mesh{
-__materialId:i64=-3557866510805491760
-isStatic:b=yes
+uid:i=4
+Mesh{isStatic:b=yes;}
 }
+res{
+guid:t="019e2525-f7b7-7187-948d-d9d069f11e1f"
+id:t="Hub_Collider"
+type:i=13
+refId:i64=-1680102285347501144
+}
+res{
+guid:t="019e127c-c6de-7259-ba5a-95bc69657b6c"
+type:i=3
+refId:i64=-6913067740776376043
+}
+}
+instance{
+root:i=-2071552245
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
 }
 node{
-uid:i=3
-Mesh{
-__materialId:i64=-1319187385610233906
-isStatic:b=yes
-}
+uid:i=4
+Mesh{isStatic:b=yes;}
 }
 node{
 uid:i=6
-Mesh{
-__materialId:i64=4606652197975435940
-isStatic:b=yes
+Mesh{isStatic:b=yes;}
+newComps{
+LevelTrigger{
+playerNode:i=0
+triggerNode:i=0
+playerName:t="P_Player"
+triggerNodeName:t="empty_mesh"
+targetLevelPath:t="Project/Levels/Lvl_Morgue.prefab"
+targetLevelName:t="LoadedLevel"
+playerPrefabPath:t="Project/Core/Player/P_Player.prefab"
+cameraPrefabPath:t="Project/Core/Player/P_FollowCamera.prefab"
+cameraName:t="P_FollowCamera"
+cameraOffset:p3=0, 10, -5
+playerSpawnNodeName:t="PlayerSpawn"
+playerSpawnPosition:p3=0, 1, 0
+playerSpawnRotation:p4=0, 0, 0, 1
+preservePlayerHealth:b=yes
+triggerRadius:r=3
+triggered:b=no
+}
 }
 }
 newNodes{
 node{
-name:t="empty_node"
-uid:i=-1407861251
-parent:i=5
-pos:p3=-0.0009, 0.0015, -0.01
+name:t="empty_mesh"
+uid:i=-1352971678
+parent:i=1
+pos:p3=15.2498, 1.9244, 0.6732
+Mesh{
+__meshId:i64=0
+__materialId:i64=0
+visibility:i=2047
+isStatic:b=no
 }
 }
-res{
-guid:t="019e1df3-7598-739a-8a2f-ae4633f4fc63"
-id:t="Hub_Collider"
-type:i=13
-refId:i64=1587519655729759306
-}
-res{
-guid:t="019e1df4-8b73-70a7-86b1-c86ae942d4af"
-type:i=3
-refId:i64=4606652197975435940
-}
-res{
-guid:t="019e1df8-a115-76d2-8127-31287eda2c67"
-type:i=3
-refId:i64=-3557866510805491760
-}
-res{
-guid:t="019e1df4-8b6b-7572-9487-0454e1f56023"
-type:i=3
-refId:i64=-1319187385610233906
 }
 }
 instance{
-root:i=1845147324
-node{
-uid:i=1
-newComps{
-Collider{
-friction:r=-1
-restitution:r=-1
-isSensor:b=no
-collisionLayer:i=0
-shapes{
-shape{
-shapeType:i=2
-translation:p3=-2.74323, 2.05508, -8.96072
-rotation:p4=-4.17957e-13, -2.68975e-14, -0.707107, 0.707107
-params:p3=2.02259, 1.23119, 1
-__mesh:i64=0
-}
-}
-}
-}
-}
-node{
-pos:p3=-2.7274, 1.0465, -8.9808
-uid:i=2
-Mesh{__materialId:i64=4606652197975435940;}
-}
-node{
-pos:p3=-2.7274, 1.0465, -8.9808
-uid:i=4
-Mesh{
-__materialId:i64=1087300819954667258
-isStatic:b=yes
-}
-}
-res{
-guid:t="019e1df4-8b73-70a7-86b1-c86ae942d4af"
-type:i=3
-refId:i64=4606652197975435940
-}
-res{
-guid:t="019e1df4-8b64-7fc0-9088-9e61f15cf863"
-type:i=3
-refId:i64=1087300819954667258
-}
-}
-instance{
-root:i=-2052737404
-node{
-uid:i=1
-newComps{
-Collider{
-friction:r=-1
-restitution:r=-1
-isSensor:b=no
-collisionLayer:i=0
-shapes{
-shape{
-shapeType:i=0
-translation:p3=-7.08265, 0.88869, 7.03996
-rotation:p4=0, 0, 0, 1
-params:p3=1.75479, 2.77738, 2.40276
-__mesh:i64=0
-}
-shape{
-shapeType:i=2
-translation:p3=-6.85535, -9.53674e-07, 4.78439
-rotation:p4=0, 0, 0, 1
-params:p3=2, 1, 1
-__mesh:i64=0
-}
-}
-}
-}
-}
-node{
-pos:p3=-7.2942, 0.2505, 6.3096
-uid:i=2
-Mesh{
-__materialId:i64=4606652197975435940
-isStatic:b=yes
-}
-}
-node{
-pos:p3=-7.2942, 0.2505, 6.3096
-uid:i=4
-Mesh{
-__materialId:i64=-5047553306836644088
-isStatic:b=yes
-}
-}
-res{
-guid:t="019e1df4-8b73-70a7-86b1-c86ae942d4af"
-type:i=3
-refId:i64=4606652197975435940
-}
-res{
-guid:t="019e1df7-7113-749c-86bc-7f350c30972d"
-type:i=3
-refId:i64=-5047553306836644088
-}
-}
-instance{
-root:i=483808442
+root:i=500127551
 node{
 uid:i=2
-Mesh{
-__materialId:i64=4606652197975435940
-isStatic:b=yes
-}
+Mesh{isStatic:b=yes;}
 }
 node{
 uid:i=4
-Mesh{
-__materialId:i64=-7404042845494008746
-isStatic:b=yes
-}
-}
-res{
-guid:t="019e1df4-8b73-70a7-86b1-c86ae942d4af"
-type:i=3
-refId:i64=4606652197975435940
-}
-res{
-guid:t="019e1df6-b462-721d-a9a0-8f0cbef0711a"
-type:i=3
-refId:i64=-7404042845494008746
+Mesh{isStatic:b=yes;}
 }
 }
 instance{
-root:i=309125683
+root:i=1849314322
 node{
 uid:i=2
-Mesh{
-__materialId:i64=4606652197975435940
-isStatic:b=yes
-}
-}
-node{
-uid:i=4
-Mesh{
-__materialId:i64=8764067277247080985
-isStatic:b=yes
-}
-}
-res{
-guid:t="019e1df4-8b73-70a7-86b1-c86ae942d4af"
-type:i=3
-refId:i64=4606652197975435940
-}
-res{
-guid:t="019e1dfa-378d-765f-8e0c-95af46d204b4"
-type:i=3
-refId:i64=8764067277247080985
-}
-}
-instance{
-root:i=105606372
-node{
-uid:i=2
-Mesh{
-__materialId:i64=4606652197975435940
-isStatic:b=yes
-}
-}
-node{
-uid:i=4
-Mesh{
-__materialId:i64=4904206615467661614
-isStatic:b=yes
-}
-}
-res{
-guid:t="019e1df4-8b73-70a7-86b1-c86ae942d4af"
-type:i=3
-refId:i64=4606652197975435940
-}
-res{
-guid:t="019e1dfc-8e25-7019-b3ad-1763c79f7fb5"
-type:i=3
-refId:i64=4904206615467661614
-}
-}
-instance{
-root:i=867823372
-node{
-uid:i=2
-Mesh{
-__materialId:i64=4606652197975435940
-isStatic:b=yes
-}
+Mesh{isStatic:b=yes;}
 }
 node{
 uid:i=4
@@ -631,105 +391,16 @@ isStatic:b=yes
 }
 }
 res{
-guid:t="019e1df4-8b73-70a7-86b1-c86ae942d4af"
-type:i=3
-refId:i64=4606652197975435940
-}
-res{
 guid:t="019e1dfd-7f3b-7fa7-816c-abb73bcf9de8"
 type:i=3
 refId:i64=6710600718182748817
 }
 }
 instance{
-root:i=-1432285132
+root:i=-1217233282
 node{
 uid:i=2
-Mesh{
-__materialId:i64=4606652197975435940
-isStatic:b=yes
-}
-}
-node{
-uid:i=4
-Mesh{
-__materialId:i64=7222022408387887005
-isStatic:b=yes
-}
-}
-res{
-guid:t="019e1df4-8b73-70a7-86b1-c86ae942d4af"
-type:i=3
-refId:i64=4606652197975435940
-}
-res{
-guid:t="019e1dfe-13be-7673-8c1a-a5086eb2cf04"
-type:i=3
-refId:i64=7222022408387887005
-}
-}
-instance{
-root:i=-311023619
-node{
-uid:i=2
-Mesh{
-__materialId:i64=4606652197975435940
-isStatic:b=yes
-}
-}
-node{
-uid:i=4
-Mesh{
-__materialId:i64=4557787228624110663
-isStatic:b=yes
-}
-}
-res{
-guid:t="019e1df4-8b73-70a7-86b1-c86ae942d4af"
-type:i=3
-refId:i64=4606652197975435940
-}
-res{
-guid:t="019e1dff-43a9-7890-b05f-fe12ad25f64b"
-type:i=3
-refId:i64=4557787228624110663
-}
-}
-instance{
-root:i=1764196766
-node{
-uid:i=2
-Mesh{
-__materialId:i64=4606652197975435940
-isStatic:b=yes
-}
-}
-node{
-uid:i=4
-Mesh{
-__materialId:i64=-4917257895144255950
-isStatic:b=yes
-}
-}
-res{
-guid:t="019e1df4-8b73-70a7-86b1-c86ae942d4af"
-type:i=3
-refId:i64=4606652197975435940
-}
-res{
-guid:t="019e1dff-be42-74ed-8f6e-b2111ca04d2d"
-type:i=3
-refId:i64=-4917257895144255950
-}
-}
-instance{
-root:i=-28878160
-node{
-uid:i=2
-Mesh{
-__materialId:i64=4606652197975435940
-isStatic:b=yes
-}
+Mesh{isStatic:b=yes;}
 }
 node{
 uid:i=4
@@ -739,13 +410,110 @@ isStatic:b=yes
 }
 }
 res{
-guid:t="019e1df4-8b73-70a7-86b1-c86ae942d4af"
-type:i=3
-refId:i64=4606652197975435940
-}
-res{
 guid:t="019e1e01-6dfc-744f-8737-0c4d86dd20a6"
 type:i=3
 refId:i64=4529720970401003190
+}
+}
+instance{
+root:i=-1580415161
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=4
+Mesh{
+__materialId:i64=-4917257895144255950
+isStatic:b=yes
+}
+}
+res{
+guid:t="019e1dff-be42-74ed-8f6e-b2111ca04d2d"
+type:i=3
+refId:i64=-4917257895144255950
+}
+}
+instance{
+root:i=854269165
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=4
+Mesh{
+__materialId:i64=4557787228624110663
+isStatic:b=yes
+}
+}
+res{
+guid:t="019e1dff-43a9-7890-b05f-fe12ad25f64b"
+type:i=3
+refId:i64=4557787228624110663
+}
+}
+instance{
+root:i=427650807
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=4
+Mesh{
+__materialId:i64=4904206615467661614
+isStatic:b=yes
+}
+}
+res{
+guid:t="019e1dfc-8e25-7019-b3ad-1763c79f7fb5"
+type:i=3
+refId:i64=4904206615467661614
+}
+}
+instance{
+root:i=1797509812
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=4
+Mesh{isStatic:b=yes;}
+}
+}
+instance{
+root:i=1869397606
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=4
+Mesh{
+__materialId:i64=8764067277247080985
+isStatic:b=yes
+}
+}
+res{
+guid:t="019e1dfa-378d-765f-8e0c-95af46d204b4"
+type:i=3
+refId:i64=8764067277247080985
+}
+}
+instance{
+root:i=-876958997
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=4
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=6
+Mesh{isStatic:b=yes;}
 }
 }

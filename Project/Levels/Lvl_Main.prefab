@@ -1,0 +1,52 @@
+node{
+name:t="Lvl_Main"
+uid:i=1417349210
+SMainMenu{
+canvasSize:p2=1920, 1080
+logoTexturePath:t="Project/Assets/UI/Logos.png"
+startButtonTexturePath:t="Project/Assets/UI/StartmenuButton.png"
+optionsButtonTexturePath:t="Project/Assets/UI/OptionsMenuButton.png"
+exitButtonTexturePath:t="Project/Assets/UI/ExitMenuButton.png"
+menuMusicPath:t="Project/Assets/Music/PlayList/cybergaijin.mp3"
+menuMusicVolume:r=0.65
+startLevelPath:t="Project/Levels/Lvl_Hub.prefab"
+playerPrefabPath:t="Project/Core/Player/P_Player.prefab"
+cameraPrefabPath:t="Project/Core/Player/P_FollowCamera.prefab"
+playerSpawnNodeName:t="PlayerSpawn"
+playerName:t="P_Player"
+cameraName:t="P_FollowCamera"
+fallbackSpawnPosition:p3=0, 1, 0
+fallbackSpawnRotation:p4=0, 0, 0, 1
+cameraOffset:p3=0, 10, -5
+menuTipsOnStart:b=no
+canvasNode:i=0
+menuRootNode:i=0
+startButtonNode:i=0
+settingsButtonNode:i=0
+exitButtonNode:i=0
+settingsPanelNode:i=0
+musicValueNode:i=0
+musicMinusButtonNode:i=0
+musicPlusButtonNode:i=0
+menuMusicHandle:i64=0
+currentMusicVolume:r=0.65
+tipsOnStart:b=no
+settingsShown:b=no
+loadingStarted:b=no
+musicStarted:b=no
+}
+}
+node{
+name:t="canvas"
+uid:i=-1533474368
+parent:i=1417349210
+UIFrame{
+localPosition2D:p2=0, 0
+size:p2=1920, 1080
+pivot:p2=0, 0
+}
+UICanvas{
+renderMode:i=0
+screenMode:i=2
+}
+}

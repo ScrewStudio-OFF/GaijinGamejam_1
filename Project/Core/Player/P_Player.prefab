@@ -34,6 +34,13 @@ __mesh:i64=0
 }
 }
 }
+SDamageable{
+maxHealth:r=100
+health:r=100
+applyKnockback:b=no
+knockbackUp:r=0.2
+destroyOnDeath:b=no
+}
 SPlayerCombat{
 __attackAnim1:i64=1282580175796610586
 __attackAnim2:i64=8384968302429660652

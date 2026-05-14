@@ -1,0 +1,57 @@
+node{
+name:t="Lvl_Greenhouse"
+uid:i=1835323674
+}
+node{
+name:t="greenhouse"
+uid:i=2008579317
+parent:i=1835323674
+}
+node{
+name:t="greenhouse_Collider"
+uid:i=-904100187
+parent:i=1835323674
+}
+node{
+name:t="spot_light"
+uid:i=-845746761
+parent:i=1835323674
+pos:p3=7.0336, 6.2399, -8.143
+rot:p4=0.707107, 0, 0, 0.707107
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=10
+color:p3=0.692494, 0, 1
+radius:r=20.46
+angle:r=1.04883
+attenuation:r=0.65
+}
+}
+node{
+name:t="spot_light"
+uid:i=738972999
+parent:i=1835323674
+pos:p3=7.3314, 3.3715, -10.4811
+rot:p4=0.921898, 0.199671, -0.00515853, 0.331978
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=10
+color:p3=0.692494, 0, 1
+radius:r=20.46
+angle:r=1.04883
+attenuation:r=0.65
+}
+}
+node{
+name:t="directional_light"
+uid:i=1103662000
+parent:i=1835323674
+pos:p3=13.5128, 3.97097, -6.06176
+DirectionLight{
+color:p3=1, 0.96, 0.92
+intensity:r=0.1
+castShadows:b=no
+}
+}

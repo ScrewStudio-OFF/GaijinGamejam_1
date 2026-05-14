@@ -1,5 +1,4 @@
 require engine.core
-require engine.input.global_input_state
 require engine.math.math_utils
 require engine.sound_core
 require Project.Mechanics.Abilities.S_AbilityBase
@@ -48,7 +47,7 @@ class SAbilityDash : SAbilityBase {
             }
         }
 
-        if (key_pressed(KeyCode.Space) && cooldownLeft <= 0.0 && dashTimeLeft <= 0.0) {
+        if (is_action_just_pressed("dash") && cooldownLeft <= 0.0 && dashTimeLeft <= 0.0) {
             dashDir = ctx.facingForward
             dashDir.y = 0.0
 

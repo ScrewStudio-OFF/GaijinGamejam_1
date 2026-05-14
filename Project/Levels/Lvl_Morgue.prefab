@@ -1,6 +1,7 @@
 node{
 name:t="Lvl_Base"
 uid:i=857286189
+pos:p3=4.1807, 0, 0
 InstancePrefabs{
 spawnPoints{
 vs{}
@@ -158,6 +159,18 @@ guid:t="019e187f-581d-70fb-9ece-aa81600bb726"
 type:i=12
 refId:i64=8620202870141665691
 }
+node{
+name:t="PlayerSpawn"
+uid:i=574986319
+parent:i=857286189
+pos:p3=7.6714, 1.2123, -2.1956
+Mesh{
+__meshId:i64=0
+__materialId:i64=0
+visibility:i=2047
+isStatic:b=no
+}
+}
 res{
 guid:t="0192f7ae-f381-7981-aca1-68dcd2f42029"
 type:i=3
@@ -284,10 +297,7 @@ Mesh{isStatic:b=yes;}
 }
 node{
 uid:i=4
-Mesh{
-__materialId:i64=-6196390899088865137
-isStatic:b=yes
-}
+Mesh{isStatic:b=yes;}
 }
 node{
 uid:i=6
@@ -311,11 +321,6 @@ attenuation:r=0.54
 }
 }
 }
-res{
-guid:t="019e1e31-62c0-78cb-8504-107feef358c2"
-type:i=3
-refId:i64=-6196390899088865137
-}
 }
 instance{
 root:i=-64313499
@@ -325,10 +330,7 @@ Mesh{isStatic:b=yes;}
 }
 node{
 uid:i=4
-Mesh{
-__materialId:i64=-6196390899088865137
-isStatic:b=yes
-}
+Mesh{isStatic:b=yes;}
 }
 node{
 uid:i=6
@@ -394,10 +396,5 @@ triggerRadius:r=2
 isShown:b=no
 }
 }
-}
-res{
-guid:t="019e1e31-62c0-78cb-8504-107feef358c2"
-type:i=3
-refId:i64=-6196390899088865137
 }
 }

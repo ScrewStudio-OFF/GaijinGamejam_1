@@ -3,8 +3,11 @@ name:t="P_FollowCamera"
 uid:i=2059526607
 SCameraFollow{
 target:i=0
-offset:p3=0, 0, 0
+offset:p3=0, 10, -5
 follow_halflife:r=0.15
+rotateSensitivity:r=0.01
+yaw:r=0
+rotateWithRightMouse:b=yes
 }
 }
 node{

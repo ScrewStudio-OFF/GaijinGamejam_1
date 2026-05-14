@@ -1,43 +1,22 @@
 require engine.core
+require Project.Mechanics.UIUX.S_MainMenu
+require Project.Mechanics.UIUX.S_HubIntro
+require Project.Mechanics.UIUX.S_GameUI
+require Project.Mechanics.UIUX.S_MusicPlaylist
+require Project.Mechanics.Levelmanager.LevelTrigger
+require Project.Core.Player.S_Player
+require Project.Core.Player.S_CameraFollow
+
 
 [export]
 def on_initialize() {
+    clear_scene()
 
-    // Спавним игрока и сохраняем NodeId
-    let player_prefab = request_prefab("Project/Core/Player/P_Player.prefab")
-    let player = instantiate_prefab(player_prefab, NodeData(
-        name = "Player",
-        position = float3(0.0, 1.0, 0.0)
-    ))
-
-    // Спавним камеру
-    let cam_prefab = request_prefab("Project/Core/Player/P_FollowCamera.prefab")
-    let cam = instantiate_prefab(cam_prefab, NodeData(
-        name = "MainCamera",
-        position = player.localPosition + float3(0.0, 20, -5)
-    ))
-
-    // Получаем компонент SCameraFollow и передаём ссылку на игрока
-    get_component(cam) $(var follow : SCameraFollow?) {
-        if (follow != null) {
-            follow.target = player
-            follow.offset = float3(0.0, 15, -7.5)
-        }
+    let mainMenuPrefab = request_prefab("Project/Levels/Lvl_Main.prefab")
+    if ( mainMenuPrefab == PrefabId() ) {
+        print("Main menu prefab not found: Project/Levels/Lvl_Main.prefab")
+        return
     }
 
-    // NEW: Найти Camera на дочерней ноде и передать её в S_Player
-    var inscope cam_children = cam.get_children()
-    for (cam_node in cam_children) {
-        get_component(cam_node) $(var camera : Camera?) {
-            if (camera != null) {
-                get_component(player) $(var splayer : SPlayer?) {
-                    if (splayer != null) {
-                        splayer.camera = camera
-                        
-                    }
-                }
-            }
-        }
-        break
-    }
+    instantiate_prefab(mainMenuPrefab, NodeData(name = "Lvl_Main"))
 }

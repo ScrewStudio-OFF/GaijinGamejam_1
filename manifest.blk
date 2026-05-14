@@ -1,11 +1,10 @@
 title:t="Gaijin_Gamejam_2"
 description:t="""
-Возьми телефон, детка
-Я знаю ты хочешь позвонить
+Slasher-Roguelike game. 
 
 """
 project_guid:t="019dff1a-ae8f-7fae-830d-b2789d7f3e40"
-defaultPrefab:t="019dff1e-cbf3-7e8b-9be8-86fb80a634e2"
+defaultPrefab:t="019e4d8a-6a8f-7fcb-8f18-cd93a11d92e6"
 type:i=3
 author:t="Sas_Matres"
 hdRendering:b=yes
@@ -16,12 +15,13 @@ uri:t=""
 build_size:i=-1
 last_played:i=0
 last_downloaded:i=0
-last_opened:i=1778614270
+last_opened:i=1778757991
 deleted_at:i=0
 likes:i=0
 downloads:i=0
 launches:i=0
 last_submit_time:i=0
 last_submit_version:i=-1
+last_build_duration:i=15
 genre:t="action"
 numberOfPlayers:t="single"

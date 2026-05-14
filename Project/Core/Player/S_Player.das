@@ -1,5 +1,4 @@
 require engine.core
-require engine.input.global_input_state
 require engine.math.math_utils
 require Project.Mechanics.Abilities.S_AbilityBase
 
@@ -42,27 +41,44 @@ class SPlayer : Component {
         show_mouse_cursor(true)
         
         // === НАСТРОЙКА УПРАВЛЕНИЯ ===
-        add_and_activate_action_set("playerInput", {
-            "move" => Action(
-                joystickActions = JoystickAction(
-                    keyboardDPads = [
-                        KeyboardDPadInput(
-                            leftIdx = KeyCode.A,
-                            rightIdx = KeyCode.D,
-                            upIdx = KeyCode.W,
-                            downIdx = KeyCode.S
-                        )
-                    ]
+        if (has_action_set("playerInput")) {
+            activate_action_set("playerInput", true)
+        } else {
+            add_and_activate_action_set("playerInput", {
+                "move" => Action(
+                    joystickActions = JoystickAction(
+                        keyboardDPads = [
+                            KeyboardDPadInput(
+                                leftIdx = KeyCode.A,
+                                rightIdx = KeyCode.D,
+                                upIdx = KeyCode.W,
+                                downIdx = KeyCode.S
+                            )
+                        ]
+                    )
+                ),
+                "attack" => Action(
+                    buttonActions = ButtonAction(
+                        mouseButtons = [
+                            MouseButtonInput(idx = MouseButton.Left)
+                        ]
+                    )
+                ),
+                "dash" => Action(
+                    buttonActions = ButtonAction(
+                        keyboardButtons = [
+                            KeyboardButtonInput(idx = KeyCode.Space)
+                        ]
+                    )
+                ),
+                "aimPosition" => Action(
+                    pointerActions = PointerAction(
+                        valueType = ValueType.Accumulate,
+                        mouse = MouseInput(active = true)
+                    )
                 )
-            ),
-            "attack" => Action(
-                buttonActions = ButtonAction(
-                    mouseButtons = [
-                        MouseButtonInput(idx = MouseButton.Left)
-                    ]
-                )
-            )
-        })
+            })
+        }
 
         refresh_abilities()
     }
@@ -77,6 +93,20 @@ class SPlayer : Component {
         
         // === ПРЕОБРАЗУЕМ В 3D (ЭКРАННЫЕ КООРДИНАТЫ) ===
         var screen_input = float3(move_input.x, 0.0, move_input.y)
+
+        if (camera != null && length(screen_input) > 0.01) {
+            var camera_forward = camera.nodeId.worldRotation * FORWARD
+            var camera_right = camera.nodeId.worldRotation * RIGHT
+
+            camera_forward.y = 0.0
+            camera_right.y = 0.0
+
+            if (length(camera_forward) > 0.001 && length(camera_right) > 0.001) {
+                camera_forward = normalize(camera_forward)
+                camera_right = normalize(camera_right)
+                screen_input = camera_right * move_input.x + camera_forward * move_input.y
+            }
+        }
         
         // === ПРИМЕНЯЕМ СКОРОСТЬ И ТРЕНИЕ ===
         if (length(screen_input) > 0.01) {
@@ -93,7 +123,7 @@ class SPlayer : Component {
 
         // === ПОЛУЧАЕМ НАПРАВЛЕНИЕ КУРСОРА ДЛЯ ПОВОРОТА И ДЭША ===
         if (camera != null) {
-            let mouse_screen_pos = get_mouse_position()
+            let mouse_screen_pos = get_action_vector2("aimPosition")
             let ray = camera.screenToRay(mouse_screen_pos)
             let current_pos = nodeId.localPosition
             var cursor_world_pos : float3

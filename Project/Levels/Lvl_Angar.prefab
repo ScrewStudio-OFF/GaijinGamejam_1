@@ -1,0 +1,16 @@
+node{
+name:t="Lvl_Angar"
+uid:i=-1227679245
+}
+node{
+name:t="Angar(1)"
+uid:i=-2143401424
+prefab:i64=-2501184892170494178
+parent:i=-1227679245
+pos:p3=11.1804, 9.53674e-07, 2.40843
+}
+res{
+guid:t="019e25d6-7b64-77ca-a09b-247a4444c631"
+type:i=12
+refId:i64=-2501184892170494178
+}

@@ -34,7 +34,7 @@ uid:i=4
 parent:i=1
 Mesh{
 __meshId:i64=-7513782735639269
-__materialId:i64=-2522203973161716528
+__materialId:i64=-6196390899088865137
 visibility:i=2047
 isStatic:b=no
 }
@@ -68,9 +68,9 @@ type:i=1
 refId:i64=-7513782735639269
 }
 res{
-guid:t="019e128e-0381-7ba9-9c25-ba5947b9f539"
+guid:t="019e1e31-62c0-78cb-8504-107feef358c2"
 type:i=3
-refId:i64=-2522203973161716528
+refId:i64=-6196390899088865137
 }
 res{
 guid:t="019e128d-b5c8-7169-9af8-7a3fb5c5d281"
