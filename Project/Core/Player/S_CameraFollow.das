@@ -40,7 +40,7 @@ class SCameraFollow : Component {
         if (enableWheelHeight) {
             let wheelAxis = get_action_axis("cameraZoom")
             if (abs(wheelAxis) > 0.0001) {
-                offset.y = clamp(offset.y + wheelAxis * wheelHeightSensitivity, minCameraHeight, maxCameraHeight)
+                offset.y = clamp(offset.y - wheelAxis * wheelHeightSensitivity, minCameraHeight, maxCameraHeight)
             }
         }
 

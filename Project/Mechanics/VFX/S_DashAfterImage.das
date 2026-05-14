@@ -11,34 +11,16 @@ class SDashAfterImage : Component {
 
     timeLeft : float = 0.0
     baseScale : float3 = float3(1.0)
-    freezeNextFrame : bool = false
-
-    sourceAnim : SingleAnimationPlayer?
-    ghostAnim : SingleAnimationPlayer?
 
     def override on_initialize() : void {
         timeLeft = lifeTime
         baseScale = nodeId.localScale
 
-        if (source.isAlive) {
-            copy_hierarchy(source, nodeId)
-            copy_animation_state(source, nodeId)
-        }
-
+        remove_physics_recursive(nodeId)
         tint_recursive(nodeId, startTint)
-
-        if (freezeAnimation) {
-            // Даем один кадр применить скопированный progress, потом стопаем анимацию.
-            freezeNextFrame = true
-        }
     }
 
     def override on_update() : void {
-        if (freezeNextFrame) {
-            set_animation_enabled_recursive(nodeId, false)
-            freezeNextFrame = false
-        }
-
         timeLeft -= get_delta_time()
 
         let t = clamp(timeLeft / lifeTime, 0.0, 1.0)
@@ -56,75 +38,6 @@ class SDashAfterImage : Component {
 
         if (timeLeft <= 0.0) {
             remove_node(nodeId)
-        }
-    }
-
-    def private copy_animation_state(srcRoot : NodeId, dstRoot : NodeId) : void {
-        sourceAnim = null
-        ghostAnim = null
-
-        resolve_source_anim(srcRoot)
-        resolve_ghost_anim(dstRoot)
-
-        if (sourceAnim != null && ghostAnim != null) {
-            ghostAnim.animation = sourceAnim.animation
-            ghostAnim.progress = sourceAnim.progress
-            ghostAnim.speed = sourceAnim.speed
-            ghostAnim.loop = sourceAnim.loop
-            ghostAnim.enabled = true
-        }
-    }
-
-    def private resolve_source_anim(root : NodeId) : void {
-        if (sourceAnim != null) {
-            return
-        }
-
-        get_component(root) $(var sap : SingleAnimationPlayer?) {
-            if (sap != null) {
-                sourceAnim = sap
-            }
-        }
-
-        var inscope children = root.get_children()
-        for (child in children) {
-            resolve_source_anim(child)
-        }
-    }
-
-    def private resolve_ghost_anim(root : NodeId) : void {
-        if (ghostAnim != null) {
-            return
-        }
-
-        get_component(root) $(var sap : SingleAnimationPlayer?) {
-            if (sap != null) {
-                ghostAnim = sap
-            }
-        }
-
-        var inscope children = root.get_children()
-        for (child in children) {
-            resolve_ghost_anim(child)
-        }
-    }
-
-    def private set_animation_enabled_recursive(root : NodeId, enabled : bool) : void {
-        get_component(root) $(var animator : Animator?) {
-            if (animator != null) {
-                animator.enabled = enabled
-            }
-        }
-
-        get_component(root) $(var sap : SingleAnimationPlayer?) {
-            if (sap != null) {
-                sap.enabled = enabled
-            }
-        }
-
-        var inscope children = root.get_children()
-        for (child in children) {
-            set_animation_enabled_recursive(child, enabled)
         }
     }
 
@@ -148,24 +61,28 @@ class SDashAfterImage : Component {
         }
     }
 
-    def private copy_hierarchy(src : NodeId, dst : NodeId) : void {
-        dst.localPosition = src.localPosition
-        dst.localRotation = src.localRotation
-        dst.localScale = src.localScale
-
-        var inscope srcChildren = src.get_children()
-        var inscope dstChildren = dst.get_children()
-
-        for (s in srcChildren) {
-            for (d in dstChildren) {
-                if (d.name == s.name) {
-                    d.localPosition = s.localPosition
-                    d.localRotation = s.localRotation
-                    d.localScale = s.localScale
-                    copy_hierarchy(s, d)
-                    break
-                }
+    def private remove_physics_recursive(root : NodeId) : void {
+        get_component(root) $(var rb : RigidBody?) {
+            if (rb != null) {
+                remove_component(root, rb)
             }
+        }
+
+        get_component(root) $(var collider : Collider?) {
+            if (collider != null) {
+                remove_component(root, collider)
+            }
+        }
+
+        get_component(root) $(var cc : CharacterController?) {
+            if (cc != null) {
+                remove_component(root, cc)
+            }
+        }
+
+        var inscope children = root.get_children()
+        for (child in children) {
+            remove_physics_recursive(child)
         }
     }
 

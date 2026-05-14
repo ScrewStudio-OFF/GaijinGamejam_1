@@ -93,11 +93,7 @@ class SLevelIntroController : Component {
 
         // Create intro
         introControllerNode = create_node(NodeData(name = "LevelIntroUI"))
-        introController = add_component(introControllerNode, new IntroController(
-            canvasSize = canvasSize,
-            introMusicPath = "",
-            introMusicVolume = introMusicVolume
-        ))
+        introController = add_component(introControllerNode, new IntroController())
 
         add_component(introControllerNode, new SIntroMusicPlaylist(
             introNode = introControllerNode,

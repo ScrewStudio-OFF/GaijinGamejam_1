@@ -42,6 +42,10 @@ class SPlayerCombat : Component {
     queuedNextAttack : bool = false
 
     def override on_initialize() : void {
+        if (nodeId.name == "DashGhost") {
+            return
+        }
+
         comboStage = 0
         attackTimeLeft = 0.0
         hitboxSpawnDelayLeft = 0.0
@@ -51,6 +55,10 @@ class SPlayerCombat : Component {
     }
 
     def override on_update() : void {
+        if (nodeId.name == "DashGhost") {
+            return
+        }
+
         let dt = get_delta_time()
 
         if (is_action_just_pressed("attack"))

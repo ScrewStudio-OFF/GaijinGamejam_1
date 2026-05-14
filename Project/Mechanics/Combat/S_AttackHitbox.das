@@ -62,7 +62,8 @@ class SAttackHitbox : Component {
             return
         }
 
-        if (target == owner || target == nodeId) {
+        // Не учитывать хитбокс самого владельца или его детей:
+        if (is_descendant_of(target, owner) || target == nodeId) {
             return
         }
 
@@ -73,36 +74,105 @@ class SAttackHitbox : Component {
         push(alreadyHit, target)
 
         if (debugPrintHits) {
-            print("overlap hit {target.name}")
+            print("overlap hit {target.name} (nodeId={target})")
         }
 
-        var dir = target.worldPosition - owner.worldPosition
-        dir.y = 0.0
-
-        if (length(dir) < 0.001) {
-            dir = FORWARD
-        } else {
-            dir = normalize(dir)
+        // Защитно выберем позицию владельца: если owner не активен, используем позицию самого хитбокса
+        var ownerPos = owner
+        if (!ownerPos.isAlive) {
+            ownerPos = nodeId
         }
 
-        dir.y = 0.25
-        dir = normalize(dir)
-
+        // Найдём ближайший родительский узел, который содержит SDamageable (включая сам target)
         var damaged = false
-        get_component(target) $(var damageable : SDamageable?) {
-            if (damageable != null) {
-                damageable.take_damage(damage, owner, knockbackForce)
-                damaged = true
+        var probe = target
+        while (probe.isAlive) {
+            get_component(probe) $(var damageable : SDamageable?) {
+                if (damageable != null) {
+                    // вычисляем направление от владельца к центру поражённого (используем ownerPos.worldPosition)
+                    var dir = probe.worldPosition - ownerPos.worldPosition
+                    dir.y = 0.0
+                    if (length(dir) < 0.001) {
+                        dir = FORWARD
+                    } else {
+                        dir = normalize(dir)
+                    }
+                    dir.y = 0.25
+                    dir = normalize(dir)
+
+                    damageable.take_damage(damage, owner, knockbackForce)
+                    damaged = true
+
+                    if (debugPrintHits) {
+                        print("Damaged {probe.name} from owner {owner.name}")
+                    }
+                }
+            }
+
+            if (damaged) {
+                break
+            }
+
+            // подняться к родителю
+            probe = probe.parent
+            if (probe == NodeId()) {
+                break
             }
         }
 
         if (!damaged) {
-            get_component(target) $(var rb : RigidBody?) {
-                if (rb != null) {
-                    apply_rigid_body_impulse(rb, dir * knockbackForce)
+            // Если не нашли SDamageable — попытка оттолкнуть rigidbody на том же или родительском узле
+            var probe2 = target
+            var applied = false
+            while (probe2.isAlive) {
+                get_component(probe2) $(var rb : RigidBody?) {
+                    if (rb != null) {
+                        var dir2 = probe2.worldPosition - ownerPos.worldPosition
+                        dir2.y = 0.0
+                        if (length(dir2) < 0.001) {
+                            dir2 = FORWARD
+                        } else {
+                            dir2 = normalize(dir2)
+                        }
+                        dir2.y = 0.25
+                        dir2 = normalize(dir2)
+                        apply_rigid_body_impulse(rb, dir2 * knockbackForce)
+                        applied = true
+                        if (debugPrintHits) {
+                            print("Applied impulse to {probe2.name}")
+                        }
+                    }
+                }
+
+                if (applied) {
+                    break
+                }
+
+                probe2 = probe2.parent
+                if (probe2 == NodeId()) {
+                    break
                 }
             }
         }
+    }
+
+    def private is_descendant_of(nodeA : NodeId; nodeB : NodeId) : bool {
+        if (!nodeA.isAlive || !nodeB.isAlive) {
+            return false
+        }
+
+        var p = nodeA
+        while (p.isAlive) {
+            if (p == nodeB) {
+                return true
+            }
+            p = p.parent
+            if (p == NodeId()) {
+                break
+            }
+        }
+
+        return false
     }
 
     def private is_already_hit(target : NodeId) : bool {

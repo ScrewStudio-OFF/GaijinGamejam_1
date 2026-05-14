@@ -1,8 +1,12 @@
 require engine.core
+require engine.input.global_input_state
 require engine.math.math_utils
 require engine.sound_core
 require Project.Mechanics.Abilities.S_AbilityBase
 require Project.Mechanics.VFX.S_DashAfterImage
+require Project.Core.Player.S_Player
+require Project.Mechanics.Combat.S_PlayerCombat
+require Project.Mechanics.Combat.S_Damageable
 
 class SAbilityDash : SAbilityBase {
     @export dashSpeed : float = 20.0
@@ -11,6 +15,8 @@ class SAbilityDash : SAbilityBase {
     @export dashPriority : int = 10
 
     @export ghostInterval : float = 0.04
+    @export ghostCopiesPerSpawn : int = 2
+    @export ghostCopySpacing : float = 0.02
     @export ghostLifeTime : float = 0.16
     @export ghostTintStart : float4 = float4(0.1, 0.9, 1.0, 0.6)
     @export ghostTintEnd : float4 = float4(0.5, 0.15, 1.0, 0.05)
@@ -25,8 +31,15 @@ class SAbilityDash : SAbilityBase {
     dashDir : float3 = float3(0)
     ghostTimer : float = 0.0
     visualRoot : NodeId = NodeId()
+    firstGhostSpawned : bool = false
+    lastAnimId : AnimationId = AnimationId()
+    lastAnimProgress : float = 0.0
 
     def override on_initialize() : void {
+        if (nodeId.name == "DashGhost") {
+            return
+        }
+
         cooldownLeft = 0.0
         dashTimeLeft = 0.0
         dashDir = float3(0)
@@ -35,6 +48,10 @@ class SAbilityDash : SAbilityBase {
 
     def override collect_motion(ctx : AbilityContext) : AbilityMotionRequest {
         var req = AbilityMotionRequest()
+
+        if (nodeId.name == "DashGhost") {
+            return req
+        }
 
         if (!isAbilityEnabled) {
             return req
@@ -47,7 +64,7 @@ class SAbilityDash : SAbilityBase {
             }
         }
 
-        if (is_action_just_pressed("dash") && cooldownLeft <= 0.0 && dashTimeLeft <= 0.0) {
+        if (key_pressed(KeyCode.Space) && cooldownLeft <= 0.0 && dashTimeLeft <= 0.0) {
             dashDir = ctx.facingForward
             dashDir.y = 0.0
 
@@ -56,8 +73,8 @@ class SAbilityDash : SAbilityBase {
                 dashTimeLeft = dashDuration
                 cooldownLeft = dashCooldown
                 ghostTimer = 0.0
+                firstGhostSpawned = false
 
-                spawn_ghost()
                 play_dash_sound()
             }
         }
@@ -65,61 +82,59 @@ class SAbilityDash : SAbilityBase {
         if (dashTimeLeft > 0.0) {
             dashTimeLeft -= ctx.dt
 
-            ghostTimer -= ctx.dt
-            if (ghostTimer <= 0.0) {
-                ghostTimer = ghostInterval
-                spawn_ghost()
+            // Спавнить первый ghost со небольшой задержкой (чтобы анимация инициализировалась)
+            if (!firstGhostSpawned) {
+                firstGhostSpawned = true
+                ghostTimer = ghostInterval * 0.5
+            } else {
+                ghostTimer -= ctx.dt
+                if (ghostTimer <= 0.0) {
+                    ghostTimer = ghostInterval
+                    spawn_ghost()
+                }
             }
 
             req.addVelocity = dashDir * dashSpeed
             req.priority = dashPriority
         }
-
+        
         return req
     }
 
     def private spawn_ghost() : void {
-        visualRoot = NodeId()
-        find_visual_root(nodeId)
+        visualRoot = nodeId
 
-        if (!visualRoot.isAlive) {
-            return
+        for (copyIndex in range(ghostCopiesPerSpawn)) {
+            let copyOffset = dashDir * (ghostCopySpacing * float(copyIndex))
+
+            let ghost = duplicate_node(nodeId, NodeData(
+                name = "DashGhost",
+                position = nodeId.localPosition - copyOffset,
+                rotation = nodeId.localRotation,
+                scale = nodeId.localScale
+            ))
+
+            ghost.set_parent(nodeId.parent, AddChildStrategy.KeepWorldTransform)
+            strip_gameplay_components(ghost)
+
+            let afterImage = add_component(ghost, new SDashAfterImage(
+                lifeTime = ghostLifeTime,
+                startTint = ghostTintStart,
+                endTint = ghostTintEnd,
+                scaleBoost = ghostScaleBoost,
+                freezeAnimation = freezeGhostAnimation,
+                source = nodeId
+            ))
         }
-
-        let ghost = duplicate_node(visualRoot, NodeData(
-            name = "DashGhost",
-            position = visualRoot.localPosition,
-            rotation = visualRoot.localRotation,
-            scale = visualRoot.localScale
-        ))
-
-        ghost.set_parent(nodeId.parent, AddChildStrategy.KeepWorldTransform)
-
-        add_component(ghost, new SDashAfterImage(
-            lifeTime = ghostLifeTime,
-            startTint = ghostTintStart,
-            endTint = ghostTintEnd,
-            scaleBoost = ghostScaleBoost,
-            freezeAnimation = freezeGhostAnimation,
-            source = nodeId
-        ))
     }
 
-    def private find_visual_root(root : NodeId) : void {
-        if (visualRoot.isAlive) {
-            return
-        }
-
-        let sap = get_component(root, type<SingleAnimationPlayer>)
-        if (sap != null) {
-            visualRoot = root
-            return
-        }
-
-        var inscope children = root.get_children()
-        for (child in children) {
-            find_visual_root(child)
-        }
+    def private strip_gameplay_components(root : NodeId) : void {
+        remove_component(root, type<SPlayer>)
+        remove_component(root, type<SPlayerCombat>)
+        remove_component(root, type<SAbilityDash>)
+        remove_component(root, type<SDamageable>)
+        remove_component(root, type<RigidBody>)
+        // CharacterController may not exist, so we skip it
     }
 
     def private play_dash_sound() : void {
