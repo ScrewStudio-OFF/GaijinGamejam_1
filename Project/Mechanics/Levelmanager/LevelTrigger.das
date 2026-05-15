@@ -47,10 +47,21 @@ class LevelTrigger : Component {
 
     preservePlayerHealth : bool = true
     requireArenaCleared : bool = false
+    showEscapedOnClearedExit : bool = true
+    escapedImagePath : string = "Project/Assets/UI/Escaped.png"
+    escapedDelaySeconds : float = 2.0
+    escapedCanvasSize : float2 = float2(1920.0, 1080.0)
+    escapedImageSourceSize : float2 = float2(1920.0, 1080.0)
 
     triggerRadius : float = 3.0
 
     triggered : bool = false
+    escapedTransitionPending : bool = false
+    escapedTimer : float = 0.0
+    escapedCanvasNode : NodeId
+    escapedBlackoutNode : NodeId
+    escapedImageNode : NodeId
+    escapedLayoutSize : float2 = float2(1920.0, 1080.0)
 
     def override on_initialize() : void {
         print("=== LevelTrigger initialized ===")
@@ -78,6 +89,11 @@ class LevelTrigger : Component {
     }
 
     def override on_update() : void {
+        if ( self.escapedTransitionPending ) {
+            self->updateEscapedTransition()
+            return
+        }
+
         if ( self.triggered ) {
             return
         }
@@ -113,7 +129,11 @@ class LevelTrigger : Component {
             print("Loading level: {self.targetLevelPath}")
 
             self.triggered = true
-            self->loadTargetLevel()
+            if ( self->shouldShowEscapedTransition() ) {
+                self->startEscapedTransition()
+            } else {
+                self->loadTargetLevel()
+            }
         }
     }
 
@@ -307,6 +327,127 @@ class LevelTrigger : Component {
         add_component(uiNode, new SGameUI(playerNode = newPlayer))
 
         print("Player spawned: {newPlayer.hierarchyName}")
+    }
+
+    def shouldShowEscapedTransition() : bool {
+        return self.showEscapedOnClearedExit && self.requireArenaCleared && progress_is_arena_cleared()
+    }
+
+    def startEscapedTransition() : void {
+        self.escapedTransitionPending = true
+        self.escapedTimer = 0.0
+        self->createEscapedOverlay()
+        print("Escaped transition started")
+    }
+
+    def updateEscapedTransition() : void {
+        if ( self->refreshEscapedLayoutSize() ) {
+            self->applyEscapedOverlayLayout()
+        }
+
+        self.escapedTimer += get_delta_time()
+        if ( self.escapedTimer >= self.escapedDelaySeconds ) {
+            self.escapedTransitionPending = false
+            self->loadTargetLevel()
+        }
+    }
+
+    def createEscapedOverlay() : void {
+        if ( self.escapedCanvasNode != NodeId() && self.escapedCanvasNode.isAlive ) {
+            remove_node(self.escapedCanvasNode)
+        }
+
+        self.escapedCanvasNode = create_node(NodeData(name = "EscapedTransitionCanvas"))
+        add_component(self.escapedCanvasNode, new UIFrame(size = self.escapedCanvasSize, pivot = float2(0.0, 0.0)))
+        add_component(self.escapedCanvasNode, new UICanvas(screenMode = ScreenMode.FitExtend, size = self.escapedCanvasSize))
+        self.escapedLayoutSize = self.escapedCanvasSize
+        self->refreshEscapedLayoutSize()
+
+        self.escapedBlackoutNode = create_node(NodeData(name = "EscapedTransitionBlackout", parent = self.escapedCanvasNode))
+        add_component(self.escapedBlackoutNode, new UIFrame(size = self.escapedLayoutSize, pivot = float2(0.0, 0.0)))
+        add_component(self.escapedBlackoutNode, new UIImage(
+            color = float4(0.0, 0.0, 0.0, 1.0),
+            size = self.escapedLayoutSize,
+            pivot = float2(0.0, 0.0)
+        ))
+        self.escapedBlackoutNode?.UIFrame.localPosition2D = float2(0.0, 0.0)
+
+        self.escapedImageNode = create_node(NodeData(name = "EscapedTransitionImage", parent = self.escapedCanvasNode))
+        let coverSize = self->getEscapedCoverImageSize(self.escapedLayoutSize)
+        add_component(self.escapedImageNode, new UIFrame(size = coverSize, pivot = float2(0.5, 0.5)))
+        add_component(self.escapedImageNode, new UIImage(
+            textureId = request_texture(self.escapedImagePath),
+            color = float4(1.0, 1.0, 1.0, 1.0),
+            size = coverSize,
+            pivot = float2(0.5, 0.5)
+        ))
+        self.escapedImageNode?.UIFrame.localPosition2D = self.escapedLayoutSize * 0.5
+
+        self->applyEscapedOverlayLayout()
+    }
+
+    def refreshEscapedLayoutSize() : bool {
+        var newSize = self.escapedCanvasSize
+
+        if ( self.escapedCanvasNode != NodeId() ) {
+            get_component(self.escapedCanvasNode) $(var frame : UIFrame?) {
+                if ( frame != null && frame.size.x > 1.0 && frame.size.y > 1.0 ) {
+                    newSize = frame.size
+                }
+            }
+        }
+
+        let dx = newSize.x - self.escapedLayoutSize.x
+        let dy = newSize.y - self.escapedLayoutSize.y
+        if ( dx > 0.5 || dx < -0.5 || dy > 0.5 || dy < -0.5 ) {
+            self.escapedLayoutSize = newSize
+            return true
+        }
+
+        return false
+    }
+
+    def applyEscapedOverlayLayout() : void {
+        self->setEscapedOverlayFrame(self.escapedBlackoutNode, float2(0.0, 0.0), self.escapedLayoutSize, float2(0.0, 0.0))
+        self->setEscapedOverlayFrame(self.escapedImageNode, self.escapedLayoutSize * 0.5, self->getEscapedCoverImageSize(self.escapedLayoutSize), float2(0.5, 0.5))
+    }
+
+    def getEscapedCoverImageSize(screenSize : float2) : float2 {
+        var result = screenSize
+
+        let imageAspect = self.escapedImageSourceSize.x / self.escapedImageSourceSize.y
+        let screenAspect = screenSize.x / screenSize.y
+
+        if ( screenAspect > imageAspect ) {
+            result.x = screenSize.x
+            result.y = screenSize.x / imageAspect
+        } else {
+            result.y = screenSize.y
+            result.x = screenSize.y * imageAspect
+        }
+
+        return result
+    }
+
+    def setEscapedOverlayFrame(n : NodeId, pos : float2, size : float2, pivot : float2) : void {
+        if ( n == NodeId() ) {
+            return
+        }
+
+        get_component(n) $(var frame : UIFrame?) {
+            if ( frame != null ) {
+                frame.size = size
+                frame.pivot = pivot
+                frame.localPosition2D = pos
+            }
+        }
+
+        get_component(n) $(var image : UIImage?) {
+            if ( image != null ) {
+                image.size = size
+                image.pivot = pivot
+            }
+        }
     }
 
     def assignCameraToPlayer(playerNode : NodeId, cameraRoot : NodeId) : void {

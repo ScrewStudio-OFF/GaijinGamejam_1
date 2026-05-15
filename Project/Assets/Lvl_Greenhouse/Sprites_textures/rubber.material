@@ -1,0 +1,19 @@
+shader:t="standard_diffuse_shader"
+textures{
+it{}
+it{}
+it{}
+it{}
+it{}
+it{}
+}
+properties{
+color{
+__variant_index:i=1
+f4:p4=0.0261275, 0.0239817, 0.0264428, 1
+}
+glossiness{
+__variant_index:i=0
+f:r=0.0929648
+}
+}

@@ -1,4 +1,4 @@
-guid:t="019e24c1-7591-7c03-80fd-941ebde3552c"
+guid:t="019e28fb-e659-7949-ba4b-02c2696e33ae"
 assetType:i=3
 sceneScale:r=1
 findInstances:b=no
@@ -20,8 +20,13 @@ importAnimations:b=yes
 animationKeyframeReduction:b=yes
 animationKeyframeReductionTolerance:r=0.001
 }
-materialRemap{}
+materialRemap{
+Metall{
+guid:t="019e1df4-8b6b-7572-9487-0454e1f56023"
+type:i=3
+}
+}
 physicsShapeImport{
 defaultAlgorithm:t="Disabled"
-overrideAlgorithm{}
+overrideAlgorithm{Hall_Collider:t="TriangleMesh";}
 }

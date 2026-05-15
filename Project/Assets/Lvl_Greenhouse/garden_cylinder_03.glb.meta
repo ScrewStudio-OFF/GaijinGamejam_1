@@ -1,4 +1,4 @@
-guid:t="019e24c1-7590-7afc-8d28-668f0062f604"
+guid:t="019e28fb-e656-74b4-a3a5-4784007588f4"
 assetType:i=3
 sceneScale:r=1
 findInstances:b=no
@@ -20,7 +20,16 @@ importAnimations:b=yes
 animationKeyframeReduction:b=yes
 animationKeyframeReductionTolerance:r=0.001
 }
-materialRemap{}
+materialRemap{
+plant_01.001{
+guid:t="019e28fe-a6aa-7e11-8d55-e49262b11d39"
+type:i=3
+}
+Metall.002{
+guid:t="019e2903-8f9d-7968-9451-cbe54d887f60"
+type:i=3
+}
+}
 physicsShapeImport{
 defaultAlgorithm:t="Disabled"
 overrideAlgorithm{}

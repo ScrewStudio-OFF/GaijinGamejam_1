@@ -1,4 +1,5 @@
 require engine.core
+require engine.input_core
 require engine.sound_core
 require engine.math.math_utils
 require Project.Core.Player.S_Player
@@ -58,6 +59,11 @@ class SMainMenu : Component {
     musicValueNode : NodeId
     musicMinusButtonNode : NodeId
     musicPlusButtonNode : NodeId
+    musicSliderTrackNode : NodeId
+    musicSliderFillNode : NodeId
+    musicSliderKnobNode : NodeId
+    tipsToggleButtonNode : NodeId
+    tipsValueNode : NodeId
 
     menuMusicHandle : SoundHandle = INVALID_SOUND_HANDLE
     currentMusicVolume : float = 0.65
@@ -65,6 +71,8 @@ class SMainMenu : Component {
     settingsShown : bool = false
     loadingStarted : bool = false
     musicStarted : bool = false
+    volumeSliderDragging : bool = false
+    previousMouseDown : bool = false
 
     def override on_initialize() : void {
         reset_hub_intro_once_flag()
@@ -90,6 +98,8 @@ class SMainMenu : Component {
             musicStarted = true
             self->play_menu_music()
         }
+
+        self->update_volume_slider_drag()
     }
 
     def override on_destroy() : void {
@@ -196,9 +206,9 @@ class SMainMenu : Component {
             pivot = float2(0.0, 0.0)
         ))
 
-        startButtonNode = self->create_image_button_node("StartButton", startButtonTexturePath, menuRootNode, float2(1580.0, 390.0), float2(410.0, 155.0))
-        settingsButtonNode = self->create_image_button_node("SettingsButton", optionsButtonTexturePath, menuRootNode, float2(1580.0, 555.0), float2(410.0, 155.0))
-        exitButtonNode = self->create_image_button_node("ExitButton", exitButtonTexturePath, menuRootNode, float2(1580.0, 720.0), float2(410.0, 155.0))
+        startButtonNode = self->create_image_button_node("StartButton", startButtonTexturePath, menuRootNode, float2(1680.0, 390.0), float2(410.0, 155.0))
+        settingsButtonNode = self->create_image_button_node("SettingsButton", optionsButtonTexturePath, menuRootNode, float2(1680.0, 555.0), float2(410.0, 155.0))
+        exitButtonNode = self->create_image_button_node("ExitButton", exitButtonTexturePath, menuRootNode, float2(1680.0, 720.0), float2(410.0, 155.0))
 
         self->create_settings_panel()
     }
@@ -206,7 +216,6 @@ class SMainMenu : Component {
     def private create_image_button_node(name : string, texturePath : string, parentNode : NodeId, pos : float2, size : float2) : NodeId {
         let n = create_node(NodeData(name = name, parent = parentNode))
         add_component(n, new UIFrame(size = size, pivot = float2(0.5, 0.5)))
-        n?.UIFrame.localPosition2D = pos
 
         add_component(n, new UIImage(
             textureId = request_texture(texturePath),
@@ -215,6 +224,9 @@ class SMainMenu : Component {
             pivot = float2(0.5, 0.5)
         ))
         add_component(n, new UIButton())
+        n?.UIFrame.size = size
+        n?.UIFrame.pivot = float2(0.5, 0.5)
+        n?.UIFrame.localPosition2D = pos
 
         return n
     }
@@ -222,7 +234,6 @@ class SMainMenu : Component {
     def private create_button_node(name : string, buttonText : string, parentNode : NodeId, pos : float2, size : float2) : NodeId {
         let n = create_node(NodeData(name = name, parent = parentNode))
         add_component(n, new UIFrame(size = size, pivot = float2(0.5, 0.5)))
-        n?.UIFrame.localPosition2D = pos
 
         add_component(n, new UIImage(
             color = float4(0.03, 0.08, 0.11, 0.92),
@@ -239,7 +250,44 @@ class SMainMenu : Component {
             horAlignment = TextHorAlignment.Center,
             vertAlignment = TextVertAlignment.Middle
         ))
+        n?.UIFrame.size = size
+        n?.UIFrame.pivot = float2(0.5, 0.5)
+        n?.UIFrame.localPosition2D = pos
 
+        return n
+    }
+
+    def private create_text_node(name : string, textValue : string, parentNode : NodeId, pos : float2, size : float2, fontSize : float, color : float4) : NodeId {
+        let n = create_node(NodeData(name = name, parent = parentNode))
+        add_component(n, new UIFrame(size = size, pivot = float2(0.5, 0.5)))
+        add_component(n, new UIText(
+            text = textValue,
+            color = color,
+            fontSize = fontSize,
+            fontScaling = false,
+            autoResizeFrame = false,
+            wordWrapping = false,
+            pivot = float2(0.5, 0.5),
+            horAlignment = TextHorAlignment.Center,
+            vertAlignment = TextVertAlignment.Middle
+        ))
+        n?.UIFrame.size = size
+        n?.UIFrame.pivot = float2(0.5, 0.5)
+        n?.UIFrame.localPosition2D = pos
+        return n
+    }
+
+    def private create_solid_node(name : string, parentNode : NodeId, pos : float2, size : float2, pivot : float2, color : float4) : NodeId {
+        let n = create_node(NodeData(name = name, parent = parentNode))
+        add_component(n, new UIFrame(size = size, pivot = pivot))
+        add_component(n, new UIImage(
+            color = color,
+            size = size,
+            pivot = pivot
+        ))
+        n?.UIFrame.size = size
+        n?.UIFrame.pivot = pivot
+        n?.UIFrame.localPosition2D = pos
         return n
     }
 
@@ -283,48 +331,41 @@ class SMainMenu : Component {
                 }
             }
         }
+
+        get_component(tipsToggleButtonNode) $(var btn : UIButton?) {
+            if ( btn != null ) {
+                btn.onClick = @() {
+                    self->toggle_tips_on_start()
+                }
+            }
+        }
     }
 
     def private create_settings_panel() : void {
         settingsPanelNode = create_node(NodeData(name = "SettingsPanel", parent = menuRootNode))
-        add_component(settingsPanelNode, new UIFrame(size = float2(440.0, 170.0), pivot = float2(0.5, 0.0)))
-        settingsPanelNode?.UIFrame.localPosition2D = float2(1580.0, 820.0)
+        add_component(settingsPanelNode, new UIFrame(size = float2(500.0, 260.0), pivot = float2(0.5, 0.0)))
+        settingsPanelNode?.UIFrame.localPosition2D = float2(1680.0, 800.0)
 
         add_component(settingsPanelNode, new UIImage(
             color = float4(0.04, 0.06, 0.075, 0.92),
-            size = float2(440.0, 170.0),
+            size = float2(500.0, 260.0),
             pivot = float2(0.5, 0.0)
         ))
 
-        let labelNode = create_node(NodeData(name = "MusicLabel", parent = settingsPanelNode))
-        add_component(labelNode, new UIText(
-            text = "Music Volume",
-            color = float4(0.9, 0.96, 1.0, 1.0),
-            fontSize = 24.0,
-            wordWrapping = false,
-            pivot = float2(0.5, 0.5),
-            horAlignment = TextHorAlignment.Center,
-            vertAlignment = TextVertAlignment.Middle
-        ))
-        labelNode?.UIFrame.localPosition2D = float2(0.0, 38.0)
-        labelNode?.UIFrame.size = float2(360.0, 42.0)
+        self->create_text_node("MusicLabel", "MUSIC VOLUME", settingsPanelNode, float2(0.0, 34.0), float2(360.0, 34.0), 23.0, float4(0.9, 0.96, 1.0, 1.0))
 
-        musicMinusButtonNode = self->create_button_node("MusicMinusButton", "-", settingsPanelNode, float2(-132.0, 104.0), float2(64.0, 58.0))
+        musicMinusButtonNode = self->create_button_node("MusicMinusButton", "-", settingsPanelNode, float2(-205.0, 88.0), float2(48.0, 48.0))
+        musicPlusButtonNode = self->create_button_node("MusicPlusButton", "+", settingsPanelNode, float2(205.0, 88.0), float2(48.0, 48.0))
 
-        musicValueNode = create_node(NodeData(name = "MusicValueText", parent = settingsPanelNode))
-        add_component(musicValueNode, new UIText(
-            text = "",
-            color = float4(0.95, 0.98, 1.0, 1.0),
-            fontSize = 26.0,
-            wordWrapping = false,
-            pivot = float2(0.5, 0.5),
-            horAlignment = TextHorAlignment.Center,
-            vertAlignment = TextVertAlignment.Middle
-        ))
-        musicValueNode?.UIFrame.localPosition2D = float2(0.0, 104.0)
-        musicValueNode?.UIFrame.size = float2(150.0, 58.0)
+        musicSliderTrackNode = self->create_solid_node("MusicSliderTrack", settingsPanelNode, float2(0.0, 88.0), float2(300.0, 12.0), float2(0.5, 0.5), float4(0.22, 0.26, 0.29, 1.0))
+        musicSliderFillNode = self->create_solid_node("MusicSliderFill", settingsPanelNode, float2(-150.0, 88.0), float2(195.0, 12.0), float2(0.0, 0.5), float4(0.47, 0.74, 0.80, 1.0))
+        musicSliderKnobNode = self->create_solid_node("MusicSliderKnob", settingsPanelNode, float2(45.0, 88.0), float2(22.0, 38.0), float2(0.5, 0.5), float4(0.94, 0.98, 1.0, 1.0))
 
-        musicPlusButtonNode = self->create_button_node("MusicPlusButton", "+", settingsPanelNode, float2(132.0, 104.0), float2(64.0, 58.0))
+        musicValueNode = self->create_text_node("MusicValueText", "", settingsPanelNode, float2(0.0, 128.0), float2(160.0, 36.0), 24.0, float4(0.95, 0.98, 1.0, 1.0))
+
+        self->create_text_node("TipsLabel", "SHOW TIPS", settingsPanelNode, float2(-70.0, 185.0), float2(190.0, 38.0), 22.0, float4(0.9, 0.96, 1.0, 1.0))
+        tipsToggleButtonNode = self->create_button_node("TipsToggleButton", "", settingsPanelNode, float2(150.0, 185.0), float2(150.0, 50.0))
+        tipsValueNode = self->create_text_node("TipsToggleText", "", tipsToggleButtonNode, float2(0.0, 0.0), float2(130.0, 34.0), 22.0, float4(0.95, 0.98, 1.0, 1.0))
 
         settingsPanelNode.isActive = false
     }
@@ -363,7 +404,11 @@ class SMainMenu : Component {
     }
 
     def private change_music_volume(delta : float) : void {
-        currentMusicVolume = clamp(currentMusicVolume + delta, 0.0, 1.0)
+        self->set_music_volume(currentMusicVolume + delta)
+    }
+
+    def private set_music_volume(value : float) : void {
+        currentMusicVolume = clamp(value, 0.0, 1.0)
         menuMusicVolume = currentMusicVolume
 
         if ( menuMusicHandle != INVALID_SOUND_HANDLE && is_playing(menuMusicHandle) ) {
@@ -373,9 +418,22 @@ class SMainMenu : Component {
         self->refresh_settings_text()
     }
 
+    def private toggle_tips_on_start() : void {
+        tipsOnStart = !tipsOnStart
+        menuTipsOnStart = tipsOnStart
+        self->refresh_settings_text()
+    }
+
     def private refresh_settings_text() : void {
         let volPercent = int(currentMusicVolume * 100.0 + 0.5)
         self->set_text(musicValueNode, "{volPercent}%")
+        self->set_text(tipsValueNode, (tipsOnStart ? "ON" : "OFF"))
+
+        let trackWidth = 300.0
+        let fillWidth = trackWidth * currentMusicVolume
+
+        self->set_node_size(musicSliderFillNode, float2(fillWidth, 12.0))
+        self->set_node_pos(musicSliderKnobNode, float2(-150.0 + fillWidth, 88.0))
     }
 
     def private set_text(textNode : NodeId, value : string) : void {
@@ -388,6 +446,85 @@ class SMainMenu : Component {
                 text.text = value
             }
         }
+    }
+
+    def private set_node_pos(n : NodeId, pos : float2) : void {
+        if ( n == NodeId() ) {
+            return
+        }
+
+        get_component(n) $(var frame : UIFrame?) {
+            if ( frame != null ) {
+                frame.localPosition2D = pos
+            }
+        }
+    }
+
+    def private set_node_size(n : NodeId, size : float2) : void {
+        if ( n == NodeId() ) {
+            return
+        }
+
+        get_component(n) $(var frame : UIFrame?) {
+            if ( frame != null ) {
+                frame.size = size
+            }
+        }
+
+        get_component(n) $(var image : UIImage?) {
+            if ( image != null ) {
+                image.size = size
+            }
+        }
+    }
+
+    def private get_frame_pos(n : NodeId) : float2 {
+        var result = float2(0.0, 0.0)
+
+        get_component(n) $(var frame : UIFrame?) {
+            if ( frame != null ) {
+                result = frame.localPosition2D
+            }
+        }
+
+        return result
+    }
+
+    def private update_volume_slider_drag() : void {
+        if ( !settingsShown || musicSliderTrackNode == NodeId() ) {
+            volumeSliderDragging = false
+            previousMouseDown = false
+            return
+        }
+
+        let mouseDown = is_any_mouse_button_pressed()
+        if ( !mouseDown ) {
+            volumeSliderDragging = false
+            previousMouseDown = false
+            return
+        }
+
+        let uiMouse = get_ui_mouse_position(musicSliderTrackNode)
+        let mouseCanvas = float2(uiMouse.x + canvasSize.x * 0.5, uiMouse.y + canvasSize.y * 0.5)
+        let panelPos = self->get_frame_pos(settingsPanelNode)
+        let trackLocalPos = self->get_frame_pos(musicSliderTrackNode)
+        let trackCenter = float2(panelPos.x + trackLocalPos.x, panelPos.y + trackLocalPos.y)
+        let trackWidth = 300.0
+        let halfWidth = trackWidth * 0.5
+        let halfHeight = 28.0
+
+        let inside = mouseCanvas.x >= trackCenter.x - halfWidth && mouseCanvas.x <= trackCenter.x + halfWidth && mouseCanvas.y >= trackCenter.y - halfHeight && mouseCanvas.y <= trackCenter.y + halfHeight
+
+        if ( !previousMouseDown ) {
+            volumeSliderDragging = inside
+        }
+
+        if ( volumeSliderDragging ) {
+            let volume = clamp((mouseCanvas.x - (trackCenter.x - halfWidth)) / trackWidth, 0.0, 1.0)
+            self->set_music_volume(volume)
+        }
+
+        previousMouseDown = mouseDown
     }
 
     def private on_exit_clicked() : void {

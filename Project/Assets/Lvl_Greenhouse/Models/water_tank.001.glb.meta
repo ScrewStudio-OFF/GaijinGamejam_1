@@ -1,4 +1,4 @@
-guid:t="019e24c1-7593-7f62-bf76-39110368971a"
+guid:t="019e28fb-e65b-7f2c-95d0-571bbce15f4e"
 assetType:i=3
 sceneScale:r=1
 findInstances:b=no
@@ -20,7 +20,20 @@ importAnimations:b=yes
 animationKeyframeReduction:b=yes
 animationKeyframeReductionTolerance:r=0.001
 }
-materialRemap{}
+materialRemap{
+Metall{
+guid:t="019e127c-c6eb-7c51-8674-d2990bd3c7b3"
+type:i=3
+}
+rubber{
+guid:t="019e28ff-0446-7bde-b7c2-f21603d69d9e"
+type:i=3
+}
+emission{
+guid:t="019e128e-2dd3-75bb-abc8-511cf734d722"
+type:i=3
+}
+}
 physicsShapeImport{
 defaultAlgorithm:t="Disabled"
 overrideAlgorithm{}

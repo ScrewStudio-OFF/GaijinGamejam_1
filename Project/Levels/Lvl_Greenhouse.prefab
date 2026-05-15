@@ -1,6 +1,17 @@
 node{
 name:t="Lvl_Greenhouse"
 uid:i=1835323674
+SGreenHouseInstancePrefabs{
+prefabFolder:t="Project/Assets/Lvl_Greenhouse"
+playerName:t="P_Player"
+markerSuffix:t="_EMPTY"
+numberedMarkerSeparator:t="."
+spawnedNodePrefix:t="GHSpawned_"
+spawnWhenPlayerAppears:b=yes
+useNumberedNodesAsMarkers:b=yes
+cleanupPreviousSpawnedNodes:b=yes
+removeMarkersAfterSpawn:b=yes
+}
 }
 node{
 name:t="greenhouse"
