@@ -1,0 +1,23 @@
+node{
+name:t="Box3"
+uid:i=1
+pos:p3=-10.1277, 0.295128, 5.96938
+scl:p3=0.1, 0.1, 0.1
+Mesh{
+__meshId:i64=-924790254402789976
+__materialId:i64=6675220586425828193
+visibility:i=2047
+isStatic:b=no
+}
+}
+res{
+guid:t="019e2bcc-3538-74b6-9b35-57bd0a2f7b09"
+id:t="Box3"
+type:i=1
+refId:i64=-924790254402789976
+}
+res{
+guid:t="019e2bb7-dddd-78cb-8c90-ee3d6f3142c6"
+type:i=3
+refId:i64=6675220586425828193
+}

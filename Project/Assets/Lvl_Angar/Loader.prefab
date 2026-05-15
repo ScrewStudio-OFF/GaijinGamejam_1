@@ -1,0 +1,24 @@
+node{
+name:t="Loader"
+uid:i=1
+pos:p3=-6.66133, 0.857237, -4.43016
+rot:p4=0, 0.950377, 0, -0.311101
+scl:p3=0.131636, 0.131636, 0.131636
+Mesh{
+__meshId:i64=-6966422317634437599
+__materialId:i64=2940001109648163595
+visibility:i=2047
+isStatic:b=no
+}
+}
+res{
+guid:t="019e2bb1-1263-7688-a921-5b61c4b16e82"
+id:t="Loader"
+type:i=1
+refId:i64=-6966422317634437599
+}
+res{
+guid:t="019e2bb8-6ddf-7057-a801-be2f012cd70a"
+type:i=3
+refId:i64=2940001109648163595
+}

@@ -1,0 +1,24 @@
+node{
+name:t="Container"
+uid:i=1
+pos:p3=-3.4734, 1.35461, 10.0648
+rot:p4=0, 0.0116807, 0, 0.999932
+scl:p3=0.1, 0.1, 0.1
+Mesh{
+__meshId:i64=1997129260278299287
+__materialId:i64=2940001109648163595
+visibility:i=2047
+isStatic:b=no
+}
+}
+res{
+guid:t="019e2bb1-125f-7321-9c9e-ed84cb14bc67"
+id:t="Container"
+type:i=1
+refId:i64=1997129260278299287
+}
+res{
+guid:t="019e2bb8-6ddf-7057-a801-be2f012cd70a"
+type:i=3
+refId:i64=2940001109648163595
+}

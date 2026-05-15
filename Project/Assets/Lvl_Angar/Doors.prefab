@@ -1,0 +1,23 @@
+node{
+name:t="Doors"
+uid:i=1
+pos:p3=-0, 1.78023, -20.0419
+scl:p3=0.1, 0.1, 0.1
+Mesh{
+__meshId:i64=-7815428214327774763
+__materialId:i64=690276726860280966
+visibility:i=2047
+isStatic:b=no
+}
+}
+res{
+guid:t="019e2bb1-1261-7a82-92e4-9a278572f1de"
+id:t="Doors"
+type:i=1
+refId:i64=-7815428214327774763
+}
+res{
+guid:t="019e2bb9-3fa5-7e5b-a413-95985213a9df"
+type:i=3
+refId:i64=690276726860280966
+}

@@ -1,0 +1,23 @@
+node{
+name:t="Barrel"
+uid:i=1
+pos:p3=-11.3427, 0.675266, -1.47462
+scl:p3=0.1, 0.1, 0.1
+Mesh{
+__meshId:i64=-6680511319684320326
+__materialId:i64=6675220586425828193
+visibility:i=2047
+isStatic:b=no
+}
+}
+res{
+guid:t="019e2bb1-125e-70cd-99b1-dcae5d1d8762"
+id:t="Barrel"
+type:i=1
+refId:i64=-6680511319684320326
+}
+res{
+guid:t="019e2bb7-dddd-78cb-8c90-ee3d6f3142c6"
+type:i=3
+refId:i64=6675220586425828193
+}

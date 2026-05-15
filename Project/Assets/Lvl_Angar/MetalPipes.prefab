@@ -1,0 +1,24 @@
+node{
+name:t="MetalPipes"
+uid:i=1
+pos:p3=4.07909, 0.782151, 0.192532
+rot:p4=0, 0.989355, 0, -0.145522
+scl:p3=0.1, 0.1, 0.1
+Mesh{
+__meshId:i64=4273510784764614512
+__materialId:i64=6675220586425828193
+visibility:i=2047
+isStatic:b=no
+}
+}
+res{
+guid:t="019e2bb1-1264-751d-9894-017974a1785a"
+id:t="MetalPipes.006"
+type:i=1
+refId:i64=4273510784764614512
+}
+res{
+guid:t="019e2bb7-dddd-78cb-8c90-ee3d6f3142c6"
+type:i=3
+refId:i64=6675220586425828193
+}

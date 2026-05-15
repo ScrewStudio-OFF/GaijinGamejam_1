@@ -1,0 +1,23 @@
+node{
+name:t="Shelf"
+uid:i=1
+pos:p3=-5.93139, 1.94947, -17.6093
+scl:p3=0.1, 0.1, 0.1
+Mesh{
+__meshId:i64=-2737042340092092048
+__materialId:i64=6675220586425828193
+visibility:i=2047
+isStatic:b=no
+}
+}
+res{
+guid:t="019e2bb1-1266-702c-8ee9-5797fc19749c"
+id:t="Shelf.002"
+type:i=1
+refId:i64=-2737042340092092048
+}
+res{
+guid:t="019e2bb7-dddd-78cb-8c90-ee3d6f3142c6"
+type:i=3
+refId:i64=6675220586425828193
+}
