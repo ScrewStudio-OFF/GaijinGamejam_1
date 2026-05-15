@@ -34,9 +34,8 @@ guid:t="019e2bb5-d28f-7ec2-939b-3c5fa8f734ee"
 type:i=2
 }
 metalness{
-__variant_index:i=5
-guid:t="019e2bb5-d290-7bc4-8f5c-afa54c788b27"
-type:i=2
+__variant_index:i=0
+f:r=0
 }
 roughness{
 __variant_index:i=5
