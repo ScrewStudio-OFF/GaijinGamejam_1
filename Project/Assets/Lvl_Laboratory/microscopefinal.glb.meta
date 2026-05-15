@@ -20,7 +20,12 @@ importAnimations:b=yes
 animationKeyframeReduction:b=yes
 animationKeyframeReductionTolerance:r=0.001
 }
-materialRemap{}
+materialRemap{
+DefaultMaterial{
+guid:t="019e2c7a-7024-7f15-afc6-869143d3e2d4"
+type:i=3
+}
+}
 physicsShapeImport{
 defaultAlgorithm:t="Disabled"
 overrideAlgorithm{}

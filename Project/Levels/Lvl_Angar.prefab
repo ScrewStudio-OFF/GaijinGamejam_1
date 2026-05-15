@@ -279,6 +279,12 @@ visibility:i=2047
 isStatic:b=no
 }
 }
+node{
+name:t="End"
+uid:i=-2089857655
+parent:i=-1227679245
+pos:p3=0.2277, 1.3291, 19.3321
+}
 res{
 guid:t="019e2bc2-9ddf-7db2-a901-7d4cbf411841"
 id:t="Angar_Collider"

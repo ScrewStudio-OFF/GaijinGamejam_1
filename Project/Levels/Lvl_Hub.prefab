@@ -267,12 +267,143 @@ name:t="P_UpgradePad"
 uid:i=-1085239541
 prefab:i64=1534396013376246799
 parent:i=-825133966
-pos:p3=-4.85021, 4.67416, -6.49895
+pos:p3=-1.5259, 4.6742, 6.7515
+rot:p4=0, -0.707107, 0, 0.707107
 }
 res{
 guid:t="019e27a1-34af-7ae7-a78e-801e86ba675b"
 type:i=12
 refId:i64=1534396013376246799
+}
+node{
+name:t="ElectricCoil"
+uid:i=-1668826473
+prefab:i64=9177536358355071359
+parent:i=-825133966
+pos:p3=-1.9386, 5.7692, -3.4539
+rot:p4=-0.180086, -0.180086, 0.68379, 0.68379
+scl:p3=0.1, 0.1, 0.1
+}
+res{
+guid:t="019e2bc0-8712-7f1a-b864-f279108b95d6"
+type:i=12
+refId:i64=9177536358355071359
+}
+node{
+name:t="Doors"
+uid:i=1711711028
+prefab:i64=6703192042464409115
+parent:i=-825133966
+pos:p3=-4.0274, 6.8128, -8.0052
+scl:p3=0.1, 0.1, 0.1
+}
+res{
+guid:t="019e2bc0-7f94-7303-a2a5-31f9add23f1b"
+type:i=12
+refId:i64=6703192042464409115
+}
+node{
+name:t="Box4"
+uid:i=-2006699540
+prefab:i64=4244634917731325309
+parent:i=-825133966
+pos:p3=-7.1466, 5.1316, -3.7732
+scl:p3=0.1, 0.1, 0.1
+}
+res{
+guid:t="019e2bcc-b749-7d12-baf3-69f738afa1f3"
+type:i=12
+refId:i64=4244634917731325309
+}
+node{
+name:t="Box3"
+uid:i=2040775815
+prefab:i64=4468890424357226946
+parent:i=-825133966
+pos:p3=-6.2336, 4.9953, -3.837
+scl:p3=0.1, 0.1, 0.1
+}
+res{
+guid:t="019e2bcc-af69-79ae-87e6-e27ceb4d717c"
+type:i=12
+refId:i64=4468890424357226946
+}
+node{
+name:t="spot_light"
+uid:i=1355513750
+parent:i=-825133966
+pos:p3=-5.1471, 12.4484, 5.5565
+rot:p4=0.707107, 0, 0, 0.707107
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=10
+color:p3=1, 0.338983, 0.338983
+radius:r=45
+angle:r=1.04883
+attenuation:r=0.5
+}
+}
+node{
+name:t="spot_light"
+uid:i=-1792318295
+parent:i=-825133966
+pos:p3=-5.1471, 12.4484, -7.5514
+rot:p4=0.707107, 0, 0, 0.707107
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=10
+color:p3=1, 0.338983, 0.338983
+radius:r=45
+angle:r=1.04883
+attenuation:r=0.5
+}
+}
+node{
+name:t="spot_light"
+uid:i=1557489125
+parent:i=-825133966
+pos:p3=-3.2487, 10.3079, -0.8455
+rot:p4=0.653282, 0.270598, 0.270599, 0.65328
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=10
+color:p3=1, 0.338983, 0.338983
+radius:r=45
+angle:r=1.04883
+attenuation:r=0.5
+}
+}
+node{
+name:t="Barrel"
+uid:i=-1668126378
+prefab:i64=-4154822702444824529
+parent:i=-825133966
+pos:p3=-3.7292, 5.521, -3.3205
+scl:p3=0.1, 0.1, 0.1
+}
+res{
+guid:t="019e2bc0-5b64-7597-901b-7bc7d9f3bb17"
+type:i=12
+refId:i64=-4154822702444824529
+}
+node{
+name:t="Barrel"
+uid:i=-1295616832
+prefab:i64=-4154822702444824529
+parent:i=-825133966
+pos:p3=-2.7903, 5.521, -3.1673
+scl:p3=0.1, 0.1, 0.1
+}
+node{
+name:t="Barrel"
+uid:i=-1589592045
+prefab:i64=-4154822702444824529
+parent:i=-825133966
+pos:p3=-3.5585, 5.521, -2.206
+scl:p3=0.1, 0.1, 0.1
 }
 internalRef{
 ref:i=-1146581833

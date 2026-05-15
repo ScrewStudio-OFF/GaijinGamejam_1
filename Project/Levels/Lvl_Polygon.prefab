@@ -1,0 +1,564 @@
+node{
+name:t="Lvl_Polygon"
+uid:i=638652238
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=-2.68096, 0.952942, 7.85401
+rotation:p4=0, 0.707107, 0, 0.707107
+params:p3=0.1, 0.1, 0.1
+__mesh:i64=3937630670218459911
+}
+}
+}
+}
+node{
+name:t="Polygon"
+uid:i=1965918630
+prefab:i64=-1899904039547369648
+parent:i=638652238
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+type:i=12
+refId:i64=-1899904039547369648
+}
+node{
+name:t="Doors"
+uid:i=-1050366647
+prefab:i64=2057303031241483928
+parent:i=638652238
+pos:p3=-0.0075, 2, 24.5276
+scl:p3=0.1, 0.1, 0.1
+}
+res{
+guid:t="019e2bb1-1261-7a82-92e4-9a278572f1de"
+type:i=12
+refId:i64=2057303031241483928
+}
+node{
+name:t="Doors"
+uid:i=-2027849194
+prefab:i64=2057303031241483928
+parent:i=638652238
+pos:p3=-3.50726, 2, -15.4006
+scl:p3=0.1, 0.1, 0.1
+}
+node{
+name:t="Door"
+uid:i=-1049363996
+prefab:i64=7853566160102372390
+parent:i=638652238
+pos:p3=-4.8892, 1, 25.4649
+rot:p4=0, -0.707107, 0, 0.707107
+}
+res{
+guid:t="019e129d-3037-74dc-b808-be90b90b530f"
+type:i=12
+refId:i64=7853566160102372390
+}
+node{
+name:t="Door"
+uid:i=1370644813
+prefab:i64=7853566160102372390
+parent:i=638652238
+pos:p3=0.8865, 1, -16.2317
+rot:p4=0, 0.707107, 0, 0.707107
+}
+node{
+name:t="PlayerSpawn"
+uid:i=180945477
+parent:i=638652238
+pos:p3=-4.9518, 1.8108, 23.0858
+}
+node{
+name:t="End"
+uid:i=952319100
+parent:i=638652238
+pos:p3=0, 0.6965, -14.3216
+}
+node{
+name:t="directional_light"
+uid:i=2137713045
+parent:i=638652238
+pos:p3=-0.694445, 9.12871, -6.77437
+DirectionLight{
+color:p3=1, 0.96, 0.92
+intensity:r=0
+castShadows:b=yes
+}
+}
+node{
+name:t="spot_light"
+uid:i=181068296
+parent:i=638652238
+pos:p3=0.1388, 16.7774, -0.0953
+rot:p4=0.707107, 0, 0, 0.707107
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=100
+color:p3=1, 1, 1
+radius:r=30.36
+angle:r=1.04883
+attenuation:r=0.5
+}
+}
+node{
+name:t="spot_light"
+uid:i=120115051
+parent:i=638652238
+pos:p3=-1.7898, 16.7774, 20.8521
+rot:p4=0.707107, 0, 0, 0.707107
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=100
+color:p3=1, 1, 1
+radius:r=30.36
+angle:r=1.04883
+attenuation:r=0.5
+}
+}
+node{
+name:t="spot_light"
+uid:i=902060763
+parent:i=638652238
+pos:p3=-1.7898, 10.2193, -13.3782
+rot:p4=0.707107, 0, 0, 0.707107
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=100
+color:p3=1, 1, 1
+radius:r=30.36
+angle:r=1.04883
+attenuation:r=0.5
+}
+}
+res{
+guid:t="019e2c4b-bd87-70f3-948f-3d0e21d0eb92"
+id:t="Polygon_Collider"
+type:i=13
+refId:i64=3937630670218459911
+}
+instance{
+root:i=1965918630
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=-1381313317435071803
+}
+}
+}
+}
+}
+node{
+uid:i=3
+Mesh{isStatic:b=yes;}
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=7.07805e-07, -0.48413, 9.86457e-06
+rotation:p4=0, 0, 0, 1
+params:p3=1, 1, 1
+__mesh:i64=-2057462384563624531
+}
+}
+}
+}
+}
+node{
+uid:i=4
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=5
+Mesh{isStatic:b=yes;}
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=-34230922577588829
+}
+}
+}
+}
+}
+node{
+uid:i=6
+Mesh{isStatic:b=yes;}
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=6871069518199266065
+}
+}
+}
+}
+}
+node{
+uid:i=7
+Mesh{isStatic:b=yes;}
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=7610879162341683440
+}
+}
+}
+}
+}
+node{
+uid:i=8
+Mesh{isStatic:b=yes;}
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=-4057564070736502194
+}
+}
+}
+}
+}
+node{
+uid:i=9
+Mesh{isStatic:b=yes;}
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=-8375623323478113441
+}
+}
+}
+}
+}
+node{
+uid:i=10
+Mesh{isStatic:b=yes;}
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=4116723655255362240
+}
+}
+}
+}
+}
+node{
+uid:i=11
+Mesh{isStatic:b=yes;}
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=3117069754719971996
+}
+}
+}
+}
+}
+node{
+uid:i=12
+Mesh{isStatic:b=yes;}
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=-747924708396256527
+}
+}
+}
+}
+}
+node{
+uid:i=13
+Mesh{isStatic:b=yes;}
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=7290039683601313754
+}
+}
+}
+}
+}
+node{
+uid:i=14
+Mesh{isStatic:b=yes;}
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=4003065573873218564
+}
+}
+}
+}
+}
+node{
+uid:i=15
+Mesh{isStatic:b=yes;}
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=-783828367325372296
+}
+}
+}
+}
+}
+node{
+uid:i=16
+Mesh{isStatic:b=yes;}
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=-7454602998915314153
+}
+}
+}
+}
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+id:t="Bunker"
+type:i=13
+refId:i64=-1381313317435071803
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+id:t="Gate"
+type:i=13
+refId:i64=-2057462384563624531
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+id:t="Wall1"
+type:i=13
+refId:i64=-34230922577588829
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+id:t="Pipes"
+type:i=13
+refId:i64=6871069518199266065
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+id:t="Turret"
+type:i=13
+refId:i64=7610879162341683440
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+id:t="Saw"
+type:i=13
+refId:i64=-4057564070736502194
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+id:t="Wall3"
+type:i=13
+refId:i64=-8375623323478113441
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+id:t="Wall2"
+type:i=13
+refId:i64=4116723655255362240
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+id:t="Column.001"
+type:i=13
+refId:i64=3117069754719971996
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+id:t="Center"
+type:i=13
+refId:i64=-747924708396256527
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+id:t="WeaponWall"
+type:i=13
+refId:i64=7290039683601313754
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+id:t="Conditioner"
+type:i=13
+refId:i64=4003065573873218564
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+id:t="Column.002"
+type:i=13
+refId:i64=-783828367325372296
+}
+res{
+guid:t="019e2c4b-bd85-795b-9059-fa01fd6cc9d1"
+id:t="WeaponWall.001"
+type:i=13
+refId:i64=-7454602998915314153
+}
+}
+instance{
+root:i=-1049363996
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=4
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=6
+Mesh{isStatic:b=yes;}
+}
+}
+instance{
+root:i=1370644813
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=4
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=6
+Mesh{isStatic:b=yes;}
+}
+}

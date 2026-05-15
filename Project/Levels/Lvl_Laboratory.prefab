@@ -1,30 +1,152 @@
 node{
 name:t="Lvl_Laboratory"
 uid:i=-409248843
+SLaboratoryInstancePrefabs{
+prefabFolder:t="Project/Assets/Lvl_Laboratory"
+prefabExtension:t=".glb"
+playerName:t="P_Player"
+markerRootNodeName:t="Labbase"
+markerSuffix:t="_EMPTY"
+numberedMarkerSeparator:t="."
+spawnedNodePrefix:t="LabSpawned_"
+spawnWhenPlayerAppears:b=yes
+useNumberedNodesAsMarkers:b=yes
+useExactPrefabNamesAsMarkers:b=yes
+scanOnlyMarkerRoot:b=yes
+cleanupPreviousSpawnedNodes:b=yes
+removeMarkersAfterSpawn:b=yes
+spawnScaleMultiplier:r=1
+}
 }
 node{
-name:t="microscopefinal"
-uid:i=-1410415289
-prefab:i64=-3144694606138965004
+name:t="Labbase"
+uid:i=-494425310
+prefab:i64=-7499323071935599502
 parent:i=-409248843
-pos:p3=-0.0143446, 0, 0.0101395
-scl:p3=0.005, 0.005, 0.005
+pos:p3=0.372691, 0, 0.196462
 }
 res{
-guid:t="019e1dcb-55ee-7019-9ad0-66068bedc41d"
+guid:t="019e2c77-b697-736b-b52d-db427bba6c37"
 type:i=12
-refId:i64=-3144694606138965004
+refId:i64=-7499323071935599502
 }
 node{
-name:t="kolba3f"
-uid:i=-152923376
-prefab:i64=-1991565478045224542
+name:t="directional_light"
+uid:i=1204881133
 parent:i=-409248843
-pos:p3=0.049834, -2.98023e-08, 0.21623
-scl:p3=0.00402077, 0.00402077, 0.00402077
+pos:p3=-13.057, 9.89248, -1.48455
+DirectionLight{
+color:p3=1, 0.96, 0.92
+intensity:r=0
+castShadows:b=yes
+}
+}
+node{
+name:t="Door"
+uid:i=1446947338
+prefab:i64=7853566160102372390
+parent:i=-409248843
+pos:p3=2.525, 2, 14.2491
+rot:p4=0, -0.707107, 0, 0.707106
 }
 res{
-guid:t="019e1e10-13c8-728f-8def-9ee409235978"
+guid:t="019e129d-3037-74dc-b808-be90b90b530f"
 type:i=12
-refId:i64=-1991565478045224542
+refId:i64=7853566160102372390
+}
+node{
+name:t="Door"
+uid:i=-395048
+prefab:i64=7853566160102372390
+parent:i=-409248843
+pos:p3=-13.3696, 2, -14.0021
+rot:p4=0, 0.707107, 0, 0.707107
+}
+node{
+name:t="PlayerSpawn"
+uid:i=-931525019
+parent:i=-409248843
+pos:p3=-14.226, 1.8973, -11.3195
+}
+node{
+name:t="End"
+uid:i=1922453115
+parent:i=-409248843
+pos:p3=10.6322, 2.2042, 11.1112
+}
+instance{
+root:i=-494425310
+node{
+uid:i=1
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=-0.780931, 2.56976, -0.00809593
+rotation:p4=0, 0.707107, 0, 0.707107
+params:p3=1.08268, 0.1, 0.863004
+__mesh:i64=-8596814271948234205
+}
+shape{
+shapeType:i=0
+translation:p3=-0.0492453, 2.01612, -0.41465
+rotation:p4=0, 0, 0, 1
+params:p3=5.15968, 8.03224, 3.83359
+__mesh:i64=0
+}
+}
+}
+}
+}
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=3
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=4
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=5
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=6
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=7
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=8
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=9
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=10
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=11
+Mesh{isStatic:b=yes;}
+}
+res{
+guid:t="019e2c77-b697-736b-b52d-db427bba6c37"
+id:t="Lab"
+type:i=13
+refId:i64=-8596814271948234205
+}
 }

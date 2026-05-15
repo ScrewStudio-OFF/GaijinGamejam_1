@@ -3,6 +3,7 @@ require Project.Mechanics.Enemy.S_EnemyLoot
 require Project.Mechanics.Enemy.S_EnemySpawner
 require Project.Mechanics.StatsAndProgression.S_GameState
 require Project.Assets.Lvl_Angar.S_AngarInstancePrefabs
+require Project.Assets.Lvl_Laboratory.S_LaboratoryInstancePrefabs
 
 struct EnemyWaveConfig {
     enemyCount : int = 1
@@ -69,37 +70,71 @@ class SLevelManager : Component {
 
     def private ensure_runtime_level_components() : void {
         let angarBase = self->find_child_by_name_recursive(nodeId, "AngarBase")
-        if (angarBase == NodeId()) {
+        let labBase = self->find_child_by_name_recursive(nodeId, "Labbase")
+
+        if (angarBase == NodeId() && labBase == NodeId()) {
             runtimeLevelComponentsReady = true
             return
         }
 
-        var hasAngarInstancer = false
-        get_component(nodeId) $(var instancer : SAngarInstancePrefabs?) {
-            if (instancer != null) {
-                hasAngarInstancer = true
+        if (angarBase != NodeId()) {
+            var hasAngarInstancer = false
+            get_component(nodeId) $(var instancer : SAngarInstancePrefabs?) {
+                if (instancer != null) {
+                    hasAngarInstancer = true
+                }
+            }
+
+            if (!hasAngarInstancer) {
+                add_component(nodeId, new SAngarInstancePrefabs(
+                    prefabFolder = "Project/Assets/Lvl_Angar",
+                    playerName = "P_Player",
+                    markerRootNodeName = "AngarBase",
+                    markerSuffix = "_EMPTY",
+                    numberedMarkerSeparator = ".",
+                    spawnedNodePrefix = "AngarSpawned_",
+                    spawnWhenPlayerAppears = true,
+                    useNumberedNodesAsMarkers = true,
+                    useExactPrefabNamesAsMarkers = true,
+                    scanOnlyMarkerRoot = true,
+                    cleanupPreviousSpawnedNodes = true,
+                    removeMarkersAfterSpawn = true,
+                    spawnScaleMultiplier = 0.1,
+                    fixExistingSpawnedScales = true
+                ))
+
+                print("Angar instancer attached by SLevelManager")
             }
         }
 
-        if (!hasAngarInstancer) {
-            add_component(nodeId, new SAngarInstancePrefabs(
-                prefabFolder = "Project/Assets/Lvl_Angar",
-                playerName = "P_Player",
-                markerRootNodeName = "AngarBase",
-                markerSuffix = "_EMPTY",
-                numberedMarkerSeparator = ".",
-                spawnedNodePrefix = "AngarSpawned_",
-                spawnWhenPlayerAppears = true,
-                useNumberedNodesAsMarkers = true,
-                useExactPrefabNamesAsMarkers = true,
-                scanOnlyMarkerRoot = true,
-                cleanupPreviousSpawnedNodes = true,
-                removeMarkersAfterSpawn = true,
-                spawnScaleMultiplier = 0.1,
-                fixExistingSpawnedScales = true
-            ))
+        if (labBase != NodeId()) {
+            var hasLaboratoryInstancer = false
+            get_component(nodeId) $(var instancer : SLaboratoryInstancePrefabs?) {
+                if (instancer != null) {
+                    hasLaboratoryInstancer = true
+                }
+            }
 
-            print("Angar instancer attached by SLevelManager")
+            if (!hasLaboratoryInstancer) {
+                add_component(nodeId, new SLaboratoryInstancePrefabs(
+                    prefabFolder = "Project/Assets/Lvl_Laboratory",
+                    prefabExtension = ".prefab",
+                    playerName = "P_Player",
+                    markerRootNodeName = "Labbase",
+                    markerSuffix = "_EMPTY",
+                    numberedMarkerSeparator = ".",
+                    spawnedNodePrefix = "LabSpawned_",
+                    spawnWhenPlayerAppears = true,
+                    useNumberedNodesAsMarkers = true,
+                    useExactPrefabNamesAsMarkers = true,
+                    scanOnlyMarkerRoot = true,
+                    cleanupPreviousSpawnedNodes = true,
+                    removeMarkersAfterSpawn = true,
+                    spawnScaleMultiplier = 1.0
+                ))
+
+                print("Laboratory instancer attached by SLevelManager")
+            }
         }
 
         runtimeLevelComponentsReady = true

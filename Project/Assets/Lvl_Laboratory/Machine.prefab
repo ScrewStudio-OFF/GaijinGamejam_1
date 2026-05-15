@@ -1,0 +1,38 @@
+node{
+name:t="Machine"
+uid:i=1
+pos:p3=-10.5612, 1.30529, -6.26553
+scl:p3=0.1, 0.1, 0.1
+Mesh{
+__meshId:i64=8101440167663265929
+__materialId:i64=4612151191243295892
+visibility:i=2047
+isStatic:b=no
+}
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=0
+translation:p3=1.68781, 2.84452, -1.52588e-05
+rotation:p4=0, 0, 0, 1
+params:p3=39.3756, 16, 20
+__mesh:i64=0
+}
+}
+}
+}
+res{
+guid:t="019e2c78-dfef-7493-8aeb-9899cb342d04"
+id:t="Machine"
+type:i=1
+refId:i64=8101440167663265929
+}
+res{
+guid:t="019e2c7a-7024-7f15-afc6-869143d3e2d4"
+type:i=3
+refId:i64=4612151191243295892
+}

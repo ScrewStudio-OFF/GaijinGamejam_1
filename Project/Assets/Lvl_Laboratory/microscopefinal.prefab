@@ -1,0 +1,30 @@
+node{
+name:t="microscopefinal"
+uid:i=1
+scl:p3=0.005, 0.005, 0.005
+}
+node{
+name:t="microscope.002"
+uid:i=2
+parent:i=1
+pos:p3=4.89291, 39.4319, 0
+rot:p4=-0.707107, 0, 0, 0.707107
+scl:p3=100, 100, 100
+Mesh{
+__meshId:i64=-2568495406737087309
+__materialId:i64=4612151191243295892
+visibility:i=2047
+isStatic:b=no
+}
+}
+res{
+guid:t="019e1dcb-55ee-7019-9ad0-66068bedc41d"
+id:t="microscope.002"
+type:i=1
+refId:i64=-2568495406737087309
+}
+res{
+guid:t="019e2c7a-7024-7f15-afc6-869143d3e2d4"
+type:i=3
+refId:i64=4612151191243295892
+}

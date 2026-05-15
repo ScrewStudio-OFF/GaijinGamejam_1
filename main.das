@@ -25,6 +25,7 @@ require Project.Core.Player.S_PlayerAnimController
 require Project.Assets.Test.InstancePrefabs
 require Project.Assets.Lvl_Angar.S_AngarInstancePrefabs
 require Project.Assets.Lvl_Greenhouse.S_GreenHouseInstancePrefabs
+require Project.Assets.Lvl_Laboratory.S_LaboratoryInstancePrefabs
 
 
 [export]

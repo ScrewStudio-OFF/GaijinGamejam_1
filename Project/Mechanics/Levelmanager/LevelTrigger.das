@@ -6,6 +6,7 @@ require Project.Mechanics.Combat.S_Damageable
 require Project.Mechanics.StatsAndProgression.S_GameState
 require Project.Mechanics.UIUX.S_GameUI
 require Project.Assets.Lvl_Angar.S_AngarInstancePrefabs
+require Project.Assets.Lvl_Laboratory.S_LaboratoryInstancePrefabs
 
 
 def level_trigger_find_node_recursive(nodeId : NodeId, nodeName : string) : NodeId {
@@ -337,6 +338,11 @@ class LevelTrigger : Component {
             return
         }
 
+        self->attachAngarInstancer(levelNode)
+        self->attachLaboratoryInstancer(levelNode)
+    }
+
+    def attachAngarInstancer(levelNode : NodeId) : void {
         let angarBase = level_trigger_find_node_recursive(levelNode, "AngarBase")
         if ( find(self.targetLevelPath, "Lvl_Angar") < 0 && angarBase == NodeId() ) {
             return
@@ -371,6 +377,43 @@ class LevelTrigger : Component {
         ))
 
         print("Angar instancer attached by LevelTrigger")
+    }
+
+    def attachLaboratoryInstancer(levelNode : NodeId) : void {
+        let labBase = level_trigger_find_node_recursive(levelNode, "Labbase")
+        if ( find(self.targetLevelPath, "Lvl_Laboratory") < 0 && labBase == NodeId() ) {
+            return
+        }
+
+        var hasLaboratoryInstancer = false
+        get_component(levelNode) $(var instancer : SLaboratoryInstancePrefabs?) {
+            if ( instancer != null ) {
+                hasLaboratoryInstancer = true
+            }
+        }
+
+        if ( hasLaboratoryInstancer ) {
+            return
+        }
+
+        add_component(levelNode, new SLaboratoryInstancePrefabs(
+            prefabFolder = "Project/Assets/Lvl_Laboratory",
+            prefabExtension = ".prefab",
+            playerName = self.playerName,
+            markerRootNodeName = "Labbase",
+            markerSuffix = "_EMPTY",
+            numberedMarkerSeparator = ".",
+            spawnedNodePrefix = "LabSpawned_",
+            spawnWhenPlayerAppears = true,
+            useNumberedNodesAsMarkers = true,
+            useExactPrefabNamesAsMarkers = true,
+            scanOnlyMarkerRoot = true,
+            cleanupPreviousSpawnedNodes = true,
+            removeMarkersAfterSpawn = true,
+            spawnScaleMultiplier = 1.0
+        ))
+
+        print("Laboratory instancer attached by LevelTrigger")
     }
 
     def shouldShowEscapedTransition() : bool {
