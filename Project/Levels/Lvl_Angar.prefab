@@ -16,34 +16,325 @@ waveConfigs{
 vs{}
 }
 }
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 1.66, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=5268532645874951943
 }
-node{
-name:t="Angar_Instances"
-uid:i=1192153218
-prefab:i64=0
-parent:i=-1227679245
-pos:p3=-0.638906, 0, -8.22942
+}
+}
 }
 node{
 name:t="AngarBase"
-uid:i=301863967
-prefab:i64=-4624470362821572874
+uid:i=-960436015
+prefab:i64=3717372707706930131
 parent:i=-1227679245
 }
 res{
-guid:t="019e2bbb-79af-78e6-a99a-bf3556b67281"
+guid:t="019e2bcb-ce65-7e36-a86f-20b6db954ad7"
 type:i=12
-refId:i64=-4624470362821572874
+refId:i64=3717372707706930131
 }
-instance{
-root:i=301863967
 node{
-uid:i=75
-Mesh{__materialId:i64=4310832912101783535;}
+name:t="spot_light"
+uid:i=-1741327785
+parent:i=-1227679245
+pos:p3=12.3407, 7.3996, 14.7793
+rot:p4=0.136195, -0.459172, 0.24963, 0.841604
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=100
+color:p3=1, 1, 1
+radius:r=25
+angle:r=1.04883
+attenuation:r=0
+}
+}
+node{
+name:t="spot_light"
+uid:i=1341359193
+parent:i=-1227679245
+pos:p3=12.3407, 7.3996, 9.9673
+rot:p4=0.212631, -0.67438, 0.212631, 0.674379
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=100
+color:p3=1, 1, 1
+radius:r=25
+angle:r=1.04883
+attenuation:r=0
+}
+}
+node{
+name:t="spot_light"
+uid:i=-907063746
+parent:i=-1227679245
+pos:p3=-13.3806, 6.4018, 15.9114
+rot:p4=0.212631, 0.67438, -0.212631, 0.67438
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=100
+color:p3=1, 1, 1
+radius:r=25
+angle:r=1.04883
+attenuation:r=0
+}
+}
+node{
+name:t="spot_light"
+uid:i=279118728
+parent:i=-1227679245
+pos:p3=-13.3806, 6.4018, 8.2278
+rot:p4=0.212631, 0.67438, -0.212631, 0.67438
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=100
+color:p3=1, 1, 1
+radius:r=25
+angle:r=1.04883
+attenuation:r=0
+}
+}
+node{
+name:t="spot_light"
+uid:i=-1725176795
+parent:i=-1227679245
+pos:p3=-13.3806, 6.4018, -5.7532
+rot:p4=0.212631, 0.67438, -0.212631, 0.67438
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=100
+color:p3=1, 1, 1
+radius:r=25
+angle:r=1.04883
+attenuation:r=0
+}
+}
+node{
+name:t="spot_light"
+uid:i=1290396873
+parent:i=-1227679245
+pos:p3=-13.3806, 6.4018, -15.9216
+rot:p4=0.212631, 0.67438, -0.212631, 0.67438
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=100
+color:p3=1, 1, 1
+radius:r=25
+angle:r=1.04883
+attenuation:r=0
+}
+}
+node{
+name:t="spot_light"
+uid:i=-1170761573
+parent:i=-1227679245
+pos:p3=12.3407, 7.3996, 0.9978
+rot:p4=0.212631, -0.67438, 0.212631, 0.674379
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=100
+color:p3=1, 1, 1
+radius:r=25
+angle:r=1.04883
+attenuation:r=0
+}
+}
+node{
+name:t="spot_light"
+uid:i=423547189
+parent:i=-1227679245
+pos:p3=12.3407, 7.3996, -8.094
+rot:p4=0.212631, -0.67438, 0.212631, 0.674379
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=100
+color:p3=1, 1, 1
+radius:r=25
+angle:r=1.04883
+attenuation:r=0
+}
+}
+node{
+name:t="spot_light"
+uid:i=-347963559
+parent:i=-1227679245
+pos:p3=0.5111, 14.4883, -0.2125
+rot:p4=0.707107, 0, 0, 0.707107
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=200
+color:p3=1, 1, 1
+radius:r=35.63
+angle:r=1.04883
+attenuation:r=0.63
+}
+}
+node{
+name:t="spot_light"
+uid:i=-1902065908
+parent:i=-1227679245
+pos:p3=0.5111, 14.4883, -14.8242
+rot:p4=0.707107, 0, 0, 0.707107
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=200
+color:p3=1, 1, 1
+radius:r=35.63
+angle:r=1.04883
+attenuation:r=0.63
+}
+}
+node{
+name:t="spot_light"
+uid:i=1619541436
+parent:i=-1227679245
+pos:p3=0.5111, 14.4883, 16.993
+rot:p4=0.707107, 0, 0, 0.707107
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=200
+color:p3=1, 1, 1
+radius:r=35.63
+angle:r=1.04883
+attenuation:r=0.63
+}
+}
+node{
+name:t="spot_light"
+uid:i=-1834634508
+parent:i=-1227679245
+pos:p3=12.3407, 7.3996, -16.3925
+rot:p4=0.212631, -0.67438, 0.212631, 0.674379
+SpotLight{
+castShadows:b=yes
+castShadowsOnlyForStatic:b=no
+intensity:r=100
+color:p3=1, 1, 1
+radius:r=25
+angle:r=1.04883
+attenuation:r=0
+}
+}
+node{
+name:t="directional_light"
+uid:i=-1482025518
+parent:i=-1227679245
+pos:p3=9.9911, 11.5572, -1.35412
+DirectionLight{
+color:p3=1, 0.96, 0.92
+intensity:r=0
+castShadows:b=yes
+}
+}
+node{
+name:t="Door"
+uid:i=549105552
+prefab:i64=7853566160102372390
+parent:i=-1227679245
+pos:p3=0.038, 1, 20.6123
+rot:p4=0, -0.707107, 0, 0.707107
 }
 res{
-guid:t="019e2bb6-3567-73f8-a478-cfb7116d5ad1"
-type:i=3
-refId:i64=4310832912101783535
+guid:t="019e129d-3037-74dc-b808-be90b90b530f"
+type:i=12
+refId:i64=7853566160102372390
+}
+node{
+name:t="Door"
+uid:i=-792194141
+prefab:i64=7853566160102372390
+parent:i=-1227679245
+pos:p3=-0.0164, 1, -20.5846
+rot:p4=0, 0.707106, 0, 0.707107
+}
+node{
+name:t="PlayerSpawn"
+uid:i=-1920602990
+parent:i=-1227679245
+pos:p3=0, 1.2328, -18.7358
+Mesh{
+__meshId:i64=0
+__materialId:i64=0
+visibility:i=2047
+isStatic:b=no
+}
+}
+res{
+guid:t="019e2bc2-9ddf-7db2-a901-7d4cbf411841"
+id:t="Angar_Collider"
+type:i=13
+refId:i64=5268532645874951943
+}
+instance{
+root:i=-960436015
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=3
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=73
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=74
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=75
+Mesh{isStatic:b=yes;}
+}
+}
+instance{
+root:i=549105552
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=4
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=6
+Mesh{isStatic:b=yes;}
+}
+}
+instance{
+root:i=-792194141
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=4
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=6
+Mesh{isStatic:b=yes;}
 }
 }

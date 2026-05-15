@@ -2,6 +2,7 @@ require engine.core
 require Project.Mechanics.Enemy.S_EnemyLoot
 require Project.Mechanics.Enemy.S_EnemySpawner
 require Project.Mechanics.StatsAndProgression.S_GameState
+require Project.Assets.Lvl_Angar.S_AngarInstancePrefabs
 
 struct EnemyWaveConfig {
     enemyCount : int = 1
@@ -20,8 +21,12 @@ class SLevelManager : Component {
     isSpawningWave : bool = false
     spawnTimer : float = 0.0
     enemiesSpawnedThisWave : int = 0
+    @no_export runtimeLevelComponentsReady : bool = false
 
     def override on_initialize() : void {
+        runtimeLevelComponentsReady = false
+        self->ensure_runtime_level_components()
+
         if (length(waveConfigs) == 0) {
             setup_default_waves()
         }
@@ -51,11 +56,73 @@ class SLevelManager : Component {
     }
 
     def override on_update() : void {
+        if (!runtimeLevelComponentsReady) {
+            self->ensure_runtime_level_components()
+        }
+
         if (isSpawningWave) {
             update_wave_spawning()
         }
         
         check_all_enemies_dead()
+    }
+
+    def private ensure_runtime_level_components() : void {
+        let angarBase = self->find_child_by_name_recursive(nodeId, "AngarBase")
+        if (angarBase == NodeId()) {
+            runtimeLevelComponentsReady = true
+            return
+        }
+
+        var hasAngarInstancer = false
+        get_component(nodeId) $(var instancer : SAngarInstancePrefabs?) {
+            if (instancer != null) {
+                hasAngarInstancer = true
+            }
+        }
+
+        if (!hasAngarInstancer) {
+            add_component(nodeId, new SAngarInstancePrefabs(
+                prefabFolder = "Project/Assets/Lvl_Angar",
+                playerName = "P_Player",
+                markerRootNodeName = "AngarBase",
+                markerSuffix = "_EMPTY",
+                numberedMarkerSeparator = ".",
+                spawnedNodePrefix = "AngarSpawned_",
+                spawnWhenPlayerAppears = true,
+                useNumberedNodesAsMarkers = true,
+                useExactPrefabNamesAsMarkers = true,
+                scanOnlyMarkerRoot = true,
+                cleanupPreviousSpawnedNodes = true,
+                removeMarkersAfterSpawn = true,
+                spawnScaleMultiplier = 0.1,
+                fixExistingSpawnedScales = true
+            ))
+
+            print("Angar instancer attached by SLevelManager")
+        }
+
+        runtimeLevelComponentsReady = true
+    }
+
+    def private find_child_by_name_recursive(n : NodeId, targetName : string) : NodeId {
+        if (n == NodeId() || !n.isAlive) {
+            return NodeId()
+        }
+
+        if (n.name == targetName) {
+            return n
+        }
+
+        let children = get_children(n)
+        for (child in children) {
+            let found = self->find_child_by_name_recursive(child, targetName)
+            if (found != NodeId()) {
+                return found
+            }
+        }
+
+        return NodeId()
     }
 
     def spawn_next_wave() : void {

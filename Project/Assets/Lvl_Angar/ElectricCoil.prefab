@@ -10,6 +10,34 @@ __materialId:i64=6675220586425828193
 visibility:i=2047
 isStatic:b=no
 }
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=2
+translation:p3=4.76837e-07, -0.263252, -0.000175476
+rotation:p4=6.19271e-09, 4.90226e-15, -2.87908e-14, 1
+params:p3=11, 7, 1
+__mesh:i64=0
+}
+}
+}
+RigidBody{
+enabled:b=yes
+mass:r=60
+linearDamping:r=0.7
+angularDamping:r=0.7
+useGravity:b=yes
+motionType:i=0
+collisionDetection:i=0
+allowedDofs:i=63
+maxVelocity:r=500
+maxAngularVelocity:r=47.124
+interpolation:i=0
+}
 }
 res{
 guid:t="019e2bb1-1262-7ee8-b634-73d95c4f1368"

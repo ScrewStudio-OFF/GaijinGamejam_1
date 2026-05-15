@@ -1,10 +1,10 @@
 node{
-name:t="Barrel"
+name:t="Box4"
 uid:i=1
-pos:p3=-11.3427, 0.675266, -1.47462
+pos:p3=-9.3937, 0.434082, 6.14355
 scl:p3=0.1, 0.1, 0.1
 Mesh{
-__meshId:i64=-6680511319684320326
+__meshId:i64=727293539349618600
 __materialId:i64=6675220586425828193
 visibility:i=2047
 isStatic:b=no
@@ -16,17 +16,17 @@ isSensor:b=no
 collisionLayer:i=0
 shapes{
 shape{
-shapeType:i=2
-translation:p3=-3.05176e-05, -1.49799, -9.53674e-07
-rotation:p4=0, 0, 0, 1
-params:p3=10.5893, 3.21, 1
+shapeType:i=0
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=6, 8.5, 8
 __mesh:i64=0
 }
 }
 }
 RigidBody{
 enabled:b=yes
-mass:r=15
+mass:r=7
 linearDamping:r=0.1
 angularDamping:r=0.1
 useGravity:b=yes
@@ -39,10 +39,10 @@ interpolation:i=0
 }
 }
 res{
-guid:t="019e2bb1-125e-70cd-99b1-dcae5d1d8762"
-id:t="Barrel"
+guid:t="019e2bcc-3539-73a1-8bce-313a998a14d0"
+id:t="Box4"
 type:i=1
-refId:i64=-6680511319684320326
+refId:i64=727293539349618600
 }
 res{
 guid:t="019e2bb7-dddd-78cb-8c90-ee3d6f3142c6"

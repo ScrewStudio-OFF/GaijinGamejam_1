@@ -23,6 +23,7 @@ require Project.Core.Player.S_Player
 require Project.Core.Player.S_CameraFollow
 require Project.Core.Player.S_PlayerAnimController
 require Project.Assets.Test.InstancePrefabs
+require Project.Assets.Lvl_Angar.S_AngarInstancePrefabs
 require Project.Assets.Lvl_Greenhouse.S_GreenHouseInstancePrefabs
 
 

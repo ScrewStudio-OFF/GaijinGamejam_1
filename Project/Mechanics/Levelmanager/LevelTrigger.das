@@ -5,6 +5,7 @@ require Project.Core.Player.S_CameraFollow
 require Project.Mechanics.Combat.S_Damageable
 require Project.Mechanics.StatsAndProgression.S_GameState
 require Project.Mechanics.UIUX.S_GameUI
+require Project.Assets.Lvl_Angar.S_AngarInstancePrefabs
 
 
 def level_trigger_find_node_recursive(nodeId : NodeId, nodeName : string) : NodeId {
@@ -271,6 +272,8 @@ class LevelTrigger : Component {
             name = levelName
         ))
 
+        self->attachRuntimeLevelComponents(levelNode)
+
         if ( levelNode != NodeId() && length(spawnNodeName) > 0 ) {
             let spawnNode = level_trigger_find_node_recursive(levelNode, spawnNodeName)
 
@@ -327,6 +330,47 @@ class LevelTrigger : Component {
         add_component(uiNode, new SGameUI(playerNode = newPlayer))
 
         print("Player spawned: {newPlayer.hierarchyName}")
+    }
+
+    def attachRuntimeLevelComponents(levelNode : NodeId) : void {
+        if ( levelNode == NodeId() || !levelNode.isAlive ) {
+            return
+        }
+
+        let angarBase = level_trigger_find_node_recursive(levelNode, "AngarBase")
+        if ( find(self.targetLevelPath, "Lvl_Angar") < 0 && angarBase == NodeId() ) {
+            return
+        }
+
+        var hasAngarInstancer = false
+        get_component(levelNode) $(var instancer : SAngarInstancePrefabs?) {
+            if ( instancer != null ) {
+                hasAngarInstancer = true
+            }
+        }
+
+        if ( hasAngarInstancer ) {
+            return
+        }
+
+        add_component(levelNode, new SAngarInstancePrefabs(
+            prefabFolder = "Project/Assets/Lvl_Angar",
+            playerName = self.playerName,
+            markerRootNodeName = "AngarBase",
+            markerSuffix = "_EMPTY",
+            numberedMarkerSeparator = ".",
+            spawnedNodePrefix = "AngarSpawned_",
+            spawnWhenPlayerAppears = true,
+            useNumberedNodesAsMarkers = true,
+            useExactPrefabNamesAsMarkers = true,
+            scanOnlyMarkerRoot = true,
+            cleanupPreviousSpawnedNodes = true,
+            removeMarkersAfterSpawn = true,
+            spawnScaleMultiplier = 0.1,
+            fixExistingSpawnedScales = true
+        ))
+
+        print("Angar instancer attached by LevelTrigger")
     }
 
     def shouldShowEscapedTransition() : bool {
