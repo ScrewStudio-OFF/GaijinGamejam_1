@@ -24,6 +24,9 @@ class SGreenHouseInstancePrefabs : Component {
     cleanupPreviousSpawnedNodes : bool = true
     removeMarkersAfterSpawn : bool = true
 
+    gardenSquareYOffset : float = -0.5
+    waterTankYOffset : float = -1.1
+
     @no_export spawned : bool = false
     @no_export playerNode : NodeId = NodeId()
     @no_export spawnPoints : array<GreenHouseSpawnPoint>
@@ -104,6 +107,7 @@ class SGreenHouseInstancePrefabs : Component {
                 sp.prefabPath = prefabPath
                 sp.markerNode = n
                 sp.position = n.worldPosition
+                sp.position.y = sp.position.y + self->get_spawn_y_offset(baseName)
                 sp.rotation = n.worldRotation
                 sp.scale = n.localScale
 
@@ -151,6 +155,16 @@ class SGreenHouseInstancePrefabs : Component {
         }
 
         return result
+    }
+
+    def private get_spawn_y_offset(baseName : string) : float {
+        if (baseName == "garden_square" || find(baseName, "garden_square.") == 0) {
+            return gardenSquareYOffset
+        } elif (baseName == "water_tank" || baseName == "water_tank.001" || find(baseName, "water_tank.") == 0) {
+            return waterTankYOffset
+        }
+
+        return 0.0
     }
 
     def private get_prefab_path(baseName : string) : string {

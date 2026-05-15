@@ -11,48 +11,8 @@ spawnWhenPlayerAppears:b=yes
 useNumberedNodesAsMarkers:b=yes
 cleanupPreviousSpawnedNodes:b=yes
 removeMarkersAfterSpawn:b=yes
-}
-}
-node{
-name:t="greenhouse"
-uid:i=2008579317
-parent:i=1835323674
-}
-node{
-name:t="greenhouse_Collider"
-uid:i=-904100187
-parent:i=1835323674
-}
-node{
-name:t="spot_light"
-uid:i=-845746761
-parent:i=1835323674
-pos:p3=7.0336, 6.2399, -8.143
-rot:p4=0.707107, 0, 0, 0.707107
-SpotLight{
-castShadows:b=yes
-castShadowsOnlyForStatic:b=no
-intensity:r=10
-color:p3=0.692494, 0, 1
-radius:r=20.46
-angle:r=1.04883
-attenuation:r=0.65
-}
-}
-node{
-name:t="spot_light"
-uid:i=738972999
-parent:i=1835323674
-pos:p3=7.3314, 3.3715, -10.4811
-rot:p4=0.921898, 0.199671, -0.00515853, 0.331978
-SpotLight{
-castShadows:b=yes
-castShadowsOnlyForStatic:b=no
-intensity:r=10
-color:p3=0.692494, 0, 1
-radius:r=20.46
-angle:r=1.04883
-attenuation:r=0.65
+gardenSquareYOffset:r=-0.5
+waterTankYOffset:r=-1.1
 }
 }
 node{
@@ -64,5 +24,113 @@ DirectionLight{
 color:p3=1, 0.96, 0.92
 intensity:r=0.1
 castShadows:b=no
+}
+}
+node{
+name:t="Door"
+uid:i=-1967255222
+prefab:i64=7853566160102372390
+parent:i=1835323674
+pos:p3=36.3286, 0.8284, 24.3121
+rot:p4=0, -0.271242, 0, 0.962511
+}
+res{
+guid:t="019e129d-3037-74dc-b808-be90b90b530f"
+type:i=12
+refId:i64=7853566160102372390
+}
+node{
+name:t="Door"
+uid:i=-1977348434
+prefab:i64=7853566160102372390
+parent:i=1835323674
+pos:p3=-36.2624, 0.8284, 24.2904
+rot:p4=0, -0.969179, 0, 0.246356
+}
+node{
+name:t="PlayerSpwan"
+uid:i=-525613204
+parent:i=1835323674
+pos:p3=34.3739, 1.334, 23.415
+}
+node{
+name:t="greenhouse"
+uid:i=960955043
+prefab:i64=-9217540301512058003
+parent:i=1835323674
+}
+res{
+guid:t="019e2b87-42f0-79e9-8d02-516fb9da8007"
+type:i=12
+refId:i64=-9217540301512058003
+}
+node{
+name:t="End"
+uid:i=1881132119
+parent:i=1835323674
+pos:p3=-34.1987, 1, 22.4685
+}
+instance{
+root:i=-1967255222
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=4
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=6
+Mesh{isStatic:b=yes;}
+}
+}
+instance{
+root:i=-1977348434
+node{
+uid:i=2
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=4
+Mesh{isStatic:b=yes;}
+}
+node{
+uid:i=6
+Mesh{isStatic:b=yes;}
+}
+}
+instance{
+root:i=960955043
+node{
+uid:i=1
+newComps{
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=4
+translation:p3=0, 0, 0
+rotation:p4=0, 0, 0, 0
+params:p3=1, 1, 1
+__mesh:i64=-7161430752469085716
+}
+}
+}
+}
+}
+node{
+active:b=no
+uid:i=4
+}
+removedNodes{uid:i=2;}
+res{
+guid:t="019e2b87-42f0-79e9-8d02-516fb9da8007"
+id:t="Hall_Collider"
+type:i=13
+refId:i64=-7161430752469085716
 }
 }

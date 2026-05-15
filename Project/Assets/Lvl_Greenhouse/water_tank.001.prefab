@@ -1,0 +1,106 @@
+node{
+name:t="water_tank.001"
+uid:i=1
+Collider{
+friction:r=-1
+restitution:r=-1
+isSensor:b=no
+collisionLayer:i=0
+shapes{
+shape{
+shapeType:i=2
+translation:p3=0, 3.02412, 0
+rotation:p4=0, 0, 0, 1
+params:p3=9.08166, 3.18, 1
+__mesh:i64=0
+}
+shape{
+shapeType:i=0
+translation:p3=4.22477, 2.60628, 0.503006
+rotation:p4=0, 0, 0, 1
+params:p3=2.14421, 5.45158, 2.38303
+__mesh:i64=0
+}
+shape{
+shapeType:i=0
+translation:p3=-3.76041, 2.60628, -2.26411
+rotation:p4=2.16806e-06, -0.270438, 1.75702e-06, 0.962737
+params:p3=2.23421, 5.45158, 0.877179
+__mesh:i64=0
+}
+shape{
+shapeType:i=0
+translation:p3=0.84984, 2.60627, 4.2663
+rotation:p4=6.23138e-07, -0.633104, -6.15199e-05, 0.774067
+params:p3=2.33994, 5.45158, 0.877182
+__mesh:i64=0
+}
+}
+}
+}
+node{
+name:t="water_tank.002"
+uid:i=2
+parent:i=1
+Mesh{
+__meshId:i64=3165521970234556666
+__materialId:i64=-1665643330029679243
+visibility:i=2047
+isStatic:b=yes
+}
+}
+node{
+name:t="water_tank.002"
+uid:i=4
+parent:i=1
+Mesh{
+__meshId:i64=4209012958064507239
+__materialId:i64=-7048000365513745327
+visibility:i=2047
+isStatic:b=yes
+}
+}
+node{
+name:t="water_tank.002"
+uid:i=6
+parent:i=1
+Mesh{
+__meshId:i64=8198383896453820031
+__materialId:i64=-7174626161328713034
+visibility:i=2047
+isStatic:b=yes
+}
+}
+res{
+guid:t="019e2b52-f795-7c4c-8d8b-c5a5aa39bee3"
+id:t="water_tank.002"
+type:i=1
+refId:i64=3165521970234556666
+}
+res{
+guid:t="019e127c-c6eb-7c51-8674-d2990bd3c7b3"
+type:i=3
+refId:i64=-1665643330029679243
+}
+res{
+guid:t="019e2b52-f795-7c4c-8d8b-c5a5aa39bee3"
+id:t="water_tank.002#1"
+type:i=1
+refId:i64=4209012958064507239
+}
+res{
+guid:t="019e28ff-0446-7bde-b7c2-f21603d69d9e"
+type:i=3
+refId:i64=-7048000365513745327
+}
+res{
+guid:t="019e2b52-f795-7c4c-8d8b-c5a5aa39bee3"
+id:t="water_tank.002#2"
+type:i=1
+refId:i64=8198383896453820031
+}
+res{
+guid:t="019e2904-083d-7dbf-97e1-ecd3f10328c1"
+type:i=3
+refId:i64=-7174626161328713034
+}
