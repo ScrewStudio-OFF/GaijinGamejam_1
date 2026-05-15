@@ -1,6 +1,9 @@
 require engine.core
 require engine.math.math_utils
+require engine.sound_core
+require Project.Core.Player.S_Player
 require Project.Mechanics.Combat.S_Damageable
+require Project.Mechanics.VFX.S_CameraShake
 
 class SAttackHitbox : Component {
     @export owner : NodeId = NodeId()
@@ -11,6 +14,9 @@ class SAttackHitbox : Component {
     @export boxSize : float3 = float3(3.0, 2.0, 4.0)
     @export boxOffset : float3 = float3(0.0, 0.0, 0.0)
     @export debugPrintHits : bool = true
+
+    @export hitSoundPath : string = ""
+    @export hitSoundVolume : float = 1.0
 
     timeLeft : float = 0.0
     alreadyHit : array<NodeId>
@@ -62,7 +68,6 @@ class SAttackHitbox : Component {
             return
         }
 
-        // Не учитывать хитбокс самого владельца или его детей:
         if (is_descendant_of(target, owner) || target == nodeId) {
             return
         }
@@ -77,19 +82,16 @@ class SAttackHitbox : Component {
             print("overlap hit {target.name} (nodeId={target})")
         }
 
-        // Защитно выберем позицию владельца: если owner не активен, используем позицию самого хитбокса
         var ownerPos = owner
         if (!ownerPos.isAlive) {
             ownerPos = nodeId
         }
 
-        // Найдём ближайший родительский узел, который содержит SDamageable (включая сам target)
         var damaged = false
         var probe = target
         while (probe.isAlive) {
             get_component(probe) $(var damageable : SDamageable?) {
                 if (damageable != null) {
-                    // вычисляем направление от владельца к центру поражённого (используем ownerPos.worldPosition)
                     var dir = probe.worldPosition - ownerPos.worldPosition
                     dir.y = 0.0
                     if (length(dir) < 0.001) {
@@ -103,6 +105,13 @@ class SAttackHitbox : Component {
                     damageable.take_damage(damage, owner, knockbackForce)
                     damaged = true
 
+                    var camShake = find_component(type<SCameraShake>)
+                    if (camShake != null) {
+                        camShake->apply_shake(probe.worldPosition, 1.0)
+                    }
+
+                    play_hit_sound()
+
                     if (debugPrintHits) {
                         print("Damaged {probe.name} from owner {owner.name}")
                     }
@@ -113,7 +122,6 @@ class SAttackHitbox : Component {
                 break
             }
 
-            // подняться к родителю
             probe = probe.parent
             if (probe == NodeId()) {
                 break
@@ -121,7 +129,6 @@ class SAttackHitbox : Component {
         }
 
         if (!damaged) {
-            // Если не нашли SDamageable — попытка оттолкнуть rigidbody на том же или родительском узле
             var probe2 = target
             var applied = false
             while (probe2.isAlive) {
@@ -155,6 +162,17 @@ class SAttackHitbox : Component {
             }
         }
     }
+
+    def private play_hit_sound() : void {
+        if (hitSoundPath == "") {
+            return
+        }
+
+        let sound = request_sound(hitSoundPath)
+        let sid = play_sound(sound)
+        set_volume(sid, hitSoundVolume)
+    }
+
 
     def private is_descendant_of(nodeA : NodeId; nodeB : NodeId) : bool {
         if (!nodeA.isAlive || !nodeB.isAlive) {

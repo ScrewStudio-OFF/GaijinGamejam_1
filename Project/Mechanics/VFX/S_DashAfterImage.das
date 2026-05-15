@@ -7,14 +7,19 @@ class SDashAfterImage : Component {
     @export endTint : float4 = float4(0.4, 0.2, 1.0, 0.1)
     @export scaleBoost : float = 1.06
     @export freezeAnimation : bool = true
+    @export freezeDelay : float = 0.04
     @export source : NodeId = NodeId()
 
     timeLeft : float = 0.0
     baseScale : float3 = float3(1.0)
+    freezeLeft : float = 0.0
+    freezeApplied : bool = false
 
     def override on_initialize() : void {
         timeLeft = lifeTime
         baseScale = nodeId.localScale
+        freezeLeft = max(freezeDelay, 0.0)
+        freezeApplied = false
 
         remove_physics_recursive(nodeId)
         tint_recursive(nodeId, startTint)
@@ -22,6 +27,14 @@ class SDashAfterImage : Component {
 
     def override on_update() : void {
         timeLeft -= get_delta_time()
+
+        if (freezeAnimation && !freezeApplied) {
+            freezeLeft -= get_delta_time()
+            if (freezeLeft <= 0.0) {
+                set_animation_enabled_recursive(nodeId, false)
+                freezeApplied = true
+            }
+        }
 
         let t = clamp(timeLeft / lifeTime, 0.0, 1.0)
         let colorLerp = float4(
@@ -83,6 +96,19 @@ class SDashAfterImage : Component {
         var inscope children = root.get_children()
         for (child in children) {
             remove_physics_recursive(child)
+        }
+    }
+
+    def private set_animation_enabled_recursive(root : NodeId; enabled : bool) : void {
+        get_component(root) $(var sap : SingleAnimationPlayer?) {
+            if (sap != null) {
+                sap.enabled = enabled
+            }
+        }
+
+        var inscope children = root.get_children()
+        for (child in children) {
+            set_animation_enabled_recursive(child, enabled)
         }
     }
 

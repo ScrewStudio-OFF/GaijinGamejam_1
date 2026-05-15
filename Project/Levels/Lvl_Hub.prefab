@@ -19,8 +19,19 @@ playerSpawnPosition:p3=0, 1, 0
 playerSpawnRotation:p4=0, 0, 0, 1
 preservePlayerHealth:b=yes
 requireArenaCleared:b=no
+showEscapedOnClearedExit:b=yes
+escapedImagePath:t="Project/Assets/UI/Escaped.png"
+escapedDelaySeconds:r=2
+escapedCanvasSize:p2=1920, 1080
+escapedImageSourceSize:p2=1920, 1080
 triggerRadius:r=3
 triggered:b=no
+escapedTransitionPending:b=no
+escapedTimer:r=0
+escapedCanvasNode:i=0
+escapedBlackoutNode:i=0
+escapedImageNode:i=0
+escapedLayoutSize:p2=1920, 1080
 }
 SHubIntro{
 canvasSize:p2=1920, 1080
@@ -348,8 +359,19 @@ playerSpawnPosition:p3=0, 1, 0
 playerSpawnRotation:p4=0, 0, 0, 1
 preservePlayerHealth:b=yes
 requireArenaCleared:b=no
+showEscapedOnClearedExit:b=yes
+escapedImagePath:t="Project/Assets/UI/Escaped.png"
+escapedDelaySeconds:r=2
+escapedCanvasSize:p2=1920, 1080
+escapedImageSourceSize:p2=1920, 1080
 triggerRadius:r=3
 triggered:b=no
+escapedTransitionPending:b=no
+escapedTimer:r=0
+escapedCanvasNode:i=0
+escapedBlackoutNode:i=0
+escapedImageNode:i=0
+escapedLayoutSize:p2=1920, 1080
 }
 }
 }

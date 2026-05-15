@@ -33,6 +33,7 @@ class SPlayerAnimController : Component {
     @no_export combat : SPlayerCombat?
     @no_export dash : SAbilityDash?
     @no_export animator : Animator?
+    @no_export snapshotPlayer : SingleAnimationPlayer?
 
     @no_export currentAnim : AnimationId
     @no_export previousAnim : AnimationId
@@ -54,11 +55,10 @@ class SPlayerAnimController : Component {
         combat = get_component(nodeId, type<SPlayerCombat>)
         dash = get_component(nodeId, type<SAbilityDash>)
         animator = require_component(nodeId, type<Animator>)
+        snapshotPlayer = get_component(nodeId, type<SingleAnimationPlayer>)
 
-        get_component(nodeId) $(var sap : SingleAnimationPlayer?) {
-            if (sap != null) {
-                sap.enabled = false
-            }
+        if (snapshotPlayer != null) {
+            snapshotPlayer.enabled = false
         }
 
         currentAnim = idleAnim
@@ -110,6 +110,7 @@ class SPlayerAnimController : Component {
 
             update_attack_playback(attackAnim, dt)
             sample_state_pose()
+            sync_single_animation_snapshot(currentAnim, currentProgress)
             return
         }
 
@@ -126,6 +127,7 @@ class SPlayerAnimController : Component {
             }
 
             sample_state_pose()
+            sync_single_animation_snapshot(currentAnim, currentProgress)
 
             if (attackHoldLeft <= 0.0 && currentProgress >= 0.999) {
                 begin_return_to_locomotion()
@@ -158,6 +160,7 @@ class SPlayerAnimController : Component {
             }
 
             sample_state_pose()
+            sync_single_animation_snapshot(locomotionRunAnim, locomotionProgress)
 
             if (blendLeft <= 0.0) {
                 attackState = 0
@@ -185,6 +188,9 @@ class SPlayerAnimController : Component {
         )
 
         sample_locomotion_pose()
+
+        let snapshotAnim = (speed01Smoothed > 0.5 ? locomotionRunAnim : idleAnim)
+        sync_single_animation_snapshot(snapshotAnim, locomotionProgress)
     }
 
     def private begin_attack(targetAnim : AnimationId; stage : int; blendTime : float) : void {
@@ -323,6 +329,20 @@ class SPlayerAnimController : Component {
         let ratios <- [locomotionProgress, locomotionProgress]
         let weights <- [idleW, runW]
         sample_animation_and_blend(targetNode, animations, ratios, weights)
+    }
+
+    def private sync_single_animation_snapshot(anim : AnimationId; progress : float) : void {
+        if (snapshotPlayer == null || anim == AnimationId()) {
+            return
+        }
+
+        snapshotPlayer.animation = anim
+        snapshotPlayer.progress = clamp(progress, 0.0, 1.0)
+        snapshotPlayer.speed = 1.0
+
+        if (dash != null) {
+            dash.update_ghost_anim_snapshot(anim, snapshotPlayer.progress, snapshotPlayer.speed)
+        }
     }
 
     def private get_physical_velocity2() : float2 {

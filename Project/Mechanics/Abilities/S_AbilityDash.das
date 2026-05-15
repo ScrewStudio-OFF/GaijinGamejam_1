@@ -3,9 +3,6 @@ require engine.math.math_utils
 require engine.sound_core
 require Project.Mechanics.Abilities.S_AbilityBase
 require Project.Mechanics.VFX.S_DashAfterImage
-require Project.Core.Player.S_Player
-require Project.Mechanics.Combat.S_PlayerCombat
-require Project.Mechanics.Combat.S_Damageable
 
 class SAbilityDash : SAbilityBase {
     @export dashSpeed : float = 20.0
@@ -20,7 +17,9 @@ class SAbilityDash : SAbilityBase {
     @export ghostTintStart : float4 = float4(0.1, 0.9, 1.0, 0.6)
     @export ghostTintEnd : float4 = float4(0.5, 0.15, 1.0, 0.05)
     @export ghostScaleBoost : float = 1.06
-    @export freezeGhostAnimation : bool = true
+    @export freezeGhostAnimation : bool = false
+    @export ghostFreezeDelay : float = 0.04
+    @export ghostPrefabPath : string = "Project/Mechanics/VFX/Prefabs/P_DashGhost.prefab"
 
     @export dashSoundPath : string = "Project/Assets/SFX/Abilities/SFX_DashAbility.mp3"
     @export dashSoundVolume : float = 3.0
@@ -33,6 +32,7 @@ class SAbilityDash : SAbilityBase {
     firstGhostSpawned : bool = false
     lastAnimId : AnimationId = AnimationId()
     lastAnimProgress : float = 0.0
+    lastAnimSpeed : float = 1.0
 
     def override on_initialize() : void {
         if (nodeId.name == "DashGhost") {
@@ -103,18 +103,39 @@ class SAbilityDash : SAbilityBase {
     def private spawn_ghost() : void {
         visualRoot = nodeId
 
+        let ghostPrefab = request_prefab(ghostPrefabPath)
+        if (ghostPrefab == PrefabId()) {
+            print("Dash WARNING: ghost prefab not found: {ghostPrefabPath}")
+            return
+        }
+
         for (copyIndex in range(ghostCopiesPerSpawn)) {
             let copyOffset = dashDir * (ghostCopySpacing * float(copyIndex))
 
-            let ghost = duplicate_node(nodeId, NodeData(
+            let ghost = instantiate_prefab(ghostPrefab, NodeData(
                 name = "DashGhost",
                 position = nodeId.localPosition - copyOffset,
                 rotation = nodeId.localRotation,
                 scale = nodeId.localScale
             ))
 
+            if (!ghost.isAlive) {
+                continue
+            }
+
             ghost.set_parent(nodeId.parent, AddChildStrategy.KeepWorldTransform)
-            strip_gameplay_components(ghost)
+
+            get_component(ghost) $(var ghostSap : SingleAnimationPlayer?) {
+                if (ghostSap != null) {
+                    if (lastAnimId != AnimationId()) {
+                        ghostSap.animation = lastAnimId
+                        ghostSap.progress = clamp(lastAnimProgress, 0.0, 1.0)
+                        ghostSap.speed = lastAnimSpeed
+                    }
+                    // Always enable at spawn so the first sample can be applied before any optional freeze.
+                    ghostSap.enabled = true
+                }
+            }
 
             let afterImage = add_component(ghost, new SDashAfterImage(
                 lifeTime = ghostLifeTime,
@@ -122,18 +143,16 @@ class SAbilityDash : SAbilityBase {
                 endTint = ghostTintEnd,
                 scaleBoost = ghostScaleBoost,
                 freezeAnimation = freezeGhostAnimation,
+                freezeDelay = ghostFreezeDelay,
                 source = nodeId
             ))
         }
     }
 
-    def private strip_gameplay_components(root : NodeId) : void {
-        remove_component(root, type<SPlayer>)
-        remove_component(root, type<SPlayerCombat>)
-        remove_component(root, type<SAbilityDash>)
-        remove_component(root, type<SDamageable>)
-        remove_component(root, type<RigidBody>)
-        // CharacterController may not exist, so we skip it
+    def update_ghost_anim_snapshot(anim : AnimationId; progress : float; speed : float = 1.0) : void {
+        lastAnimId = anim
+        lastAnimProgress = clamp(progress, 0.0, 1.0)
+        lastAnimSpeed = max(speed, 0.0)
     }
 
     def private play_dash_sound() : void {

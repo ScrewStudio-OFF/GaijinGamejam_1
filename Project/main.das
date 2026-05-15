@@ -18,10 +18,14 @@ require Project.Mechanics.Combat.S_AttackHitbox
 require Project.Mechanics.Combat.S_PlayerCombat
 require Project.Mechanics.Abilities.S_AbilityDash
 require Project.Mechanics.VFX.S_DashAfterImage
+require Project.Mechanics.VFX.S_CameraShake
+require Project.Mechanics.VFX.S_HitVignette
 require Project.Mechanics.VFX.S_AutoDestroy
 require Project.Core.Player.S_Player
 require Project.Core.Player.S_CameraFollow
 require Project.Core.Player.S_PlayerAnimController
+require Project.Assets.Test.InstancePrefabs
+require Project.Assets.Lvl_Greenhouse.S_GreenHouseInstancePrefabs
 require Project.Assets.Test.InstancePrefabs
 require Project.Assets.Lvl_Angar.S_AngarInstancePrefabs
 require Project.Assets.Lvl_Greenhouse.S_GreenHouseInstancePrefabs
@@ -38,4 +42,15 @@ def on_initialize() {
     }
 
     instantiate_prefab(mainMenuPrefab, NodeData(name = "Lvl_Main"))
+
+    // Добавляем эффект компоненты
+    let camera = find_component(type<Camera>)
+    if (camera != null) {
+        add_component(camera.nodeId, new SCameraShake())
+    }
+
+    let canvas = find_component(type<UICanvas>)
+    if (canvas != null) {
+        add_component(canvas.nodeId, new SHitVignette())
+    }
 }

@@ -5,9 +5,23 @@ SCameraFollow{
 target:i=0
 offset:p3=0, 10, -5
 follow_halflife:r=0.15
+rotation_halflife:r=0.08
 rotateSensitivity:r=0.01
 yaw:r=0
 rotateWithRightMouse:b=yes
+enableWheelHeight:b=yes
+wheelHeightSensitivity:r=0.6
+minCameraHeight:r=8
+maxCameraHeight:r=14
+}
+SCameraShake{
+maxShakeDistance:r=30
+shakeStrength:r=0.3
+shakeDuration:r=0.1
+shakeTimeLeft:r=0
+originalPos:p3=0, 0, 0
+targetCamera:i=-2071617657
+shakeTime:r=0
 }
 }
 node{

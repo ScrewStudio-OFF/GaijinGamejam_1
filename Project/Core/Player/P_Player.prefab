@@ -40,37 +40,10 @@ health:r=100
 applyKnockback:b=no
 knockbackUp:r=0.2
 destroyOnDeath:b=no
-}
-SPlayerCombat{
-__attackAnim1:i64=1282580175796610586
-__attackAnim2:i64=8384968302429660652
-__attackAnim3:i64=-3282072774475686836
-attackDuration1:r=0.6
-attackDuration2:r=0.6
-attackDuration3:r=0.9
-comboWindowOpen1:r=0.3
-comboWindowOpen2:r=0.25
-comboWindowOpen3:r=0.2
-hitboxDelay1:r=0.08
-hitboxDelay2:r=0.09
-hitboxDelay3:r=0.1
-hitboxLife1:r=0.1
-hitboxLife2:r=0.11
-hitboxLife3:r=0.12
-damage1:r=10
-damage2:r=12
-damage3:r=20
-knockback1:r=20
-knockback2:r=50
-knockback3:r=120
-hitboxPrefabPath:t="Project/Mechanics/Combat/Prefabs/P_AttackHitbox.prefab"
-hitboxOffset:p3=0, 0.9, 1.2
-hitboxScale:p3=1, 1, 1
-comboStage:i=0
-attackTimeLeft:r=0
-hitboxSpawnDelayLeft:r=0
-hitboxSpawned:b=no
-queuedNextAttack:b=no
+playerDeathImagePath:t="Project/Assets/UI/Refined.png"
+playerDeathMenuPath:t="Project/Levels/Lvl_Main.prefab"
+playerDeathDelay:r=5
+dead:b=no
 }
 Animator{enabled:b=yes;}
 SingleAnimationPlayer{
@@ -86,14 +59,16 @@ dashSpeed:r=20
 dashDuration:r=0.12
 dashCooldown:r=0.6
 dashPriority:i=10
-ghostInterval:r=0.04
-ghostCopiesPerSpawn:i=2
+ghostInterval:r=0.02
+ghostCopiesPerSpawn:i=1
 ghostCopySpacing:r=0.02
 ghostLifeTime:r=0.16
 ghostTintStart:p4=0.1, 0.9, 1, 0.6
 ghostTintEnd:p4=0.5, 0.15, 1, 0.05
 ghostScaleBoost:r=1.06
 freezeGhostAnimation:b=yes
+ghostFreezeDelay:r=0.06
+ghostPrefabPath:t="Project/Mechanics/VFX/Prefabs/P_DashGhost.prefab"
 dashSoundPath:t="Project/Assets/SFX/Abilities/SFX_DashAbility.mp3"
 dashSoundVolume:r=3
 cooldownLeft:r=0
@@ -104,6 +79,7 @@ visualRoot:i=2145662318
 firstGhostSpawned:b=no
 __lastAnimId:i64=0
 lastAnimProgress:r=0
+lastAnimSpeed:r=1
 }
 SPlayerAnimController{
 __idleAnim:i64=-1575754562899439477
@@ -140,6 +116,39 @@ HP_BONUS:i=2
 DAMAGE_BONUS:i=2
 SPEED_BONUS_PERCENT:r=0.2
 }
+SPlayerCombat{
+__attackAnim1:i64=1282580175796610586
+__attackAnim2:i64=8384968302429660652
+__attackAnim3:i64=-3282072774475686836
+attackDuration1:r=0.6
+attackDuration2:r=0.6
+attackDuration3:r=0.9
+comboWindowOpen1:r=0.3
+comboWindowOpen2:r=0.25
+comboWindowOpen3:r=0.2
+hitboxDelay1:r=0.08
+hitboxDelay2:r=0.09
+hitboxDelay3:r=0.1
+hitboxLife1:r=0.1
+hitboxLife2:r=0.11
+hitboxLife3:r=0.12
+damage1:r=10
+damage2:r=12
+damage3:r=20
+knockback1:r=20
+knockback2:r=50
+knockback3:r=120
+hitboxPrefabPath:t="Project/Mechanics/Combat/Prefabs/P_AttackHitbox.prefab"
+hitboxOffset:p3=0, 0.9, 1.2
+hitboxScale:p3=1, 1, 1
+attackSoundPath:t="Project/Assets/SFX/Combat/SFX_HitAir.mp3"
+attackSoundVolume:r=1
+comboStage:i=0
+attackTimeLeft:r=0
+hitboxSpawnDelayLeft:r=0
+hitboxSpawned:b=no
+queuedNextAttack:b=no
+}
 }
 node{
 name:t="SKM_Player"
@@ -151,24 +160,6 @@ res{
 guid:t="019e1d64-eb61-7f36-838a-308049a9cf17"
 type:i=12
 refId:i64=-5610596055769179669
-}
-res{
-guid:t="019e1d64-eb61-7f36-838a-308049a9cf17"
-id:t="Hook 1"
-type:i=7
-refId:i64=1282580175796610586
-}
-res{
-guid:t="019e1d64-eb61-7f36-838a-308049a9cf17"
-id:t="Hook 2"
-type:i=7
-refId:i64=8384968302429660652
-}
-res{
-guid:t="019e1d64-eb61-7f36-838a-308049a9cf17"
-id:t="Kick 1"
-type:i=7
-refId:i64=-3282072774475686836
 }
 res{
 guid:t="019e1d64-eb61-7f36-838a-308049a9cf17"
@@ -229,4 +220,22 @@ guid:t="019e051a-eb3c-707c-b6e0-ccec75a915c3"
 id:t="RunFast"
 type:i=7
 refId:i64=1764241193208059668
+}
+res{
+guid:t="019e1d64-eb61-7f36-838a-308049a9cf17"
+id:t="Hook 1"
+type:i=7
+refId:i64=1282580175796610586
+}
+res{
+guid:t="019e1d64-eb61-7f36-838a-308049a9cf17"
+id:t="Hook 2"
+type:i=7
+refId:i64=8384968302429660652
+}
+res{
+guid:t="019e1d64-eb61-7f36-838a-308049a9cf17"
+id:t="Kick 1"
+type:i=7
+refId:i64=-3282072774475686836
 }

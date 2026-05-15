@@ -4,6 +4,8 @@ require Project.Core.Player.S_Player
 require Project.Mechanics.Enemy.S_EnemyLoot
 require Project.Mechanics.Enemy.S_EnemySpawner
 require Project.Mechanics.UIUX.S_DeathScreen
+require Project.Mechanics.VFX.S_CameraShake
+require Project.Mechanics.VFX.S_HitVignette
 
 class SDamageable : Component {
     @export maxHealth : float = 100.0
@@ -37,6 +39,16 @@ class SDamageable : Component {
 
         health -= amount
         apply_knockback(source, knockbackForce)
+
+        var camShake = find_component(type<SCameraShake>)
+        if (camShake != null) {
+            camShake->apply_shake(nodeId.worldPosition, 0.8)
+        }
+
+        var vignette = find_component(type<SHitVignette>)
+        if (vignette != null) {
+            vignette->apply_vignette(nodeId.worldPosition, 1.0)
+        }
 
         if (health <= 0.0) {
             die(source)

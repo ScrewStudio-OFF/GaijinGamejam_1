@@ -1,5 +1,6 @@
 require engine.core
 require engine.math.math_utils
+require engine.sound_core
 require Project.Mechanics.Combat.S_AttackHitbox
 
 class SPlayerCombat : Component {
@@ -35,6 +36,9 @@ class SPlayerCombat : Component {
     @export hitboxOffset : float3 = float3(0.0, 0.9, 1.2)
     @export hitboxScale : float3 = float3(1.0)
 
+    @export attackSoundPath : string = ""
+    @export attackSoundVolume : float = 1.0
+
     comboStage : int = 0
     attackTimeLeft : float = 0.0
     hitboxSpawnDelayLeft : float = 0.0
@@ -51,7 +55,6 @@ class SPlayerCombat : Component {
         hitboxSpawnDelayLeft = 0.0
         hitboxSpawned = false
         queuedNextAttack = false
-
     }
 
     def override on_update() : void {
@@ -61,8 +64,7 @@ class SPlayerCombat : Component {
 
         let dt = get_delta_time()
 
-        if (is_action_just_pressed("attack"))
-        {
+        if (is_action_just_pressed("attack")) {
             if (attackTimeLeft <= 0.0) {
                 start_attack(0)
             } elif (attackTimeLeft <= combo_window_open(comboStage)) {
@@ -95,6 +97,8 @@ class SPlayerCombat : Component {
         hitboxSpawned = false
         attackTimeLeft = attack_duration(stage)
         hitboxSpawnDelayLeft = hitbox_delay(stage)
+
+        play_attack_sound()
     }
 
     def private reset_combo() : void {
@@ -121,6 +125,16 @@ class SPlayerCombat : Component {
                 hb.set_lifetime(hitbox_life(stage))
             }
         }
+    }
+
+    def private play_attack_sound() : void {
+        if (attackSoundPath == "") {
+            return
+        }
+
+        let sound = request_sound(attackSoundPath)
+        let sid = play_sound(sound)
+        set_volume(sid, attackSoundVolume)
     }
 
     def is_attacking() : bool {

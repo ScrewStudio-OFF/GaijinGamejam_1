@@ -22,7 +22,25 @@ health:r=100
 applyKnockback:b=yes
 knockbackUp:r=0.2
 destroyOnDeath:b=yes
+playerDeathImagePath:t="Project/Assets/UI/Refined.png"
+playerDeathMenuPath:t="Project/Levels/Lvl_Main.prefab"
+playerDeathDelay:r=5
+dead:b=no
 }
+RigidBody{
+enabled:b=yes
+mass:r=100
+linearDamping:r=0.05
+angularDamping:r=0.05
+useGravity:b=no
+motionType:i=1
+collisionDetection:i=0
+allowedDofs:i=63
+maxVelocity:r=500
+maxAngularVelocity:r=47.124
+interpolation:i=1
+}
+SEnemyLoot{arenaLevel:i=1;}
 SEnemyAI{
 patrolOffsetA:p3=-4, 0, 0
 patrolOffsetB:p3=4, 0, 0
@@ -48,20 +66,6 @@ stepHeight:r=0.3
 upDirection:p3=0, 1, 0
 gravityScale:r=1
 }
-RigidBody{
-enabled:b=yes
-mass:r=1
-linearDamping:r=0.05
-angularDamping:r=0.05
-useGravity:b=no
-motionType:i=1
-collisionDetection:i=0
-allowedDofs:i=63
-maxVelocity:r=500
-maxAngularVelocity:r=47.124
-interpolation:i=0
-}
-SEnemyLoot{arenaLevel:i=1;}
 }
 node{
 name:t="enemy_tankdrone"
