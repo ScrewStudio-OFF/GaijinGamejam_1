@@ -4,7 +4,7 @@ Slasher-Roguelike game.
 
 """
 project_guid:t="019dff1a-ae8f-7fae-830d-b2789d7f3e40"
-defaultPrefab:t="019e23a0-e158-7c87-b7dd-00716cec32dc"
+defaultPrefab:t="019e4d8a-6a8f-7fcb-8f18-cd93a11d92e6"
 type:i=3
 author:t="Владик_Виноградик"
 hdRendering:b=yes

@@ -14,9 +14,8 @@ spawnTimer:r=0
 enemiesSpawnedThisWave:i=0
 spawnerNodes{
 vs{
-v:i=0
-v:i=0
-v:i=0
+v:i=-1184618149
+v:i=-1652802383
 }
 }
 waveConfigs{
@@ -307,6 +306,25 @@ name:t="End"
 uid:i=-2089857655
 parent:i=-1227679245
 pos:p3=0.2277, 1.3291, 19.3321
+}
+node{
+name:t="P_EnemySpawnPoint"
+uid:i=-1652802383
+prefab:i64=7668696029787419492
+parent:i=-1227679245
+pos:p3=-6.1059, 0, 9.4386
+}
+res{
+guid:t="019e2720-ed8f-7cca-83aa-0b2d11e7cd9f"
+type:i=12
+refId:i64=7668696029787419492
+}
+node{
+name:t="P_EnemySpawnPoint"
+uid:i=-1184618149
+prefab:i64=7668696029787419492
+parent:i=-1227679245
+pos:p3=5.2115, 0, 9.6053
 }
 res{
 guid:t="019e2bc2-9ddf-7db2-a901-7d4cbf411841"
