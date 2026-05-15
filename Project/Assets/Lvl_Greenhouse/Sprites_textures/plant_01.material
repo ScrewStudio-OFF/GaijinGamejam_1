@@ -1,0 +1,27 @@
+shader:t="standard_diffuse_shader"
+textures{
+it{
+id:t="*0"
+type:i=2
+guid:t="019e2b52-f78f-7017-b361-fced0872e42c"
+}
+it{}
+it{}
+it{}
+it{}
+it{}
+}
+properties{
+transparencyMode{
+__variant_index:i=2
+i:i=1
+}
+color{
+__variant_index:i=1
+f4:p4=1, 1, 1, 1
+}
+glossiness{
+__variant_index:i=0
+f:r=0.166062
+}
+}
