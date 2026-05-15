@@ -9,17 +9,39 @@ vs{}
 }
 SLevelManager{
 arenaLevel:i=1
-timeBetweenWaves:r=3
+spawnPointNodeName:t="P_EnemySpawnPoint"
+timeBetweenWaves:r=5
+waitForLevelLoadedBeforeSpawn:b=yes
+spawnAfterLevelLoadedDelay:r=0.5
 currentWave:i=0
 waveTimer:r=0
 isSpawningWave:b=no
 spawnTimer:r=0
 enemiesSpawnedThisWave:i=0
 spawnerNodes{
-vs{v:i=310536303;}
+vs{
+v:i=666595459
+v:i=666595459
+}
 }
 waveConfigs{
-vs{}
+vs{
+EnemyWaveConfig{
+enemyCount:i=2
+enemyPrefabPath:t="Project/Mechanics/Enemy/Prefabs/P_Enemy.prefab"
+timeBetweenSpawns:r=2
+}
+EnemyWaveConfig{
+enemyCount:i=3
+enemyPrefabPath:t="Project/Mechanics/Enemy/Prefabs/P_Enemy.prefab"
+timeBetweenSpawns:r=3
+}
+EnemyWaveConfig{
+enemyCount:i=4
+enemyPrefabPath:t="Project/Mechanics/Enemy/Prefabs/P_Enemy.prefab"
+timeBetweenSpawns:r=2
+}
+}
 }
 }
 }
@@ -167,23 +189,11 @@ isStatic:b=no
 }
 }
 node{
-name:t="P_EnemySpawnPoint"
-uid:i=310536303
-prefab:i64=7668696029787419492
-parent:i=857286189
-pos:p3=4.4996, 0, 1.7268
-}
-res{
-guid:t="019e2720-ed8f-7cca-83aa-0b2d11e7cd9f"
-type:i=12
-refId:i64=7668696029787419492
-}
-node{
 name:t="Door"
 uid:i=-1718855438
 prefab:i64=2324462395507322239
 parent:i=857286189
-pos:p3=-8.8769, 0.1187, 13.3614
+pos:p3=-8.7114, 0.1187, 13.9064
 rot:p4=0, 0.986135, 0, -0.165948
 scl:p3=0.54, 0.54, 0.54
 }
@@ -193,10 +203,23 @@ type:i=12
 refId:i64=2324462395507322239
 }
 node{
-name:t="End"
-uid:i=687410381
+name:t="P_EnemySpawnPoint"
+uid:i=666595459
+prefab:i64=7668696029787419492
 parent:i=857286189
-pos:p3=-16.6964, 0.3634, 16.6203
+pos:p3=3.96976, 0.0151892, 2.93861
+}
+res{
+guid:t="019e2720-ed8f-7cca-83aa-0b2d11e7cd9f"
+type:i=12
+refId:i64=7668696029787419492
+}
+node{
+name:t="P_EnemySpawnPoint"
+uid:i=-6075383
+prefab:i64=7668696029787419492
+parent:i=857286189
+pos:p3=-2.7987, 0.0152, 22.3328
 }
 res{
 guid:t="0192f7ae-f381-7981-aca1-68dcd2f42029"
@@ -347,13 +370,6 @@ angle:r=1.04883
 attenuation:r=0.54
 }
 }
-}
-}
-instance{
-root:i=310536303
-node{
-uid:i=-1588463328
-SEnemySpawner{enemyPrefabPath:t="Sasdasda";}
 }
 }
 instance{

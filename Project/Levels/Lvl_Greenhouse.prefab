@@ -14,6 +14,34 @@ removeMarkersAfterSpawn:b=yes
 gardenSquareYOffset:r=-0.5
 waterTankYOffset:r=-1.1
 }
+SLevelManager{
+arenaLevel:i=2
+spawnPointNodeName:t="P_EnemySpawnPoint"
+timeBetweenWaves:r=3
+waitForLevelLoadedBeforeSpawn:b=yes
+spawnAfterLevelLoadedDelay:r=0.5
+currentWave:i=0
+waveTimer:r=0
+isSpawningWave:b=no
+spawnTimer:r=0
+enemiesSpawnedThisWave:i=0
+spawnerNodes{
+vs{
+v:i=0
+v:i=0
+v:i=0
+}
+}
+waveConfigs{
+vs{
+EnemyWaveConfig{
+enemyCount:i=10
+enemyPrefabPath:t="Project/Mechanics/Enemy/Prefabs/P_Enemy.prefab"
+timeBetweenSpawns:r=2
+}
+}
+}
+}
 }
 node{
 name:t="directional_light"
@@ -48,7 +76,7 @@ pos:p3=-36.2624, 0.8284, 24.2904
 rot:p4=0, -0.969179, 0, 0.246356
 }
 node{
-name:t="PlayerSpwan"
+name:t="PlayerSpawn"
 uid:i=-525613204
 parent:i=1835323674
 pos:p3=34.3739, 1.334, 23.415

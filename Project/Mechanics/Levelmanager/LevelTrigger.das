@@ -5,6 +5,7 @@ require Project.Core.Player.S_CameraFollow
 require Project.Mechanics.Combat.S_Damageable
 require Project.Mechanics.StatsAndProgression.S_GameState
 require Project.Mechanics.UIUX.S_GameUI
+require Project.Mechanics.Levelmanager.S_LevelManager
 require Project.Assets.Lvl_Angar.S_AngarInstancePrefabs
 require Project.Assets.Lvl_Laboratory.S_LaboratoryInstancePrefabs
 
@@ -85,7 +86,7 @@ class LevelTrigger : Component {
             print("Trigger node: {self.triggerNode.hierarchyName}")
         }
 
-        print("Target level: {self.targetLevelPath}")
+        print("Target level: {self->getResolvedTargetLevelPath()}")
 
         self.triggered = false
     }
@@ -128,7 +129,7 @@ class LevelTrigger : Component {
         if ( d <= self.triggerRadius ) {
             print("PLAYER ENTERED LEVEL TRIGGER")
             print("Distance: {d}")
-            print("Loading level: {self.targetLevelPath}")
+            print("Loading level: {self->getResolvedTargetLevelPath()}")
 
             self.triggered = true
             if ( self->shouldShowEscapedTransition() ) {
@@ -214,12 +215,15 @@ class LevelTrigger : Component {
     }
 
     def loadTargetLevel() : void {
-        let levelPrefab = request_prefab(self.targetLevelPath)
+        let resolvedTargetLevelPath = self->getResolvedTargetLevelPath()
+        self->advanceProgressionIfClearedExit(resolvedTargetLevelPath)
+
+        let levelPrefab = request_prefab(resolvedTargetLevelPath)
         let playerPrefab = request_prefab(self.playerPrefabPath)
         let cameraPrefab = request_prefab(self.cameraPrefabPath)
 
         if ( levelPrefab == PrefabId() ) {
-            print("WARNING: target level prefab not found: {self.targetLevelPath}")
+            print("WARNING: target level prefab not found: {resolvedTargetLevelPath}")
             self.triggered = false
             return
         }
@@ -273,7 +277,7 @@ class LevelTrigger : Component {
             name = levelName
         ))
 
-        self->attachRuntimeLevelComponents(levelNode)
+        self->attachRuntimeLevelComponents(levelNode, resolvedTargetLevelPath)
 
         if ( levelNode != NodeId() && length(spawnNodeName) > 0 ) {
             let spawnNode = level_trigger_find_node_recursive(levelNode, spawnNodeName)
@@ -333,18 +337,146 @@ class LevelTrigger : Component {
         print("Player spawned: {newPlayer.hierarchyName}")
     }
 
-    def attachRuntimeLevelComponents(levelNode : NodeId) : void {
+    def getResolvedTargetLevelPath() : string {
+        var result = self.targetLevelPath
+
+        if ( self->usesProgressionArenaTarget() ) {
+            result = progress_get_arena_level_path(progress_get_current_arena_level())
+        }
+
+        return result
+    }
+
+    def usesProgressionArenaTarget() : bool {
+        return !self.requireArenaCleared && find(self.targetLevelPath, "Lvl_Morgue") >= 0
+    }
+
+    def advanceProgressionIfClearedExit(resolvedTargetLevelPath : string) : void {
+        if ( find(resolvedTargetLevelPath, "Lvl_Hub") < 0 ) {
+            return
+        }
+
+        var shouldAdvance = false
+        if ( self.requireArenaCleared ) {
+            if ( progress_is_arena_cleared() ) {
+                shouldAdvance = true
+            }
+        } else {
+            shouldAdvance = true
+        }
+
+        if ( shouldAdvance ) {
+            progress_advance_arena_level()
+            print("Next arena level: {progress_get_current_arena_level()}")
+        }
+    }
+
+    def attachRuntimeLevelComponents(levelNode : NodeId, resolvedTargetLevelPath : string) : void {
         if ( levelNode == NodeId() || !levelNode.isAlive ) {
             return
         }
 
-        self->attachAngarInstancer(levelNode)
-        self->attachLaboratoryInstancer(levelNode)
+        self->attachAngarInstancer(levelNode, resolvedTargetLevelPath)
+        self->attachLaboratoryInstancer(levelNode, resolvedTargetLevelPath)
+        self->attachDefaultLevelManager(levelNode, resolvedTargetLevelPath)
+        self->attachDefaultExitTrigger(levelNode, resolvedTargetLevelPath)
     }
 
-    def attachAngarInstancer(levelNode : NodeId) : void {
+    def attachDefaultLevelManager(levelNode : NodeId, resolvedTargetLevelPath : string) : void {
+        if ( find(resolvedTargetLevelPath, "Lvl_Hub") >= 0 ) {
+            return
+        }
+
+        var hasLevelManager = false
+        get_component(levelNode) $(var levelManager : SLevelManager?) {
+            if ( levelManager != null ) {
+                hasLevelManager = true
+            }
+        }
+
+        if ( hasLevelManager ) {
+            return
+        }
+
+        add_component(levelNode, new SLevelManager(
+            arenaLevel = progress_get_current_arena_level()
+        ))
+
+        print("Default level manager attached to {levelNode.name}")
+    }
+
+    def attachDefaultExitTrigger(levelNode : NodeId, resolvedTargetLevelPath : string) : void {
+        if ( find(resolvedTargetLevelPath, "Lvl_Hub") >= 0 ) {
+            return
+        }
+
+        if ( self->hasLevelTriggerRecursive(levelNode) ) {
+            return
+        }
+
+        let endNode = level_trigger_find_node_recursive(levelNode, "End")
+        if ( endNode == NodeId() ) {
+            return
+        }
+
+        var hasLevelManager = false
+        get_component(levelNode) $(var levelManager : SLevelManager?) {
+            if ( levelManager != null ) {
+                hasLevelManager = true
+            }
+        }
+
+        add_component(levelNode, new LevelTrigger(
+            triggerNode = endNode,
+            triggerNodeName = "End",
+            targetLevelPath = "Project/Levels/Lvl_Hub.prefab",
+            targetLevelName = self.targetLevelName,
+            playerPrefabPath = self.playerPrefabPath,
+            cameraPrefabPath = self.cameraPrefabPath,
+            cameraName = self.cameraName,
+            cameraOffset = self.cameraOffset,
+            playerSpawnNodeName = self.playerSpawnNodeName,
+            playerSpawnPosition = self.playerSpawnPosition,
+            playerSpawnRotation = self.playerSpawnRotation,
+            preservePlayerHealth = self.preservePlayerHealth,
+            requireArenaCleared = hasLevelManager,
+            showEscapedOnClearedExit = self.showEscapedOnClearedExit,
+            escapedImagePath = self.escapedImagePath,
+            escapedDelaySeconds = self.escapedDelaySeconds,
+            escapedCanvasSize = self.escapedCanvasSize,
+            escapedImageSourceSize = self.escapedImageSourceSize,
+            triggerRadius = self.triggerRadius
+        ))
+
+        print("Default exit trigger attached to {levelNode.name}")
+    }
+
+    def hasLevelTriggerRecursive(n : NodeId) : bool {
+        var found = false
+
+        get_component(n) $(var trigger : LevelTrigger?) {
+            if ( trigger != null ) {
+                found = true
+            }
+        }
+
+        if ( found ) {
+            return true
+        }
+
+        let children = get_children(n)
+        for ( child in children ) {
+            if ( self->hasLevelTriggerRecursive(child) ) {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    def attachAngarInstancer(levelNode : NodeId, resolvedTargetLevelPath : string) : void {
         let angarBase = level_trigger_find_node_recursive(levelNode, "AngarBase")
-        if ( find(self.targetLevelPath, "Lvl_Angar") < 0 && angarBase == NodeId() ) {
+        if ( find(resolvedTargetLevelPath, "Lvl_Angar") < 0 && angarBase == NodeId() ) {
             return
         }
 
@@ -379,9 +511,9 @@ class LevelTrigger : Component {
         print("Angar instancer attached by LevelTrigger")
     }
 
-    def attachLaboratoryInstancer(levelNode : NodeId) : void {
+    def attachLaboratoryInstancer(levelNode : NodeId, resolvedTargetLevelPath : string) : void {
         let labBase = level_trigger_find_node_recursive(levelNode, "Labbase")
-        if ( find(self.targetLevelPath, "Lvl_Laboratory") < 0 && labBase == NodeId() ) {
+        if ( find(resolvedTargetLevelPath, "Lvl_Laboratory") < 0 && labBase == NodeId() ) {
             return
         }
 

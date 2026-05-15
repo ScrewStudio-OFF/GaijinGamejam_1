@@ -1,9 +1,4 @@
 node{
 name:t="P_EnemySpawnPoint"
 uid:i=-1588463328
-SEnemySpawner{
-enemyPrefabPath:t="Project/Mechanics/Enemy/Prefabs/P_Enemy.prefab"
-maxEnemies:i=1
-currentEnemyCount:i=0
-}
 }

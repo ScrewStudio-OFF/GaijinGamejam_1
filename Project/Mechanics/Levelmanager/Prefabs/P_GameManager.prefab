@@ -1,10 +1,5 @@
 node{
 name:t="P_GameManager"
 uid:i=-859352374
-SGameState{
-playerNode:i=0
-playerStats:i=0
-currentArenaLevel:i=1
-currentWave:i=1
-}
+SGameState{}
 }

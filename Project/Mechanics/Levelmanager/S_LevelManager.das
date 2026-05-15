@@ -1,9 +1,13 @@
 require engine.core
+require Project.Core.Player.S_Player
 require Project.Mechanics.Enemy.S_EnemyLoot
 require Project.Mechanics.Enemy.S_EnemySpawner
 require Project.Mechanics.StatsAndProgression.S_GameState
 require Project.Assets.Lvl_Angar.S_AngarInstancePrefabs
+require Project.Assets.Lvl_Greenhouse.S_GreenHouseInstancePrefabs
 require Project.Assets.Lvl_Laboratory.S_LaboratoryInstancePrefabs
+
+let DEFAULT_ENEMY_PREFAB_PATH = "Project/Mechanics/Enemy/Prefabs/P_Enemy.prefab"
 
 struct EnemyWaveConfig {
     enemyCount : int = 1
@@ -14,46 +18,71 @@ struct EnemyWaveConfig {
 class SLevelManager : Component {
     @export arenaLevel : int = 1
     @export spawnerNodes : array<NodeId>
+    @export spawnPointNodeName : string = "P_EnemySpawnPoint"
     @export waveConfigs : array<EnemyWaveConfig>
     @export timeBetweenWaves : float = 3.0
+    @export waitForLevelLoadedBeforeSpawn : bool = true
+    @export spawnAfterLevelLoadedDelay : float = 0.5
     
     currentWave : int = 0
     waveTimer : float = 0.0
     isSpawningWave : bool = false
     spawnTimer : float = 0.0
     enemiesSpawnedThisWave : int = 0
+    @no_export activeEnemies : array<NodeId>
+    @no_export levelCompleted : bool = false
     @no_export runtimeLevelComponentsReady : bool = false
+    @no_export wavesStarted : bool = false
+    @no_export spawnReadyTimer : float = 0.0
 
     def override on_initialize() : void {
         runtimeLevelComponentsReady = false
+        isSpawningWave = false
+        levelCompleted = false
+        wavesStarted = false
+        spawnReadyTimer = 0.0
+        currentWave = 0
+        enemiesSpawnedThisWave = 0
+        resize(activeEnemies, 0)
         self->ensure_runtime_level_components()
 
         if (length(waveConfigs) == 0) {
             setup_default_waves()
         }
+        self->normalize_wave_configs()
+
+        let savedArenaLevel = progress_get_current_arena_level()
+        if (savedArenaLevel > arenaLevel) {
+            arenaLevel = savedArenaLevel
+        }
 
         progress_set_arena_level(arenaLevel)
         progress_set_arena_cleared(false)
         
-        // Auto-discover enemy spawners in the scene if none assigned in the editor
-        if (length(spawnerNodes) == 0) {
-            var comps := find_components(type<SEnemySpawner>)
-            for (c in comps) {
-                if (c != null) {
-                    push(spawnerNodes, c.nodeId)
-                }
-            }
-            print("Auto-discovered {length(spawnerNodes)} spawner nodes")
-        }
+        self->discover_spawn_points()
 
-        spawn_next_wave()
+        if (!waitForLevelLoadedBeforeSpawn) {
+            wavesStarted = true
+            spawn_next_wave()
+        }
     }
 
     def setup_default_waves() : void {
-        let enemyPath = "Project/Mechanics/Enemy/Prefabs/P_Enemy.prefab"
-        push(waveConfigs, EnemyWaveConfig(enemyCount = 1, enemyPrefabPath = enemyPath, timeBetweenSpawns = 4.))
-        push(waveConfigs, EnemyWaveConfig(enemyCount = 2, enemyPrefabPath = enemyPath, timeBetweenSpawns = 3.))
-        push(waveConfigs, EnemyWaveConfig(enemyCount = 3, enemyPrefabPath = enemyPath, timeBetweenSpawns = 2.))
+        push(waveConfigs, EnemyWaveConfig(enemyCount = 1, enemyPrefabPath = DEFAULT_ENEMY_PREFAB_PATH, timeBetweenSpawns = 4.))
+        push(waveConfigs, EnemyWaveConfig(enemyCount = 2, enemyPrefabPath = DEFAULT_ENEMY_PREFAB_PATH, timeBetweenSpawns = 3.))
+        push(waveConfigs, EnemyWaveConfig(enemyCount = 3, enemyPrefabPath = DEFAULT_ENEMY_PREFAB_PATH, timeBetweenSpawns = 2.))
+    }
+
+    def normalize_wave_configs() : void {
+        for (waveIndex in range(length(waveConfigs))) {
+            if (waveConfigs[waveIndex].enemyCount <= 0) {
+                waveConfigs[waveIndex].enemyCount = waveIndex + 1
+            }
+
+            if (length(waveConfigs[waveIndex].enemyPrefabPath) == 0) {
+                waveConfigs[waveIndex].enemyPrefabPath = DEFAULT_ENEMY_PREFAB_PATH
+            }
+        }
     }
 
     def override on_update() : void {
@@ -61,11 +90,63 @@ class SLevelManager : Component {
             self->ensure_runtime_level_components()
         }
 
+        if (!wavesStarted) {
+            self->update_waiting_for_level_loaded()
+            return
+        }
+
         if (isSpawningWave) {
             update_wave_spawning()
         }
         
         check_all_enemies_dead()
+    }
+
+    def private update_waiting_for_level_loaded() : void {
+        if (!self->is_level_ready_for_enemy_spawn()) {
+            spawnReadyTimer = 0.0
+            return
+        }
+
+        spawnReadyTimer += get_delta_time()
+        if (spawnReadyTimer < spawnAfterLevelLoadedDelay) {
+            return
+        }
+
+        wavesStarted = true
+        print("Level loaded, starting enemy waves")
+        spawn_next_wave()
+    }
+
+    def private is_level_ready_for_enemy_spawn() : bool {
+        if (find_component(type<SPlayer>) == null) {
+            return false
+        }
+
+        var ready = true
+
+        var angarInstancers := find_components(type<SAngarInstancePrefabs>)
+        for (instancer in angarInstancers) {
+            if (instancer != null && !instancer.spawned) {
+                ready = false
+            }
+        }
+
+        var greenhouseInstancers := find_components(type<SGreenHouseInstancePrefabs>)
+        for (instancer in greenhouseInstancers) {
+            if (instancer != null && !instancer.spawned) {
+                ready = false
+            }
+        }
+
+        var laboratoryInstancers := find_components(type<SLaboratoryInstancePrefabs>)
+        for (instancer in laboratoryInstancers) {
+            if (instancer != null && !instancer.spawned) {
+                ready = false
+            }
+        }
+
+        return ready
     }
 
     def private ensure_runtime_level_components() : void {
@@ -161,16 +242,29 @@ class SLevelManager : Component {
     }
 
     def spawn_next_wave() : void {
-        if (currentWave >= length(waveConfigs)) {
+        if (levelCompleted || currentWave >= length(waveConfigs)) {
             on_all_waves_completed()
             return
         }
-        
-        isSpawningWave = true
-        spawnTimer = 0.0
+
+        let config = waveConfigs[currentWave]
+        resize(activeEnemies, 0)
+        self->discover_spawn_points()
+
         enemiesSpawnedThisWave = 0
-        
-        print("Wave {currentWave + 1} started on arena level {arenaLevel}")
+        isSpawningWave = true
+
+        print("Wave {currentWave + 1} started on arena level {arenaLevel}, spawning {config.enemyCount} enemies")
+
+        for (i in range(config.enemyCount)) {
+            let enemy = self->spawn_enemy(config.enemyPrefabPath)
+            if (enemy != NodeId() && enemy.isAlive) {
+                push(activeEnemies, enemy)
+                enemiesSpawnedThisWave += 1
+            }
+        }
+
+        isSpawningWave = false
     }
 
     def private update_wave_spawning() : void {
@@ -196,34 +290,10 @@ class SLevelManager : Component {
             print("Failed to load enemy prefab: {prefabPath}")
             return NodeId()
         }
-        // Ensure we have spawner nodes available
-        if (length(spawnerNodes) == 0) {
-            var comps := find_components(type<SEnemySpawner>)
-            for (c in comps) {
-                if (c != null) {
-                     push(spawnerNodes, c.nodeId) 
-                     }
-            }
-        }
 
-        // fallback to children of this manager node
-        if (length(spawnerNodes) == 0) {
-            var fallback := nodeId.get_children()
-            if (length(fallback) > 0) {
-                spawnerNodes <- fallback
-            }
-        }
-
-        if (length(spawnerNodes) == 0) {
-            print("No spawner nodes available, cannot spawn enemy")
-            return NodeId()
-        }
-
-        let spawnerIdx = enemiesSpawnedThisWave % length(spawnerNodes)
-        let spawnerNode = spawnerNodes[spawnerIdx]
-
-        if (!spawnerNode.isAlive) {
-            print("Selected spawner node is not alive, aborting spawn")
+        let spawnerNode = self->get_random_spawn_point()
+        if (spawnerNode == NodeId() || !spawnerNode.isAlive) {
+            print("No alive spawn point available, cannot spawn enemy")
             return NodeId()
         }
         
@@ -241,24 +311,18 @@ class SLevelManager : Component {
     }
 
     def private check_all_enemies_dead() : void {
+        if (levelCompleted) {
+            return
+        }
+
         if (isSpawningWave) {
             return
         }
         
         var hasEnemies = false
-        var spawners := spawnerNodes
 
-        // fallback: if spawnerNodes is empty, try to use children of this node
-        if (length(spawners) == 0) {
-            spawners <- nodeId.get_children()
-        }
-
-        for (spawner in spawners) {
-            if (spawner == NodeId()) {
-                 continue 
-            }
-            var children = spawner.get_children()
-            if (length(children) > 0) {
+        for (enemy in activeEnemies) {
+            if (enemy != NodeId() && enemy.isAlive) {
                 hasEnemies = true
                 break
             }
@@ -286,10 +350,78 @@ class SLevelManager : Component {
     }
 
     def private on_all_waves_completed() : void {
+        if (levelCompleted) {
+            return
+        }
+
+        levelCompleted = true
         print("All waves completed on arena level {arenaLevel}!")
         print("Level complete!")
 
         progress_set_arena_cleared(true)
+    }
+
+    def private discover_spawn_points() : void {
+        if (length(spawnerNodes) > 0) {
+            return
+        }
+
+        let roots = get_scene_roots()
+        for (root in roots) {
+            self->collect_spawn_points_recursive(root)
+        }
+
+        if (length(spawnerNodes) == 0) {
+            var comps := find_components(type<SEnemySpawner>)
+            for (c in comps) {
+                if (c != null) {
+                    push(spawnerNodes, c.nodeId)
+                }
+            }
+        }
+
+        if (length(spawnerNodes) == 0 && wavesStarted) {
+            push(spawnerNodes, nodeId)
+            print("No {spawnPointNodeName} nodes found, using level manager position as fallback")
+        } else {
+            print("Enemy spawn points found: {length(spawnerNodes)}")
+        }
+    }
+
+    def private collect_spawn_points_recursive(n : NodeId) : void {
+        if (n == NodeId() || !n.isAlive) {
+            return
+        }
+
+        if (n.name == spawnPointNodeName || find(n.name, "EnemySpawnPoint") >= 0) {
+            push(spawnerNodes, n)
+        }
+
+        let children = get_children(n)
+        for (child in children) {
+            self->collect_spawn_points_recursive(child)
+        }
+    }
+
+    def private get_random_spawn_point() : NodeId {
+        var result = NodeId()
+
+        if (length(spawnerNodes) == 0) {
+            self->discover_spawn_points()
+        }
+
+        if (length(spawnerNodes) > 0) {
+            for (attempt in range(length(spawnerNodes))) {
+                let spawnIndex = random_range(0, length(spawnerNodes))
+                let candidate = spawnerNodes[spawnIndex]
+                if (candidate != NodeId() && candidate.isAlive) {
+                    result = candidate
+                    break
+                }
+            }
+        }
+
+        return result
     }
 
     def get_coins_for_kill() : int {

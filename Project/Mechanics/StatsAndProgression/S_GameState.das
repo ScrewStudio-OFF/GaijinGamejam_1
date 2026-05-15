@@ -5,9 +5,34 @@ var SAVED_HP_UPGRADE_LEVEL : int = 0
 var SAVED_DAMAGE_UPGRADE_LEVEL : int = 0
 var SAVED_SPEED_UPGRADE_LEVEL : int = 0
 
-var CURRENT_ARENA_LEVEL : int = 1
+var CURRENT_ARENA_LEVEL : int = 2
 var CURRENT_WAVE : int = 1
 var ARENA_CLEARED : bool = false
+
+
+def progress_get_arena_level_path(level : int) : string {
+    var sequenceIndex = level - 2
+    while (sequenceIndex >= 5) {
+        sequenceIndex -= 5
+    }
+    while (sequenceIndex < 0) {
+        sequenceIndex += 5
+    }
+
+    var result = "Project/Levels/Lvl_Morgue.prefab"
+
+    if (sequenceIndex == 1) {
+        result = "Project/Levels/Lvl_Greenhouse.prefab"
+    } elif (sequenceIndex == 2) {
+        result = "Project/Levels/Lvl_Angar.prefab"
+    } elif (sequenceIndex == 3) {
+        result = "Project/Levels/Lvl_Polygon.prefab"
+    } elif (sequenceIndex == 4) {
+        result = "Project/Levels/Lvl_Laboratory.prefab"
+    }
+
+    return result
+}
 
 
 def progress_save_player_progress(coins : int, hpLevel : int, damageLevel : int, speedLevel : int) : void {
@@ -52,6 +77,12 @@ def progress_spend_saved_coins(cost : int) : bool {
 
 def progress_set_arena_level(level : int) : void {
     CURRENT_ARENA_LEVEL = level
+    CURRENT_WAVE = 1
+    ARENA_CLEARED = false
+}
+
+def progress_advance_arena_level() : void {
+    CURRENT_ARENA_LEVEL += 1
     CURRENT_WAVE = 1
     ARENA_CLEARED = false
 }
@@ -108,6 +139,14 @@ class SGameState : Component {
 
     def set_arena_level(level : int) : void {
         progress_set_arena_level(level)
+    }
+
+    def advance_arena_level() : void {
+        progress_advance_arena_level()
+    }
+
+    def get_arena_level_path(level : int) : string {
+        return progress_get_arena_level_path(level)
     }
 
     def advance_wave() : void {
