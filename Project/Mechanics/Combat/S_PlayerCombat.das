@@ -2,6 +2,7 @@ require engine.core
 require engine.math.math_utils
 require engine.sound_core
 require Project.Mechanics.Combat.S_AttackHitbox
+require Project.Mechanics.StatsAndProgression.S_PlayerStats
 
 class SPlayerCombat : Component {
     @export attackAnim1 : AnimationId
@@ -196,12 +197,20 @@ class SPlayerCombat : Component {
     }
 
     def private attack_damage(stage : int) : float {
+        var statDamage = damage1
+
+        get_component(nodeId) $(var stats : SPlayerStats?) {
+            if (stats != null) {
+                statDamage = float(stats.get_damage())
+            }
+        }
+
         if (stage == 0) {
-            return damage1
+            return statDamage
         } elif (stage == 1) {
-            return damage2
+            return statDamage + 2.0
         } else {
-            return damage3
+            return statDamage + 6.0
         }
     }
 

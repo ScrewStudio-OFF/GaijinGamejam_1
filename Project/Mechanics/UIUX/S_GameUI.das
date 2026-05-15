@@ -245,11 +245,17 @@ class SGameUI : Component {
         var healthText = "100 / 100"
 
         if (playerNode != NodeId() && playerNode.isAlive) {
+            var currentHealth = 100
+            var maxHealth = 100
+
             get_component(playerNode) $(var damageable : SDamageable?) {
                 if (damageable != null) {
-                    healthText = "{int(damageable.health)} / {int(damageable.maxHealth)}"
+                    currentHealth = int(damageable.health)
+                    maxHealth = int(damageable.maxHealth)
                 }
             }
+
+            healthText = "{currentHealth} / {maxHealth}"
         }
 
         get_component(healthTextNode) $(var text : UIText?) {

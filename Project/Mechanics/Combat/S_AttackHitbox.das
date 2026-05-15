@@ -15,8 +15,8 @@ class SAttackHitbox : Component {
     @export boxOffset : float3 = float3(0.0, 0.0, 0.0)
     @export debugPrintHits : bool = true
 
-    @export hitSoundPath : string = ""
-    @export hitSoundVolume : float = 1.0
+    @export hitSoundPath : string = "Project/Assets/SFX/Combat/SFX_HitMetall.mp3"
+    @export hitSoundVolume : float = 2.0
 
     timeLeft : float = 0.0
     alreadyHit : array<NodeId>
@@ -164,7 +164,7 @@ class SAttackHitbox : Component {
     }
 
     def private play_hit_sound() : void {
-        if (hitSoundPath == "") {
+        if (length(hitSoundPath) == 0) {
             return
         }
 
@@ -173,6 +173,16 @@ class SAttackHitbox : Component {
         set_volume(sid, hitSoundVolume)
     }
 
+    def private is_player_target(target : NodeId) : bool {
+        var isPlayer = false
+        get_component(target) $(var player : SPlayer?) {
+            if (player != null) {
+                isPlayer = true
+            }
+        }
+
+        return isPlayer
+    }
 
     def private is_descendant_of(nodeA : NodeId; nodeB : NodeId) : bool {
         if (!nodeA.isAlive || !nodeB.isAlive) {

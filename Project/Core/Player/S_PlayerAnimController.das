@@ -139,7 +139,7 @@ class SPlayerAnimController : Component {
 
         if (attackState == 3) {
             let vel = get_physical_velocity2()
-            let speed01 = clamp(length(vel) / max(maxRunSpeed, 0.0001), 0.0, 1.0)
+            let speed01 = clamp(length(vel) / max(self->get_current_max_run_speed(), 0.0001), 0.0, 1.0)
             speed01Smoothed = approach(speed01Smoothed, speed01, dt, speedResponse)
 
             let targetRun = pick_run_anim_8dir(vel)
@@ -172,7 +172,7 @@ class SPlayerAnimController : Component {
         }
 
         let vel = get_physical_velocity2()
-        let speed01 = clamp(length(vel) / max(maxRunSpeed, 0.0001), 0.0, 1.0)
+        let speed01 = clamp(length(vel) / max(self->get_current_max_run_speed(), 0.0001), 0.0, 1.0)
         speed01Smoothed = approach(speed01Smoothed, speed01, dt, speedResponse)
 
         let targetRun = pick_run_anim_8dir(vel)
@@ -210,6 +210,16 @@ class SPlayerAnimController : Component {
         currentProgress = locomotionProgress
         stateBlendDuration = attackBlendTime
         blendLeft = attackBlendTime
+    }
+
+    def private get_current_max_run_speed() : float {
+        var result = maxRunSpeed
+
+        if (player != null) {
+            result = player.MOVE_SPEED
+        }
+
+        return result
     }
 
     def private update_attack_playback(targetAnim : AnimationId; dt : float) : void {

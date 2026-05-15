@@ -1,5 +1,5 @@
 require engine.core
-require Project.Mechanics.StatsAndProgression.S_PlayerStats
+require Project.Mechanics.StatsAndProgression.S_GameState
 
 class SEnemyLoot : Component {
     arenaLevel : int = 1
@@ -10,13 +10,8 @@ class SEnemyLoot : Component {
 
     def on_enemy_died(playerNode : NodeId) : void {
         let coinsEarned = calculate_coins()
-        
-        get_component(playerNode) $(var stats : SPlayerStats?) {
-            if (stats != null) {
-                stats.add_coins(coinsEarned)
-                print("Player earned {coinsEarned} coins!")
-            }
-        }
+        progress_add_saved_coins(coinsEarned)
+        print("Player earned {coinsEarned} coins!")
     }
 
     def private calculate_coins() : int {

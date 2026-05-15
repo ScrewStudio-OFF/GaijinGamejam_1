@@ -17,7 +17,7 @@ waterTankYOffset:r=-1.1
 SLevelManager{
 arenaLevel:i=2
 spawnPointNodeName:t="P_EnemySpawnPoint"
-timeBetweenWaves:r=3
+timeBetweenWaves:r=5
 waitForLevelLoadedBeforeSpawn:b=yes
 spawnAfterLevelLoadedDelay:r=0.5
 currentWave:i=0
@@ -27,15 +27,25 @@ spawnTimer:r=0
 enemiesSpawnedThisWave:i=0
 spawnerNodes{
 vs{
-v:i=0
-v:i=0
-v:i=0
+v:i=-457202467
+v:i=1265423380
+v:i=278928222
 }
 }
 waveConfigs{
 vs{
 EnemyWaveConfig{
-enemyCount:i=10
+enemyCount:i=3
+enemyPrefabPath:t="Project/Mechanics/Enemy/Prefabs/P_Enemy.prefab"
+timeBetweenSpawns:r=2
+}
+EnemyWaveConfig{
+enemyCount:i=4
+enemyPrefabPath:t="Project/Mechanics/Enemy/Prefabs/P_Enemy.prefab"
+timeBetweenSpawns:r=3
+}
+EnemyWaveConfig{
+enemyCount:i=5
 enemyPrefabPath:t="Project/Mechanics/Enemy/Prefabs/P_Enemy.prefab"
 timeBetweenSpawns:r=2
 }
@@ -97,6 +107,32 @@ name:t="End"
 uid:i=1881132119
 parent:i=1835323674
 pos:p3=-34.1987, 1, 22.4685
+}
+node{
+name:t="P_EnemySpawnPoint"
+uid:i=278928222
+prefab:i64=7668696029787419492
+parent:i=1835323674
+pos:p3=5.2526, 0, 5.8036
+}
+res{
+guid:t="019e2720-ed8f-7cca-83aa-0b2d11e7cd9f"
+type:i=12
+refId:i64=7668696029787419492
+}
+node{
+name:t="P_EnemySpawnPoint"
+uid:i=1265423380
+prefab:i64=7668696029787419492
+parent:i=1835323674
+pos:p3=-8.0631, 0, 8.8091
+}
+node{
+name:t="P_EnemySpawnPoint"
+uid:i=-457202467
+prefab:i64=7668696029787419492
+parent:i=1835323674
+pos:p3=0.7571, 0, -11.7462
 }
 instance{
 root:i=-1967255222

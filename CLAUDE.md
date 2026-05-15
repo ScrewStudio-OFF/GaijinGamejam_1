@@ -71,11 +71,11 @@ Follow this sequence when working on a game:
 Use documentation for EdenSpark and Daslang from Context7 in the first place.
 If Context7 is not available use local documentation bundled with EdenSpark:
 
-- **API reference (RST):** `C:/Users/brawl/AppData/Local/EdenSpark/docs`
+- **API reference (RST):** `C:/Users/stasd/AppData/Local/EdenSpark/docs`
 
 In case you couldn't find required functionality in documentation look into usages in samples bundled with EdenSpark:
 
-- **Sample projects:** `C:/Users/brawl/AppData/Local/EdenSpark/samples`
+- **Sample projects:** `C:/Users/stasd/AppData/Local/EdenSpark/samples`
 
 ## Language: Gen2 daScript
 

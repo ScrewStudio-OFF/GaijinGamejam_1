@@ -25,7 +25,7 @@ boxSize:p3=3, 2, 4
 boxOffset:p3=0, 0, 0
 debugPrintHits:b=yes
 hitSoundPath:t="Project/Assets/SFX/Combat/SFX_HitMetall.mp3"
-hitSoundVolume:r=0.3
+hitSoundVolume:r=1
 timeLeft:r=0
 alreadyHit{
 vs{}

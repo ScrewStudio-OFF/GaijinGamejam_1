@@ -49,6 +49,7 @@ class LevelTrigger : Component {
     playerSpawnRotation : quat4 = quat4()
 
     preservePlayerHealth : bool = true
+    healPlayerOnHubReturn : bool = true
     requireArenaCleared : bool = false
     showEscapedOnClearedExit : bool = true
     escapedImagePath : string = "Project/Assets/UI/Escaped.png"
@@ -259,6 +260,7 @@ class LevelTrigger : Component {
         var spawnPosition = self.playerSpawnPosition
         var spawnRotation = self.playerSpawnRotation
         let shouldPreserveHealth = self.preservePlayerHealth
+        let shouldHealOnLoadedHub = self.healPlayerOnHubReturn && (find(resolvedTargetLevelPath, "Lvl_Hub") >= 0)
         var savedPlayerHealth = -1.0
         var savedPlayerMaxHealth = -1.0
 
@@ -331,6 +333,10 @@ class LevelTrigger : Component {
             }
         }
 
+        if ( shouldHealOnLoadedHub ) {
+            self->healPlayerToFull(newPlayer)
+        }
+
         let uiNode = create_node(NodeData(name = "GameUI"))
         add_component(uiNode, new SGameUI(playerNode = newPlayer))
 
@@ -368,6 +374,19 @@ class LevelTrigger : Component {
         if ( shouldAdvance ) {
             progress_advance_arena_level()
             print("Next arena level: {progress_get_current_arena_level()}")
+        }
+    }
+
+    def healPlayerToFull(playerNode : NodeId) : void {
+        if ( playerNode == NodeId() || !playerNode.isAlive ) {
+            return
+        }
+
+        get_component(playerNode) $(var damageable : SDamageable?) {
+            if ( damageable != null ) {
+                damageable.health = damageable.maxHealth
+                print("Player healed to full: {damageable.health} / {damageable.maxHealth}")
+            }
         }
     }
 
