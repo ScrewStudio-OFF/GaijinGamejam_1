@@ -1,5 +1,6 @@
 require engine.core
 require Project.Mechanics.UIUX.IntroController
+require Project.Mechanics.UIUX.S_MusicPlaylist
 
 
 var hubIntroWasPlayed : bool = false
@@ -22,19 +23,28 @@ class SHubIntro : Component {
     introControllerNode : NodeId
     introController : IntroController?
     introStarted : bool = false
+    playlistStarted : bool = false
 
     def override on_initialize() : void {
         if ( hubIntroWasPlayed || introStarted ) {
+            self->start_gameplay_playlist()
             return
         }
 
         hubIntroWasPlayed = true
         introStarted = true
+        stop_gameplay_music(0.2)
         self->start_intro()
     }
 
     def override on_update() : void {
-        pass
+        if ( playlistStarted ) {
+            return
+        }
+
+        if ( introStarted && introController != null && introController.introFinished ) {
+            self->start_gameplay_playlist()
+        }
     }
 
     def override on_destroy() : void {
@@ -56,5 +66,14 @@ class SHubIntro : Component {
             hubIntroWasPlayed = false
             print("HubIntro: failed to create IntroController")
         }
+    }
+
+    def private start_gameplay_playlist() : void {
+        if ( playlistStarted ) {
+            return
+        }
+
+        playlistStarted = true
+        ensure_gameplay_music_playlist(self.playlistFolder, self.introMusicVolume)
     }
 }
