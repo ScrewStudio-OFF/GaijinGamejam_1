@@ -1,4 +1,5 @@
 require engine.core
+require Project.Mechanics.UIUX.S_MusicPlaylist
 
 
 var playerDeathScreenActive : bool = false
@@ -20,6 +21,7 @@ class SDeathScreen : Component {
 
     def override on_initialize() : void {
         playerDeathScreenActive = true
+        stop_gameplay_music(0.35)
         timer = 0.0
         returningToMenu = false
         self->create_screen()

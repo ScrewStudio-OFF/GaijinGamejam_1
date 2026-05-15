@@ -6,6 +6,7 @@ require Project.Mechanics.Combat.S_Damageable
 require Project.Mechanics.StatsAndProgression.S_GameState
 require Project.Mechanics.UIUX.S_GameUI
 require Project.Mechanics.Levelmanager.S_LevelManager
+require Project.Mechanics.UIUX.S_MusicPlaylist
 require Project.Assets.Lvl_Angar.S_AngarInstancePrefabs
 require Project.Assets.Lvl_Laboratory.S_LaboratoryInstancePrefabs
 
@@ -339,6 +340,8 @@ class LevelTrigger : Component {
 
         let uiNode = create_node(NodeData(name = "GameUI"))
         add_component(uiNode, new SGameUI(playerNode = newPlayer))
+
+        ensure_gameplay_music_playlist()
 
         print("Player spawned: {newPlayer.hierarchyName}")
     }

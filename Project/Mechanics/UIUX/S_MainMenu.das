@@ -6,6 +6,7 @@ require Project.Core.Player.S_Player
 require Project.Core.Player.S_CameraFollow
 require Project.Mechanics.UIUX.S_GameUI
 require Project.Mechanics.UIUX.S_HubIntro
+require Project.Mechanics.UIUX.S_MusicPlaylist
 
 
 def main_menu_find_node_recursive(nodeId : NodeId, nodeName : string) : NodeId {
@@ -76,6 +77,7 @@ class SMainMenu : Component {
 
     def override on_initialize() : void {
         reset_hub_intro_once_flag()
+        stop_gameplay_music(0.2)
         show_mouse_cursor(true)
 
         currentMusicVolume = clamp(menuMusicVolume, 0.0, 1.0)
